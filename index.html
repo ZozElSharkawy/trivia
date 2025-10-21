@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>لعبة الأسئلة — Demo</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div style="display:flex;align-items:center;gap:12px">
+    <h1>لعبة الأسئلة — Demo</h1>
+  </div>
+  <div id="topRight" style="text-align:center">
+    <div style="font-weight:900; font-size:18px" id="currentTurnBadge">دور: -</div>
+  </div>
+</header>
+
+<div class="container">
+  <!-- Setup -->
+  <div id="setupPanel" class="panel">
+    <h2>إعداد اللعبة</h2>
+    <div class="flex" style="align-items:flex-end">
+      <div class="col">
+        <label>اسم الفريق 1</label>
+        <input id="p1name" type="text" value="فريق 1">
+      </div>
+      <div class="col">
+        <label>اسم الفريق 2</label>
+        <input id="p2name" type="text" value="فريق 2">
+      </div>
+      <div style="width:160px">
+        <label>نقاط بداية كل فريق</label>
+        <input id="startingPoints" type="number" value="1000" min="0">
+      </div>
+      
+    </div>
+    <p class="muted" style="margin-top:8px">اللعب بين فريقين فقط. الأسئلة تُحمّل من <code>questions.json</code>.</p>
+  </div>
+
+  <!-- Category Selection -->
+  <div id="categoryPanel" class="panel">
+    <h2>اختيار الفئات (اختر 6 مصغرات)</h2>
+    <div class="stage">
+      <div class="left">
+        <div id="categoriesWrap"></div>
+      </div>
+
+      <div class="right">
+        <div class="side-panel">
+          <h4>المصغرات المختارة (<span id="chosenCount">0</span>/6)</h4>
+          <div class="chosen-list" id="chosenList"></div>
+
+          <div style="margin-top:12px">
+          <button id="startGameBtn" class="start-btn" disabled>ابدأ اللعب</button>
+          </div>
+
+          <hr style="margin:12px 0" />
+          <div class="small">بعض المصغرات قد تكون مغلقة وتحتاج نقاط لفتحها.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game Board -->
+  <div id="gamePanel" class="panel" style="display:none">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <h2>لوحة اللعب</h2>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button id="openBuyModal" style="background:#c23b3b">اشتري فئة</button>
+        <button id="resetToCategories" style="background:#999">تعديل المصغرات</button>
+        <button id="endGame" class="end-btn">إنهاء اللعبة</button>
+      </div>
+    </div>
+
+    <div id="boardArea" class="board"></div>
+
+    <div class="footer-scores">
+      <div class="players-row" id="playersRow"></div>
+      <div>
+        <div class="small">اضغط على بطاقة الفريق لتبديل الدور أو تحريره.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Question Page (full-screen) -->
+<div id="questionPage" class="question-page" role="dialog" aria-hidden="true">
+  <div class="q-top">
+    <div>
+      <div class="q-title" id="qpCategory">فئة</div>
+      <div class="small" id="qpQtextPreview" style="margin-top:6px;color:#555"></div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+      <div style="display:flex;gap:8px;align-items:center">
+        <div class="timer-pill" id="timerDisplay">00:00</div>
+        <button id="pauseTimer" class="small-btn">إيقاف</button>
+        <button id="resetTimer" class="small-btn">إعادة</button>
+      </div>
+      <div class="q-value" id="qpValue">200</div>
+    </div>
+  </div>
+
+  <div class="q-body">
+    <div class="q-image" id="qpImageWrap">
+      <!-- optional image -->
+    </div>
+    <div class="q-text">
+      <div id="qpQuestionText" style="font-size:18px;font-weight:800"></div>
+      <div class="q-controls">
+        <button id="backToBoard" class="small-btn" style="background:#bbb">العودة للوحة</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="height:18px"></div>
+  <div id="answerArea" style="display:flex;justify-content:flex-start;gap:12px;align-items:center;padding-left:12px">
+    <!-- dynamic: will show "الإجابة" or answer + who buttons -->
+    <button id="answerBtn" class="answer-action">الإجابة</button>
+  </div>
+</div>
+
+<!-- modal -->
+<div id="modalBack" style="position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.45);z-index:120">
+  <div style="background:#fff;padding:18px;border-radius:10px;min-width:280px;max-width:720px" id="modalContent"></div>
+</div><script src="script.js"></script>
+</body>
+</html>

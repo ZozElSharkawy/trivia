@@ -1,0 +1,139 @@
+{
+  "العلوم": {
+    "الفيزياء": [
+      { "difficulty": "easy", "question": "من اكتشف الجاذبية؟", "answer": "نيوتن", "points": 200 },
+      { "difficulty": "hard", "question": "ما وحدة قياس القوة؟", "answer": "نيوتن", "points": 400 },
+      { "difficulty": "extreme", "question": "ما نوع الطاقة الناتجة عن حركة الجسم؟", "answer": "الطاقة الحركية", "points": 600 }
+    ],
+    "الكيمياء": [
+      { "difficulty": "easy", "question": "ما العنصر الذي يرمز له بـ O؟", "answer": "الأكسجين", "points": 200 },
+      { "difficulty": "hard", "question": "ما الغاز المستخدم في إطفاء الحرائق؟", "answer": "ثاني أكسيد الكربون", "points": 400 },
+      { "difficulty": "extreme", "question": "ما العنصر الأخف في الجدول الدوري؟", "answer": "الهيدروجين", "points": 600 }
+    ],
+    "الأحياء": [
+      {"difficulty": "easy", "question": "ما هو مركز الطاقة في الخلية؟", "answer": "الميتوكوندريا", "points": 200 },
+      {"difficulty": "hard", "question": "أي جزء من الجسم يتحكم في التوازن؟", "answer": "المخيخ", "points": 400 },
+      {"difficulty": "extreme", "question": "ما هو أكبر عضو في جسم الإنسان؟", "answer": "الجلد", "points": 600 }
+    ],
+    "الفضاء": [
+      { "difficulty": "easy", "question": "ما أقرب نجم إلى الأرض؟", "answer": "الشمس", "points": 200 },
+      { "difficulty": "hard", "question": "كم عدد الكواكب في المجموعة الشمسية؟", "answer": "ثمانية", "points": 400 },
+      { "difficulty": "extreme", "question": "ما أول إنسان صعد إلى الفضاء؟", "answer": "يوري غاغارين", "points": 600 }
+    ]
+  },
+
+  "المعارف العامة": {
+    "التاريخ": [
+      { "difficulty": "easy", "question": "من أول رئيس للولايات المتحدة؟", "answer": "جورج واشنطن", "points": 200 },
+      { "difficulty": "hard", "question": "في أي عام انتهت الحرب العالمية الثانية؟", "answer": "1945", "points": 400 },
+      { "difficulty": "extreme", "question": "من اكتشف أمريكا سنة 1492؟", "answer": "كريستوفر كولومبوس", "points": 600 }
+    ],
+    "الجغرافيا": [
+      { "difficulty": "easy", "question": "ما عاصمة فرنسا؟", "answer": "باريس", "points": 200 },
+      { "difficulty": "hard", "question": "في أي قارة تقع صحراء السّحَراء الكبرى؟", "answer": "أفريقيا", "points": 400 },
+      { "difficulty": "extreme", "question": "ما أطول نهر في العالم؟", "answer": "نهر النيل", "points": 600 }
+    ],
+    "الثقافة العامة": [
+      { "difficulty": "easy", "question": "كم عدد الحروف في الأبجدية العربية؟", "answer": "28", "points": 200 },
+      { "difficulty": "hard", "question": "ما عاصمة اليابان؟", "answer": "طوكيو", "points": 400 },
+      { "difficulty": "extreme", "question": "ما لون علم الأمم المتحدة؟", "answer": "أزرق وأبيض", "points": 600 }
+    ],
+    "البيئة": [
+      { "difficulty": "easy", "question": "ما الغاز المسبب للاحتباس الحراري؟", "answer": "ثاني أكسيد الكربون", "points": 200 },
+      { "difficulty": "hard", "question": "ما المصدر الرئيسي للطاقة المتجددة؟", "answer": "الشمس", "points": 400 },
+      { "difficulty": "extreme", "question": "ما هو إعادة التدوير؟", "answer": "استخدام المواد مرة أخرى", "points": 600 }
+    ]
+  },
+
+  "الآداب والفنون": {
+    "الأدب": [
+      { "difficulty": "easy", "question": "من كتب رواية الحرب والسلام؟", "answer": "تولستوي", "points": 200 },
+      { "difficulty": "hard", "question": "من هو شاعر النيل؟", "answer": "حافظ إبراهيم", "points": 400 },
+      { "difficulty": "extreme", "question": "من كتب رواية البؤساء؟", "answer": "فيكتور هوغو", "points": 600 }
+    ],
+    "الفنون": [
+      { "difficulty": "easy", "question": "من رسم لوحة الموناليزا؟", "answer": "ليوناردو دافنشي", "points": 200 },
+      { "difficulty": "hard", "question": "في أي مدينة يوجد متحف اللوفر؟", "answer": "باريس", "points": 400 },
+      { "difficulty": "extreme", "question": "ما الفن الذي يستخدم العجين والنار؟", "answer": "الخزف", "points": 600 }
+    ],
+    "الموسيقى": [
+      { "difficulty": "easy", "question": "كم عدد المفاتيح في البيانو؟", "answer": "88", "points": 200 },
+      { "difficulty": "hard", "question": "من هو ملك البوب؟", "answer": "مايكل جاكسون", "points": 400 },
+      { "difficulty": "extreme", "question": "ما اسم النوتة الموسيقية الأولى؟", "answer": "دو", "points": 600 }
+    ],
+    "اللغة العربية": [
+      { "difficulty": "easy", "question": "ما جمع كلمة قلم؟", "answer": "أقلام", "points": 200 },
+      { "difficulty": "hard", "question": "ما ضد كلمة جميل؟", "answer": "قبيح", "points": 400 },
+      { "difficulty": "extreme", "question": "من مؤلف لسان العرب؟", "answer": "ابن منظور", "points": 600 }
+    ]
+  },
+
+  "الرياضة والترفيه": {
+    "الرياضة": [
+      { "difficulty": "easy", "question": "كم عدد لاعبي فريق كرة القدم؟", "answer": "11 لاعبًا", "points": 200 },
+      { "difficulty": "hard", "question": "ما الرياضة التي تُستخدم فيها الريشة الطائرة؟", "answer": "الريشة الطائرة", "points": 400 },
+      { "difficulty": "extreme", "question": "أي دولة استضافت أولمبياد 2016؟", "answer": "البرازيل", "points": 600 }
+    ],
+    "الأفلام": [
+      { "difficulty": "easy", "question": "من هو مخرج فيلم تايتانيك؟", "answer": "جيمس كاميرون", "points": 200 },
+      { "difficulty": "hard", "question": "في أي فيلم يوجد شخصية أولاف رجل الثلج؟", "answer": "فروزن", "points": 400 },
+      { "difficulty": "extreme", "question": "من بطل فيلم الجوكر 2019؟", "answer": "خواكين فينيكس", "points": 600 }
+    ],
+    "الألعاب": [
+      { "difficulty": "easy", "question": "كم عدد المربعات في لوحة الشطرنج؟", "answer": "64", "points": 200 },
+      { "difficulty": "hard", "question": "في أي لعبة تستخدم الكروت والرموز ♠ ♥ ♦ ♣؟", "answer": "الكوتشينة", "points": 400 },
+      { "difficulty": "extreme", "question": "ما اللعبة التي تحتوي على مكعب بألوان متعددة؟", "answer": "مكعب روبيك", "points": 600 }
+    ],
+    "الطبيعة": [
+      { "difficulty": "easy", "question": "ما الحيوان الذي يلقب بملك الغابة؟", "answer": "الأسد", "points": 200 },
+      { "difficulty": "hard", "question": "ما أسرع الحيوانات البرية؟", "answer": "الفهد", "points": 400 },
+      { "difficulty": "extreme", "question": "ما أكبر محيط في العالم؟", "answer": "الهادئ", "points": 600 }
+    ]
+  },
+
+  "التقنية والمنطق": {
+    "التكنولوجيا": [
+      { "difficulty": "easy", "question": "ما نظام التشغيل الذي تطوره مايكروسوفت؟", "answer": "ويندوز", "points": 200 },
+      { "difficulty": "hard", "question": "ما لغة البرمجة المستخدمة لتصميم صفحات الويب؟", "answer": "HTML", "points": 400 },
+      { "difficulty": "extreme", "question": "ما هو اسم الذكاء الصناعي الذي طورته OpenAI؟", "answer": "شات جي بي تي", "points": 600 }
+    ],
+    "الاختراعات": [
+      { "difficulty": "easy", "question": "من اخترع المصباح الكهربائي؟", "answer": "توماس إديسون", "points": 200 },
+      { "difficulty": "hard", "question": "من اخترع الهاتف؟", "answer": "ألكسندر غراهام بيل", "points": 400 },
+      { "difficulty": "extreme", "question": "من أول من اخترع الطائرة؟", "answer": "الأخوان رايت", "points": 600 }
+    ],
+    "المنطق": [
+      { "difficulty": "easy", "question": "إذا كانت 5×3=15، فكم 3×5؟", "answer": "15", "points": 200 },
+      { "difficulty": "hard", "question": "كم تفاحة تبقى إذا أكلت 2 من 5؟", "answer": "3", "points": 400 },
+      { "difficulty": "extreme", "question": "ما الرقم التالي في التسلسل 2، 4، 8، 16؟", "answer": "32", "points": 600 }
+    ],
+    "الرياضيات": [
+      {"difficulty": "easy", "question": "ما حاصل جمع 7 + 8؟", "answer": "15", "points": 200 },
+      {"difficulty": "hard", "question": "كم درجة في المثلث؟", "answer": "180", "points": 400 },
+      {"difficulty": "extreme", "question": "ما الجذر التربيعي لـ 81؟", "answer": "9", "points": 600 }
+    ]
+  },
+
+  "المجتمع والحياة": {
+    "الطب": [
+      { "difficulty": "easy", "question": "ما العضو المسؤول عن ضخ الدم؟", "answer": "القلب", "points": 200 },
+      { "difficulty": "hard", "question": "ما الفيتامين المسؤول عن تقوية العظام؟", "answer": "فيتامين د", "points": 400 },
+      { "difficulty": "extreme", "question": "ما المرض الذي يسببه نقص الإنسولين؟", "answer": "السكري", "points": 600 }
+    ],
+    "الدين": [
+      { "difficulty": "easy", "question": "كم عدد أركان الإسلام؟", "answer": "خمسة", "points": 200 },
+      { "difficulty": "hard", "question": "ما أول سورة في القرآن؟", "answer": "الفاتحة", "points": 400 },
+      { "difficulty": "extreme", "question": "في أي شهر يصوم المسلمون؟", "answer": "رمضان", "points": 600 }
+    ],
+    "الاقتصاد": [
+      { "difficulty": "easy", "question": "ما العملة الرسمية لمصر؟", "answer": "الجنيه", "points": 200 },
+      { "difficulty": "hard", "question": "ما الجهة المسؤولة عن إصدار النقود؟", "answer": "البنك المركزي", "points": 400 },
+      { "difficulty": "extreme", "question": "ما هو التضخم؟", "answer": "ارتفاع الأسعار العام", "points": 600 }
+    ],
+    "السياسة": [
+      { "difficulty": "easy", "question": "ما أعلى سلطة تنفيذية في الدولة؟", "answer": "رئيس الجمهورية", "points": 200 },
+      { "difficulty": "hard", "question": "كم عدد الدول الأعضاء في الأمم المتحدة؟", "answer": "193", "points": 400 },
+      { "difficulty": "extreme", "question": "أين يقع مقر الأمم المتحدة؟", "answer": "نيويورك", "points": 600 }
+    ]
+  }
+}

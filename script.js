@@ -69,35 +69,114 @@ function buildMiniCardsFromData(){
    ------------------------- */
 
 
-/* render collapsible categories & mini cards */
+// Track current active tab
+let currentActiveTab = null;
+
+/* render category tabs and mini cards */
 function renderCategories(){
-  const wrap = $('#categoriesWrap');
-  wrap.innerHTML = '';
-  // group miniCards by group
-  const groups = {};
-  miniCards.forEach(m => {
-    if(!groups[m.group]) groups[m.group] = [];
-    groups[m.group].push(m);
-  });
-  Object.keys(groups).forEach(gname => {
-    const box = document.createElement('div');
-    box.className = 'collapsible';
-    box.innerHTML = `<h3>${gname} <span class="small">اضغط للتوسيع</span></h3><div class="mini-grid" style="display:none"></div>`;
-    const grid = box.querySelector('.mini-grid');
-    groups[gname].forEach(m=>{
-      const el = document.createElement('div');
-      el.className = 'mini-card ' + (m.locked ? 'locked' : '');
-      el.dataset.id = m.id;
-      el.innerHTML = `<div style="font-size:13px">${m.title}</div>${m.locked?`<div class="lock">قفل ${m.cost}</div>`:''}`;
-      el.addEventListener('click', ()=> onMiniClick(m.id));
-      grid.appendChild(el);
+const tabsContainer = $('#categoryTabs');
+const cardsContainer = $('#miniCardsContainer');
+
+tabsContainer.innerHTML = '';
+cardsContainer.innerHTML = '';
+
+// group miniCards by group
+const groups = {};
+miniCards.forEach(m => {
+if(!groups[m.group]) groups[m.group] = [];
+groups[m.group].push(m);
+});
+
+// Create "All" tab first (active by default)
+const allTab = document.createElement('div');
+allTab.className = 'category-tab active';
+allTab.textContent = 'الكل';
+allTab.dataset.group = 'all';
+
+allTab.addEventListener('click', () => {
+// Remove active class from all tabs
+  document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+  // Add active class to clicked tab
+  allTab.classList.add('active');
+  currentActiveTab = 'all';
+  renderAllMiniCards(groups);
+});
+
+tabsContainer.appendChild(allTab);
+currentActiveTab = 'all';
+renderAllMiniCards(groups);
+
+// Create tabs for each group
+const groupNames = Object.keys(groups);
+groupNames.forEach((gname, index) => {
+const tab = document.createElement('div');
+tab.className = 'category-tab';
+tab.textContent = gname;
+    tab.dataset.group = gname;
+
+  tab.addEventListener('click', () => {
+      // Remove active class from all tabs
+      document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+      // Add active class to clicked tab
+      tab.classList.add('active');
+      currentActiveTab = gname;
+      renderMiniCardsForGroup(gname, groups[gname]);
     });
-    box.querySelector('h3').addEventListener('click', ()=> {
-      grid.style.display = grid.style.display === 'none' ? 'flex' : 'none';
-    });
-    wrap.appendChild(box);
+
+    tabsContainer.appendChild(tab);
   });
-  refreshMiniVisuals();
+}
+
+/* render mini cards for a specific group */
+function renderMiniCardsForGroup(groupName, miniCardsArray){
+const cardsContainer = $('#miniCardsContainer');
+cardsContainer.innerHTML = '';
+
+miniCardsArray.forEach(m => {
+const card = document.createElement('div');
+card.className = 'mini-card ' + (m.locked ? 'locked' : '') + (state.chosen.includes(m.id) ? ' selected' : '');
+card.dataset.id = m.id;
+
+card.innerHTML = `
+<div class="mini-card-image"></div>
+<div class="mini-card-content">
+<h4 class="mini-card-title">${m.title}</h4>
+</div>
+${m.locked ? `<div class="lock">قفل ${m.cost}</div>` : ''}
+`;
+
+card.addEventListener('click', () => onMiniClick(m.id));
+cardsContainer.appendChild(card);
+});
+}
+
+/* render all mini cards from all groups */
+function renderAllMiniCards(groups){
+  const cardsContainer = $('#miniCardsContainer');
+  cardsContainer.innerHTML = '';
+
+  // Combine all mini cards from all groups
+  const allMiniCards = [];
+  Object.values(groups).forEach(groupCards => {
+    allMiniCards.push(...groupCards);
+  });
+
+  allMiniCards.forEach(m => {
+    const card = document.createElement('div');
+    card.className = 'mini-card ' + (m.locked ? 'locked' : '') + (state.chosen.includes(m.id) ? ' selected' : '');
+    card.dataset.id = m.id;
+
+    card.innerHTML = `
+      <div class="mini-card-image"></div>
+      <div class="mini-card-content">
+        <h4 class="mini-card-title">${m.title}</h4>
+      </div>
+      ${m.locked ? `<div class="lock">قفل ${m.cost}</div>` : ''}
+    `;
+
+    card.addEventListener('click', () => onMiniClick(m.id));
+    cardsContainer.appendChild(card);
+  });
 }
 
 /* when clicking a mini-card in selection */
@@ -220,13 +299,12 @@ function renderChosen(){
 
 /* visual update for mini cards */
 function refreshMiniVisuals(){
-  $$('.mini-card').forEach(el=>{
-    const id = el.dataset.id;
-    const m = miniCards.find(x=>x.id===id);
-    el.classList.toggle('locked', !!m.locked);
-    el.classList.toggle('selected', state.chosen.includes(id));
-    el.innerHTML = `<div style="font-size:13px">${m.title}</div>${m.locked?`<div class="lock">قفل ${m.cost}</div>`:''}`;
-  });
+$$('.mini-card').forEach(el=>{
+const id = el.dataset.id;
+const m = miniCards.find(x=>x.id===id);
+el.classList.toggle('locked', !!m.locked);
+el.classList.toggle('selected', state.chosen.includes(id));
+});
 }
 
 
@@ -254,15 +332,34 @@ $('#startGameBtn').addEventListener('click', ()=>{
   const difficultyMap = { 200: 'easy', 400: 'hard', 600: 'extreme' };
   state.boardCats.forEach(cat => {
     const qlist = (questionsData[cat.group] && questionsData[cat.group][cat.title]) || [];
-    // ensure mapping for 200/400/600, if missing create placeholder
+    // ensure mapping for 200/400/600 with 2 questions each, ensure different questions for each button
     [200,400,600].forEach(val => {
       const difficultyLabel = difficultyMap[val];
-      const found = qlist.find(q => q.difficulty === difficultyLabel);
-      state.questions[cat.id + '_' + val] = {
-        q: found ? found.question : `سؤال تجريبي عن ${cat.title} (قيمة ${val})`,
-        answer: found ? found.answer : (found ? found.answer : 'الإجابة'),
-        image: found && found.image ? found.image : null
-      };
+      const availableQuestions = qlist.filter(q => q.difficulty === difficultyLabel);
+
+      // Select 2 different questions for this difficulty level
+      let selectedQuestions = [];
+      if (availableQuestions.length >= 2) {
+        // Shuffle and pick first 2 questions
+        const shuffled = [...availableQuestions].sort(() => Math.random() - 0.5);
+        selectedQuestions = shuffled.slice(0, 2);
+      } else if (availableQuestions.length === 1) {
+        // If only 1 question available, use it for both buttons
+        selectedQuestions = [availableQuestions[0], availableQuestions[0]];
+      } else {
+        // No questions available
+        selectedQuestions = [null, null];
+      }
+
+      // Assign the selected questions to the 2 buttons
+      for (let i = 1; i <= 2; i++) {
+        const selectedQuestion = selectedQuestions[i-1];
+        state.questions[cat.id + '_' + val + '_' + i] = {
+          q: selectedQuestion ? selectedQuestion.question : `سؤال تجريبي عن ${cat.title} (قيمة ${val})`,
+          answer: selectedQuestion ? selectedQuestion.answer : 'الإجابة',
+          image: selectedQuestion && selectedQuestion.image ? selectedQuestion.image : null
+        };
+      }
     });
   });
 
@@ -290,19 +387,28 @@ function renderBoard(){
       </div>
       <div class="title-badge">الفئة ${idx+1}</div>
       <div class="values">
-        <button data-cat="${cat.id}" data-val="200" class="val-btn">200</button>
-        <button data-cat="${cat.id}" data-val="400" class="val-btn">400</button>
-        <button data-cat="${cat.id}" data-val="600" class="val-btn">600</button>
+      <div class="difficulty-row">
+        <button data-cat="${cat.id}" data-val="200" data-instance="1" class="val-btn">200</button>
+        <button data-cat="${cat.id}" data-val="200" data-instance="2" class="val-btn">200</button>
+        </div>
+        <div class="difficulty-row">
+          <button data-cat="${cat.id}" data-val="400" data-instance="1" class="val-btn">400</button>
+          <button data-cat="${cat.id}" data-val="400" data-instance="2" class="val-btn">400</button>
+        </div>
+        <div class="difficulty-row">
+          <button data-cat="${cat.id}" data-val="600" data-instance="1" class="val-btn">600</button>
+          <button data-cat="${cat.id}" data-val="600" data-instance="2" class="val-btn">600</button>
+        </div>
       </div>`;
     area.appendChild(block);
   });
 
   $$('.val-btn').forEach(b=>{
-    const key = b.dataset.cat + '_' + b.dataset.val;
+    const key = b.dataset.cat + '_' + b.dataset.val + '_' + b.dataset.instance;
     if(state.boardDisabled[key]) b.classList.add('answered');
     b.addEventListener('click', ()=> {
       if(state.boardDisabled[key]) return;
-      openQuestionPage(b.dataset.cat, parseInt(b.dataset.val,10));
+      openQuestionPage(b.dataset.cat, parseInt(b.dataset.val,10), parseInt(b.dataset.instance,10));
     });
   });
 }
@@ -343,9 +449,9 @@ function resetTimer(){
   $('#timerDisplay').innerText = '00:00';
 }
 
-function openQuestionPage(catId, value){
-  currentQP = { catId, value };
-  const key = catId + '_' + value;
+function openQuestionPage(catId, value, instance = 1){
+  currentQP = { catId, value, instance };
+  const key = catId + '_' + value + '_' + instance;
   const qobj = state.questions[key] || { q: `سؤال عن ${catId}`, answer: 'الإجابة', image: null };
   const m = miniCards.find(x=>x.id === catId);
   $('#qpCategory').innerText = (m ? m.group : '') + ' / ' + (m ? m.title : '');
@@ -410,7 +516,7 @@ function renderAnswerButton(){
 /* on الإجابة clicked: show the correct answer text first, then three buttons (team1 / team2 / no one) */
 function onAnswerClicked(){
   if(!currentQP) return;
-  const key = currentQP.catId + '_' + currentQP.value;
+  const key = currentQP.catId + '_' + currentQP.value + '_' + currentQP.instance;
   const qobj = state.questions[key] || { answer: 'الإجابة' };
   // stop timer while showing answer selection? We'll keep timer running until selection, but per request timer stops when a team chosen
   // Show answer text then the three buttons
@@ -464,7 +570,7 @@ function onAnswerClicked(){
 /* finalize answer: award points (if any), stop timer, disable question, auto-switch turn to other team, return to board */
 function finalizeAnswer(playerId){
   if(!currentQP) return;
-  const key = currentQP.catId + '_' + currentQP.value;
+  const key = currentQP.catId + '_' + currentQP.value + '_' + currentQP.instance;
   // award points
   if(playerId !== null){
     const pl = state.players.find(p=>p.id === playerId);
@@ -588,11 +694,13 @@ state.categorySelectionScores[1] = sp;
 
 /* check all answered */
 function checkAllAnswered(){
-  const total = state.boardCats.length * 3;
+  const total = state.boardCats.length * 6; // 2 questions per difficulty × 3 difficulties
   let answered = 0;
   state.boardCats.forEach(cat => {
     [200,400,600].forEach(v => {
-      if(state.boardDisabled[cat.id + '_' + v]) answered++;
+      // Check both instances of each difficulty level
+      if(state.boardDisabled[cat.id + '_' + v + '_1']) answered++;
+      if(state.boardDisabled[cat.id + '_' + v + '_2']) answered++;
     });
   });
   if(answered >= total){

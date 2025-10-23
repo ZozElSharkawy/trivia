@@ -19,7 +19,7 @@
   .container{max-width:1200px;margin:14px auto;padding:12px}
   .panel{background:#fff;border-radius:12px;padding:14px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
   label{display:block;margin-bottom:6px;color:#444;font-weight:700}
-  input[type="text"], input[type="number"], select{width:100%;padding:10px;border-radius:8px;border:1px solid #ccc;font-size:14px}
+  input[type="text"], input[type="number"], select{width:80%;padding:10px;border-radius:8px;border:1px solid #ccc;font-size:14px}
   button{cursor:pointer;border:0;background:var(--accent);color:#fff;padding:10px 16px;border-radius:20px;font-weight:800}
   .muted{color:var(--muted);font-size:13px}
   .flex{display:flex;gap:12px;align-items:center}
@@ -27,23 +27,120 @@
   .stage{display:flex;gap:14px;margin-top:18px}
   .left{flex:2}
   .right{flex:1;min-width:260px}
-  .collapsible{background:linear-gradient(#fff,#fafafa);border-radius:10px;padding:8px;margin-bottom:10px;border:1px solid #e6e6e6}
-  .collapsible h3{margin:0;display:flex;justify-content:space-between;align-items:center;padding:6px 8px;cursor:pointer}
-  .mini-grid{display:flex;flex-wrap:wrap;gap:8px;padding:8px}
-  .mini-card{
-    width:calc(33.333% - 8px);
-    min-height:72px;background:var(--blue-soft);border-radius:8px;
-    display:flex;align-items:center;justify-content:center;text-align:center;padding:6px;font-weight:800;color:#222;
-    position:relative;cursor:pointer;
+
+  /* Category tabs */
+  .category-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
+    overflow-x: auto;
+    padding-bottom: 8px;
   }
-  .mini-card.locked{
-    filter: grayscale(0.35);
-    border: 3px solid #ff6b35;
-    background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
-    box-shadow: 0 4px 8px rgba(255, 107, 53, 0.3);
+
+  .category-tab {
+    padding: 10px 16px;
+    background: #f8f9fa;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #555;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
   }
-  .mini-card .lock{position:absolute;left:6px;top:6px;background:#ff6b35;color:#fff;padding:6px 10px;border-radius:8px;font-size:14px;font-weight:600;box-shadow: 0 2px 4px rgba(0,0,0,0.2);}
-  .mini-card.selected{outline:4px solid var(--accent);transform:translateY(-4px)}
+
+  .category-tab:hover {
+    background: #e9ecef;
+    border-color: #dee2e6;
+  }
+
+  .category-tab.active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+
+  /* Mini cards container */
+  .mini-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 8px;
+  }
+
+  /* Enhanced mini category cards */
+  .mini-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    position: relative;
+  }
+
+  .mini-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  }
+
+  .mini-card.selected {
+    border-color: var(--accent);
+    box-shadow: 0 4px 12px rgba(255, 122, 58, 0.3);
+  }
+
+  .mini-card.locked {
+    opacity: 0.7;
+    filter: grayscale(0.3);
+  }
+
+  .mini-card-image {
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .mini-card-image::before {
+    content: '📚';
+    font-size: 32px;
+    opacity: 0.8;
+  }
+
+  .mini-card-content {
+    padding: 12px;
+    text-align: center;
+  }
+
+  .mini-card-title {
+    font-weight: 700;
+    font-size: 14px;
+    color: #333;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .mini-card .lock {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #ff6b35;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    z-index: 10;
+  }
+
   .side-panel{background:var(--panel);border-radius:10px;padding:12px}
   .chosen-list{display:flex;flex-direction:column;gap:8px}
   .chosen-mini{background:#fff;padding:8px;border-radius:8px;display:flex;justify-content:space-between;align-items:center}
@@ -51,8 +148,9 @@
   .board{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}
   .category-block{background:linear-gradient(#fff,#f7f7f7);border-radius:14px;padding:8px;display:flex;flex-direction:column;align-items:center;min-height:220px;box-shadow:0 6px 12px rgba(0,0,0,0.04)}
   .title-badge{background:var(--accent);color:#fff;padding:8px 12px;border-radius:8px;margin-top:8px;font-weight:900}
-  .values{margin-top:12px;display:flex;flex-direction:column;gap:10px;width:100%}
-  .val-btn{display:block;margin:0 auto;width:80%;padding:10px;border-radius:30px;background:var(--pill);border:1px solid #ccc;font-weight:900;color:var(--red);cursor:pointer}
+  .values{margin-top:12px;display:flex;flex-direction:column;gap:12px;width:100%}
+  .difficulty-row{display:flex;gap:8px;justify-content:center}
+  .val-btn{display:inline-block;width:60px;padding:8px;border-radius:25px;background:var(--pill);border:1px solid #ccc;font-weight:900;color:var(--red);cursor:pointer;font-size:14px}
   .val-btn.answered{opacity:0.45;pointer-events:none}
   
   /* Question Page */
@@ -346,10 +444,36 @@
     }
   }
 
+  /* Category tabs responsive */
+  @media (max-width: 768px) {
+    .category-tabs {
+      gap: 4px;
+      padding-bottom: 4px;
+    }
+
+    .category-tab {
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+
+    .mini-cards-container {
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+      max-height: 350px;
+    }
+
+    .mini-card-image {
+      height: 80px;
+    }
+
+    .mini-card-title {
+      font-size: 13px;
+    }
+  }
+
   @media (max-width:900px){
     .stage{flex-direction:column}
     .board{grid-template-columns:repeat(2,1fr)}
-    .mini-card{width:calc(50% - 8px)}
   }
   @media (max-width:520px){
     .board{grid-template-columns:1fr}

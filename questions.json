@@ -1,10 +1,13 @@
 {
   "العلوم": {
     "الفيزياء": [
-      { "difficulty": "easy", "question": "من اكتشف الجاذبية؟", "answer": "نيوتن", "points": 200 },
-      { "difficulty": "hard", "question": "ما وحدة قياس القوة؟", "answer": "نيوتن", "points": 400 },
-      { "difficulty": "extreme", "question": "ما نوع الطاقة الناتجة عن حركة الجسم؟", "answer": "الطاقة الحركية", "points": 600 }
-    ],
+    { "difficulty": "easy", "question": "من اكتشف الجاذبية؟", "answer": "نيوتن", "points": 200 },
+    { "difficulty": "easy", "question": "ما هو قانون نيوتن الأول؟", "answer": "قانون القصور الذاتي", "points": 200 },
+    { "difficulty": "hard", "question": "ما وحدة قياس القوة؟", "answer": "نيوتن", "points": 400 },
+      { "difficulty": "hard", "question": "ما سرعة الضوء في الفراغ؟", "answer": "300,000 كم/ثانية", "points": 400 },
+       { "difficulty": "extreme", "question": "ما نوع الطاقة الناتجة عن حركة الجسم؟", "answer": "الطاقة الحركية", "points": 600 },
+       { "difficulty": "extreme", "question": "ما نظرية أينشتاين الشهيرة؟", "answer": "نظرية النسبية", "points": 600 }
+     ],
     "الكيمياء": [
       { "difficulty": "easy", "question": "ما العنصر الذي يرمز له بـ O؟", "answer": "الأكسجين", "points": 200 },
       { "difficulty": "hard", "question": "ما الغاز المستخدم في إطفاء الحرائق؟", "answer": "ثاني أكسيد الكربون", "points": 400 },

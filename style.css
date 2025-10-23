@@ -36,8 +36,13 @@
     display:flex;align-items:center;justify-content:center;text-align:center;padding:6px;font-weight:800;color:#222;
     position:relative;cursor:pointer;
   }
-  .mini-card.locked{filter:grayscale(0.35)}
-  .mini-card .lock{position:absolute;left:6px;top:6px;background:rgba(0,0,0,0.06);padding:4px 8px;border-radius:8px;font-size:12px}
+  .mini-card.locked{
+    filter: grayscale(0.35);
+    border: 3px solid #ff6b35;
+    background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+    box-shadow: 0 4px 8px rgba(255, 107, 53, 0.3);
+  }
+  .mini-card .lock{position:absolute;left:6px;top:6px;background:#ff6b35;color:#fff;padding:6px 10px;border-radius:8px;font-size:14px;font-weight:600;box-shadow: 0 2px 4px rgba(0,0,0,0.2);}
   .mini-card.selected{outline:4px solid var(--accent);transform:translateY(-4px)}
   .side-panel{background:var(--panel);border-radius:10px;padding:12px}
   .chosen-list{display:flex;flex-direction:column;gap:8px}
@@ -66,6 +71,38 @@
   .who-team1{background:#ff7a3a;color:#fff}
   .who-team2{background:#2b9cff;color:#fff}
   .who-none{background:#999;color:#fff}
+
+  /* Modal styling */
+  #modalBack {
+    z-index: 2000 !important;
+  }
+
+  #modalContent {
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  /* Buy player buttons in modals */
+  .buy-player-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+    margin: 6px;
+    transition: background 0.2s ease;
+    display: inline-block;
+    min-width: 120px;
+  }
+
+  .buy-player-btn:hover {
+    background: var(--accent-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
   .footer-scores{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-top:14px}
   .players-row{display:flex;gap:12px;align-items:center}
   .player-chip{background:var(--panel);padding:10px 14px;border-radius:40px;min-width:160px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer}

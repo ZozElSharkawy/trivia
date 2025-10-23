@@ -22,6 +22,8 @@ const state = {
   currentPlayerIndex: 0,
   boardDisabled: {}, // key catid_value -> true when answered
   questions: {}, // key catid_value -> {q, answer, image?}
+  // Track individual player scores during category selection
+  categorySelectionScores: { 0: 1000, 1: 1000 }
 };
 
 /* -------------------------
@@ -54,7 +56,7 @@ function buildMiniCardsFromData(){
         id: 'm' + (idCounter++),
         group,
         title: sub,
-        locked: Math.random() < 0.35, // some locked for demo
+        locked: Math.random() < 0.5, // some locked for demo - increased to 50% for better testing
         cost: CATEGORY_COST,
         unlockedBy: null
       });
@@ -104,10 +106,37 @@ function onMiniClick(id){
   if(!m) return;
   if(m.locked){
     // buy flow: ask which player will buy
-    const playersHtml = state.players.map(p=>`<button data-p="${p.id}" class="buy-player-btn" style="margin:6px;padding:8px;border-radius:8px">${p.name} (${p.score})</button>`).join('');
+    // First ensure players are set from setup panel
+    const p1 = $('#p1name').value.trim() || 'فريق 1';
+    const p2 = $('#p2name').value.trim() || 'فريق 2';
+    const sp = parseInt($('#startingPoints').value || '1000', 10);
+    // Ensure categorySelectionScores is initialized
+    if (!state.categorySelectionScores) {
+      state.categorySelectionScores = { 0: sp, 1: sp };
+    }
+    const tempPlayers = [
+      {id:0, name:p1, score: state.categorySelectionScores[0] || sp},
+      {id:1, name:p2, score: state.categorySelectionScores[1] || sp}
+    ];
+    const playersHtml = tempPlayers.map(p=>`<button data-p="${p.id}" class="buy-player-btn" style="margin:6px;padding:8px;border-radius:8px">${p.name} (${p.score})</button>`).join('');
     showModal(`<h3>فتح: ${m.title} — التكلفة ${m.cost}</h3><div>من سيدفع لفتح هذه الفئة؟</div><div style="margin-top:10px">${playersHtml}</div><div style="margin-top:10px"><button id="cancelBuy" style="background:#999;padding:8px;border-radius:8px">إلغاء</button></div>`);
-    document.getElementById('cancelBuy').addEventListener('click', closeModal);
-    $$('.buy-player-btn').forEach(btn => btn.addEventListener('click', ()=> attemptBuyCategory(parseInt(btn.dataset.p,10), id)));
+
+    // Add event listeners after a small delay to ensure DOM is ready
+    setTimeout(() => {
+    const cancelBtn = document.getElementById('cancelBuy');
+    if(cancelBtn) {
+      cancelBtn.addEventListener('click', closeModal);
+      }
+
+      $$('.buy-player-btn').forEach(btn => {
+        console.log('Attaching event listener to button:', btn, 'data-p:', btn.dataset.p);
+        btn.addEventListener('click', (e) => {
+          console.log('Buy button clicked for player:', btn.dataset.p, 'mini:', id);
+          e.preventDefault();
+          attemptBuyCategory(parseInt(btn.dataset.p,10), id);
+        });
+      });
+    }, 100);
     return;
   }
   // toggle selection (max 6)
@@ -122,18 +151,47 @@ function onMiniClick(id){
 }
 
 function attemptBuyCategory(playerId, miniId){
-  const player = state.players.find(p=>p.id === playerId);
   const mini = miniCards.find(m=>m.id === miniId);
-  if(!player || !mini) return;
-  if(player.score < mini.cost){ closeModal(); alert('نقاط غير كافية'); return; }
-  player.score -= mini.cost;
+  if(!mini) return;
+
+  // Check if we're in category selection phase (state.players is empty)
+  if(state.players.length === 0){
+    // Category selection phase - deduct from categorySelectionScores
+    const currentScore = state.categorySelectionScores[playerId];
+    if(currentScore < mini.cost){
+      closeModal();
+      alert('نقاط غير كافية');
+      return;
+    }
+    state.categorySelectionScores[playerId] -= mini.cost;
+    console.log(`Player ${playerId} bought ${mini.title} for ${mini.cost} points. New score: ${state.categorySelectionScores[playerId]}`);
+  } else {
+    // In-game phase - deduct from actual player scores
+    const player = state.players.find(p=>p.id === playerId);
+    if(!player || player.score < mini.cost){
+      closeModal();
+      alert('نقاط غير كافية');
+      return;
+    }
+    player.score -= mini.cost;
+  }
+
+  // Unlock the category
   mini.locked = false;
-  mini.unlockedBy = player.id;
+  mini.unlockedBy = playerId;
   if(state.chosen.length < 6 && !state.chosen.includes(miniId)) state.chosen.push(miniId);
+
+  // Show success message
+  alert(`تم فتح الفئة ${mini.title} بنجاح!`);
+
   closeModal();
   renderChosen();
   refreshMiniVisuals();
-  renderPlayersRow();
+
+  // Only render players row if we're in game mode
+  if(state.players.length > 0){
+    renderPlayersRow();
+  }
 }
 
 /* chosen side panel */
@@ -314,6 +372,7 @@ $('#pauseTimer').addEventListener('click', ()=>{
 });
 $('#resetTimer').addEventListener('click', ()=> {
   resetTimer();
+  startTimer();
   $('#pauseTimer').innerText = 'إيقاف';
 });
 $('#backToBoard').addEventListener('click', ()=> {
@@ -535,8 +594,19 @@ function checkAllAnswered(){
 /* -------------------------
    Initialization
    ------------------------- */
+// Update category selection scores when starting points input changes
+$('#startingPoints').addEventListener('input', ()=>{
+  const sp = parseInt($('#startingPoints').value || '1000', 10);
+  state.categorySelectionScores[0] = sp;
+  state.categorySelectionScores[1] = sp;
+});
+
 (async function init(){
   await loadQuestionsJson();
   renderCategories(); // initial render (works if questionsData not loaded yet)
   renderChosen(); // render the chosen categories panel
+  // Initialize category selection scores
+  const sp = parseInt($('#startingPoints').value || '1000', 10);
+  state.categorySelectionScores[0] = sp;
+  state.categorySelectionScores[1] = sp;
 })();

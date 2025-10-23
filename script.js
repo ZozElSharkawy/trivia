@@ -236,12 +236,14 @@ function refreshMiniVisuals(){
    ------------------------- */
 $('#startGameBtn').addEventListener('click', ()=>{
   if(state.chosen.length !== 6){ alert('اختر 6 مصغرات للبدء.'); return; }
-  // Ensure players are set from setup panel inputs
+  // Ensure players are set from setup panel inputs and use category selection scores
   const p1 = $('#p1name').value.trim() || 'فريق 1';
   const p2 = $('#p2name').value.trim() || 'فريق 2';
-  const sp = parseInt($('#startingPoints').value || '1000', 10);
-  state.players = [{id:0,name:p1,score:sp},{id:1,name:p2,score:sp}];
-  state.startingPoints = sp;
+  state.players = [
+    {id:0, name:p1, score: state.categorySelectionScores[0]},
+    {id:1, name:p2, score: state.categorySelectionScores[1]}
+  ];
+  state.startingPoints = Math.max(state.categorySelectionScores[0], state.categorySelectionScores[1]); // Use the higher score as reference
   state.boardCats = state.chosen.map((id, idx)=>{
     const m = miniCards.find(x=>x.id===id);
     return { slot: idx, id: m.id, title: m.title, group: m.group };
@@ -265,9 +267,10 @@ $('#startGameBtn').addEventListener('click', ()=>{
   });
 
   state.boardDisabled = {};
-  // Hide both setup and category panels to show only game panel
+  // Hide setup, category, and hero panels to show only game panel
   $('#setupPanel').style.display = 'none';
   $('#categoryPanel').style.display = 'none';
+  $('.hero-section').style.display = 'none';
   $('#gamePanel').style.display = 'block';
   state.currentPlayerIndex = 0;
   renderBoard();
@@ -551,10 +554,11 @@ $('#openBuyModal').addEventListener('click', ()=>{
 
 /* Reset to categories from board */
 $('#resetToCategories').addEventListener('click', ()=>{
-  // allow editing chosen categories again - show both setup and category panels
+  // allow editing chosen categories again - show setup, category, and hero panels
   $('#gamePanel').style.display = 'none';
   $('#setupPanel').style.display = 'block';
   $('#categoryPanel').style.display = 'block';
+  $('.hero-section').style.display = 'block';
 });
 
 /* End game */
@@ -565,16 +569,21 @@ const summary = state.players.map(p => `${p.name}: ${p.score}`).join('<br/>');
 showModal(`<h3>نهاية اللعبة — الفائز: ${winner ? winner.name : 'لا يوجد'}</h3><div style="margin-top:8px">${summary}</div><div style="margin-top:12px"><button id="closeEnd" style="padding:8px;border-radius:8px">العودة للإعداد</button></div>`);
 $('#closeEnd').addEventListener('click', ()=>{
 closeModal();
-// Reset to setup panel and category panel (both always visible)
+// Reset to setup panel, category panel, and hero section
 $('#gamePanel').style.display = 'none';
 $('#setupPanel').style.display = 'block';
 $('#categoryPanel').style.display = 'block';
+$('.hero-section').style.display = 'block';
+// Reset category selection scores to default
+const sp = parseInt($('#startingPoints').value || '1000', 10);
+state.categorySelectionScores[0] = sp;
+state.categorySelectionScores[1] = sp;
 // Reset state (optional - could keep scores or reset everything)
-// state.players = [];
-// state.chosen = [];
-// state.boardCats = [];
-// state.questions = {};
-});
+  // state.players = [];
+    // state.chosen = [];
+    // state.boardCats = [];
+    // state.questions = {};
+  });
 });
 
 /* check all answered */

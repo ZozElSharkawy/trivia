@@ -22,26 +22,7 @@
     <h1>العب الآن</h1>
   </div>
 
-  <!-- Setup -->
-  <div id="setupPanel" class="panel">
-    <h2>إعداد اللعبة</h2>
-    <div class="flex" style="align-items:flex-end">
-      <div class="col">
-        <label>اسم الفريق 1</label>
-        <input id="p1name" type="text" value="فريق 1">
-      </div>
-      <div class="col">
-        <label>اسم الفريق 2</label>
-        <input id="p2name" type="text" value="فريق 2">
-      </div>
-      <div style="width:160px">
-        <label>نقاط بداية كل فريق</label>
-        <input id="startingPoints" type="number" value="1000" min="0">
-      </div>
-      
-    </div>
-    <p class="muted" style="margin-top:8px">اللعب بين فريقين فقط. الأسئلة تُحمّل من <code>questions.json</code>.</p>
-  </div>
+  
 
   <!-- Category Selection -->
   <div id="categoryPanel" class="panel">
@@ -67,7 +48,26 @@
       </div>
     </div>
   </div>
-
+<!-- Setup -->
+  <div id="setupPanel" class="panel">
+    <h2>إعداد اللعبة</h2>
+    <div class="flex" style="align-items:flex-end">
+      <div class="col">
+        <label>اسم الفريق 1</label>
+        <input id="p1name" type="text" value="فريق 1">
+      </div>
+      <div class="col">
+        <label>اسم الفريق 2</label>
+        <input id="p2name" type="text" value="فريق 2">
+      </div>
+      <div style="width:160px">
+        <label>نقاط بداية كل فريق</label>
+        <input id="startingPoints" type="number" value="1000" min="0">
+      </div>
+      
+    </div>
+    <p class="muted" style="margin-top:8px">اللعب بين فريقين فقط. الأسئلة تُحمّل من <code>questions.json</code>.</p>
+  </div>
   <!-- Game Board -->
   <div id="gamePanel" class="panel" style="display:none">
     <div style="display:flex;justify-content:space-between;align-items:center">

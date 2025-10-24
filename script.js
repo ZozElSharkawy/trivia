@@ -429,12 +429,34 @@ function formatTimer(ms){
   return `${mm}:${ss}`;
 }
 function startTimer(){
-  if(running) return;
-  running = true;
-  timerStart = Date.now() - pausedTime;
-  timerInterval = setInterval(()=> {
-    const elapsed = Date.now() - timerStart;
+if(running) return;
+running = true;
+timerStart = Date.now() - pausedTime;
+oneMinuteAlertShown = false;
+timerPhase = 'normal';
+ currentTeamTimedOut = false;
+timerInterval = setInterval(()=> {
+  const elapsed = Date.now() - timerStart;
     $('#timerDisplay').innerText = formatTimer(elapsed);
+
+    // Check for 1 minute alert
+    if (elapsed >= 60000 && !oneMinuteAlertShown && timerPhase === 'normal') {
+      oneMinuteAlertShown = true;
+      timerPhase = 'extended';
+      currentTeamTimedOut = true;
+      alert('انتهى الوقت! الفريق الآخر لديه 30 ثانية إضافية للإجابة');
+      // Continue timer for additional 30 seconds
+    }
+
+    // Check for final timeout (1 minute 30 seconds total)
+    if (elapsed >= 90000 && timerPhase !== 'final') {
+      timerPhase = 'final';
+      pauseTimer();
+      // Auto-show answer after timeout
+      if (!document.querySelector('.answer-result')) {
+        onAnswerClicked();
+      }
+    }
   }, 200);
 }
 function pauseTimer(){
@@ -446,6 +468,9 @@ function pauseTimer(){
 function resetTimer(){
   pauseTimer();
   pausedTime = 0;
+  oneMinuteAlertShown = false;
+  timerPhase = 'normal';
+  currentTeamTimedOut = false;
   $('#timerDisplay').innerText = '00:00';
 }
 
@@ -545,6 +570,22 @@ function onAnswerClicked(){
   const b1 = document.createElement('button'); b1.className = 'who-btn who-team1'; b1.innerText = state.players[0].name;
   const b2 = document.createElement('button'); b2.className = 'who-btn who-team2'; b2.innerText = state.players[1].name;
   const b3 = document.createElement('button'); b3.className = 'who-btn who-none'; b3.innerText = 'لا أحد';
+
+  // Disable the team that failed to answer in time (timeout scenario)
+  if (timerPhase === 'final' || currentTeamTimedOut) {
+    // Find which team was supposed to answer (the current player)
+    const currentTeamIndex = state.currentPlayerIndex;
+
+    // Disable and mark the team that timed out
+    if (currentTeamIndex === 0) {
+      b1.style.pointerEvents = 'none';
+      b1.innerText += ' (انتهى وقتهم)';
+    } else {
+      b2.style.pointerEvents = 'none';
+      b2.innerText += ' (انتهى وقتهم)';
+    }
+  }
+
   buttonsWrap.appendChild(b1); buttonsWrap.appendChild(b2); buttonsWrap.appendChild(b3);
 
   answerArea.appendChild(answerBox);
@@ -686,8 +727,8 @@ state.categorySelectionScores[0] = sp;
 state.categorySelectionScores[1] = sp;
 // Reset state (optional - could keep scores or reset everything)
   // state.players = [];
-    // state.chosen = [];
-    // state.boardCats = [];
+    state.chosen = [];
+    state.boardCats = [];
     // state.questions = {};
   });
 });

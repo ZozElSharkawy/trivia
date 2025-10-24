@@ -197,7 +197,7 @@ function onMiniClick(id){
       {id:0, name:p1, score: state.categorySelectionScores[0] || sp},
       {id:1, name:p2, score: state.categorySelectionScores[1] || sp}
     ];
-    const playersHtml = tempPlayers.map(p=>`<button data-p="${p.id}" class="buy-player-btn" style="margin:6px;padding:8px;border-radius:8px">${p.name} (${p.score})</button>`).join('');
+    const playersHtml = tempPlayers.map(p=>`<button data-p="${p.id}" class="buy-player-btn" style="margin:6px;padding:8px;border-radius:8px;color:#ff1493">${p.name} (${p.score})</button>`).join('');
     showModal(`<h3>فتح: ${m.title} — التكلفة ${m.cost}</h3><div>من سيدفع لفتح هذه الفئة؟</div><div style="margin-top:10px">${playersHtml}</div><div style="margin-top:10px"><button id="cancelBuy" style="background:#999;padding:8px;border-radius:8px">إلغاء</button></div>`);
 
     // Add event listeners after a small delay to ensure DOM is ready
@@ -382,8 +382,8 @@ function renderBoard(){
     const block = document.createElement('div');
     block.className = 'category-block';
     block.innerHTML = `
-      <div style="height:120px;width:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(#e8f3fb,#d7e9f6);border-radius:8px">
-        <div style="font-size:22px;font-weight:900;color:#2b2b2b">${cat.title}</div>
+      <div style="height:120px;width:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(#ffff00,#ffcc00);border-radius:8px">
+        <div style="font-size:22px;font-weight:900;color:#FF1493">${cat.title}</div>
       </div>
       <div class="title-badge">الفئة ${idx+1}</div>
       <div class="values">
@@ -452,9 +452,12 @@ timerInterval = setInterval(()=> {
     if (elapsed >= 90000 && timerPhase !== 'final') {
       timerPhase = 'final';
       pauseTimer();
-      // Auto-show answer after timeout
-      if (!document.querySelector('.answer-result')) {
-        onAnswerClicked();
+      // Highlight answer button to indicate time is up
+      const answerBtn = $('#answerBtn');
+      if(answerBtn && !document.querySelector('.answer-result')) {
+        answerBtn.style.background = '#ff4444';
+        answerBtn.style.animation = 'pulse 0.5s infinite';
+        answerBtn.style.boxShadow = '0 0 20px rgba(255, 68, 68, 0.8)';
       }
     }
   }, 200);
@@ -571,20 +574,6 @@ function onAnswerClicked(){
   const b2 = document.createElement('button'); b2.className = 'who-btn who-team2'; b2.innerText = state.players[1].name;
   const b3 = document.createElement('button'); b3.className = 'who-btn who-none'; b3.innerText = 'لا أحد';
 
-  // Disable the team that failed to answer in time (timeout scenario)
-  if (timerPhase === 'final' || currentTeamTimedOut) {
-    // Find which team was supposed to answer (the current player)
-    const currentTeamIndex = state.currentPlayerIndex;
-
-    // Disable and mark the team that timed out
-    if (currentTeamIndex === 0) {
-      b1.style.pointerEvents = 'none';
-      b1.innerText += ' (انتهى وقتهم)';
-    } else {
-      b2.style.pointerEvents = 'none';
-      b2.innerText += ' (انتهى وقتهم)';
-    }
-  }
 
   buttonsWrap.appendChild(b1); buttonsWrap.appendChild(b2); buttonsWrap.appendChild(b3);
 
@@ -621,6 +610,13 @@ function finalizeAnswer(playerId){
   }
   // stop timer
   pauseTimer();
+  // remove answer button highlighting if it exists
+  const answerBtn = $('#answerBtn');
+  if(answerBtn){
+    answerBtn.style.background = '';
+    answerBtn.style.animation = '';
+    answerBtn.style.boxShadow = '';
+  }
   // disable question
   state.boardDisabled[key] = true;
   // render updates
@@ -768,3 +764,4 @@ $('#startingPoints').addEventListener('input', ()=>{
   state.categorySelectionScores[0] = sp;
   state.categorySelectionScores[1] = sp;
 })();
+

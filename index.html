@@ -51,22 +51,37 @@
 <!-- Setup -->
   <div id="setupPanel" class="panel">
     <h2>إعداد اللعبة</h2>
-    <div class="flex" style="align-items:flex-end">
-      <div class="col">
-        <label>اسم الفريق 1</label>
-        <input id="p1name" type="text" value="فريق 1">
+    <div class="setup-container">
+    <div class="team-block">
+    <div class="name-points">
+      <div class="team-name">
+          <label>اسم الفريق 1</label>
+          <input id="p1name" type="text" value="فريق 1">
       </div>
-      <div class="col">
+      <div class="points">
+          <label>نقاط بداية</label>
+            <input id="startingPoints1" type="number" value="1000" min="0">
+           </div>
+        </div>
+      <div class="powerups" id="team1Tools"></div>
+    </div>
+
+       <div class="team-block">
+        <div class="name-points">
+        <div class="team-name">
         <label>اسم الفريق 2</label>
         <input id="p2name" type="text" value="فريق 2">
+        </div>
+           <div class="points">
+          <label>نقاط بداية</label>
+        <input id="startingPoints2" type="number" value="1000" min="0">
       </div>
-      <div style="width:160px">
-        <label>نقاط بداية كل فريق</label>
-        <input id="startingPoints" type="number" value="1000" min="0">
       </div>
-      
-    </div>
-    <p class="muted" style="margin-top:8px">اللعب بين فريقين فقط. الأسئلة تُحمّل من <code>questions.json</code>.</p>
+        <div class="powerups" id="team2Tools"></div>
+       </div>
+     </div>
+
+     <p class="muted" style="margin-top:8px">اللعب بين فريقين فقط. الأسئلة تُحمّل من <code>questions.json</code>.</p>
   </div>
   <!-- Game Board -->
   <div id="gamePanel" class="panel" style="display:none">
@@ -82,10 +97,11 @@
     <div id="boardArea" class="board"></div>
 
     <div class="footer-scores">
-      <div class="players-row" id="playersRow"></div>
-      <div>
-        <div class="small">اضغط على بطاقة الفريق لتبديل الدور أو تحريره.</div>
-      </div>
+    <div class="score-card" id="player0Card"></div>
+    <div class="muted-middle">
+    <div class="small">اضغط على بطاقة الفريق لتبديل الدور أو تحريره.</div>
+    </div>
+    <div class="score-card" id="player1Card"></div>
     </div>
   </div>
 </div>
@@ -124,6 +140,15 @@
   <div id="answerArea" style="display:flex;justify-content:flex-start;gap:12px;align-items:center;padding-left:12px">
     <!-- dynamic: will show "الإجابة" or answer + who buttons -->
     <button id="answerBtn" class="answer-action">الإجابة</button>
+  </div>
+
+  <!-- Scores and Powerups at bottom -->
+  <div class="q-footer">
+    <div class="score-card" id="qpPlayer0Card"></div>
+    <div class="muted-middle">
+      <div class="small">اضغط على بطاقة الفريق لتبديل الدور أو تحريره.</div>
+    </div>
+    <div class="score-card" id="qpPlayer1Card"></div>
   </div>
 </div>
 

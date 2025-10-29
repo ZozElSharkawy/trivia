@@ -1,142 +1,142 @@
 {
   "العلوم": {
     "الفيزياء": [
-    { "difficulty": "easy", "question": "من اكتشف الجاذبية؟", "answer": "نيوتن", "points": 200 },
-    { "difficulty": "easy", "question": "ما هو قانون نيوتن الأول؟", "answer": "قانون القصور الذاتي", "points": 200 },
-    { "difficulty": "hard", "question": "ما وحدة قياس القوة؟", "answer": "نيوتن", "points": 400 },
-      { "difficulty": "hard", "question": "ما سرعة الضوء في الفراغ؟", "answer": "300,000 كم/ثانية", "points": 400 },
-       { "difficulty": "extreme", "question": "ما نوع الطاقة الناتجة عن حركة الجسم؟", "answer": "الطاقة الحركية", "points": 600 },
-       { "difficulty": "extreme", "question": "ما نظرية أينشتاين الشهيرة؟", "answer": "نظرية النسبية", "points": 600 }
+    { "difficulty": "easy", "question": "من اكتشف الجاذبية؟", "answer": "نيوتن", "points": 200, "choices": ["غاليليو", "نيوتن", "أينشتاين", "كوبرنيكوس"] },
+    { "difficulty": "easy", "question": "ما هو قانون نيوتن الأول؟", "answer": "قانون القصور الذاتي", "points": 200, "choices": ["قانون الجاذبية", "قانون القصور الذاتي", "قانون الحركة الثالث", "قانون الطاقة"] },
+    { "difficulty": "hard", "question": "ما وحدة قياس القوة؟", "answer": "نيوتن", "points": 400, "choices": ["كيلوغرام", "متر", "ثانية", "نيوتن"] },
+      { "difficulty": "hard", "question": "ما سرعة الضوء في الفراغ؟", "answer": "300,000 كم/ثانية", "points": 400, "choices": ["150,000 كم/ث", "300,000 كم/ث", "450,000 كم/ث", "600,000 كم/ث"] },
+       { "difficulty": "extreme", "question": "ما نوع الطاقة الناتجة عن حركة الجسم؟", "answer": "الطاقة الحركية", "points": 600, "choices": ["الطاقة الكهربائية", "الطاقة الحرارية", "الطاقة الحركية", "الطاقة الشمسية"] },
+       { "difficulty": "extreme", "question": "ما نظرية أينشتاين الشهيرة؟", "answer": "نظرية النسبية", "points": 600, "choices": ["نظرية التطور", "نظرية النسبية", "نظرية الكم", "نظرية الجاذبية"] }
      ],
     "الكيمياء": [
-      { "difficulty": "easy", "question": "ما العنصر الذي يرمز له بـ O؟", "answer": "الأكسجين", "points": 200 },
-      { "difficulty": "hard", "question": "ما الغاز المستخدم في إطفاء الحرائق؟", "answer": "ثاني أكسيد الكربون", "points": 400 },
-      { "difficulty": "extreme", "question": "ما العنصر الأخف في الجدول الدوري؟", "answer": "الهيدروجين", "points": 600 }
+      { "difficulty": "easy", "question": "ما العنصر الذي يرمز له بـ O؟", "answer": "الأكسجين", "points": 200, "choices": ["الهيدروجين", "الأكسجين", "النيتروجين", "الكربون"] },
+      { "difficulty": "hard", "question": "ما الغاز المستخدم في إطفاء الحرائق؟", "answer": "ثاني أكسيد الكربون", "points": 400, "choices": ["الأكسجين", "النيتروجين", "ثاني أكسيد الكربون", "الهيليوم"] },
+      { "difficulty": "extreme", "question": "ما العنصر الأخف في الجدول الدوري؟", "answer": "الهيدروجين", "points": 600, "choices": ["الهيليوم", "الليثيوم", "الهيدروجين", "البيريليوم"] }
     ],
     "الأحياء": [
-      {"difficulty": "easy", "question": "ما هو مركز الطاقة في الخلية؟", "answer": "الميتوكوندريا", "points": 200 },
-      {"difficulty": "hard", "question": "أي جزء من الجسم يتحكم في التوازن؟", "answer": "المخيخ", "points": 400 },
-      {"difficulty": "extreme", "question": "ما هو أكبر عضو في جسم الإنسان؟", "answer": "الجلد", "points": 600 }
+      {"difficulty": "easy", "question": "ما هو مركز الطاقة في الخلية؟", "answer": "الميتوكوندريا", "points": 200, "choices": ["النواة", "الميتوكوندريا", "الغشاء الخلوي", "الريبوزوم"] },
+      {"difficulty": "hard", "question": "أي جزء من الجسم يتحكم في التوازن؟", "answer": "المخيخ", "points": 400, "choices": ["المخ الكبير", "المخيخ", "النخاع الشوكي", "القلب"] },
+      {"difficulty": "extreme", "question": "ما هو أكبر عضو في جسم الإنسان؟", "answer": "الجلد", "points": 600, "choices": ["الكبد", "الرئتين", "الجلد", "القلب"] }
     ],
     "الفضاء": [
-      { "difficulty": "easy", "question": "ما أقرب نجم إلى الأرض؟", "answer": "الشمس", "points": 200 },
-      { "difficulty": "hard", "question": "كم عدد الكواكب في المجموعة الشمسية؟", "answer": "ثمانية", "points": 400 },
-      { "difficulty": "extreme", "question": "ما أول إنسان صعد إلى الفضاء؟", "answer": "يوري غاغارين", "points": 600 }
+      { "difficulty": "easy", "question": "ما أقرب نجم إلى الأرض؟", "answer": "الشمس", "points": 200, "choices": ["القمر", "الشمس", "نبتون", "المريخ"] },
+      { "difficulty": "hard", "question": "كم عدد الكواكب في المجموعة الشمسية؟", "answer": "ثمانية", "points": 400, "choices": ["7", "8", "9", "10"] },
+      { "difficulty": "extreme", "question": "ما أول إنسان صعد إلى الفضاء؟", "answer": "يوري غاغارين", "points": 600, "choices": ["نيل أرمسترونغ", "يوري غاغارين", "جون غلين", "أليكسي ليونوف"] }
     ]
   },
 
   "المعارف العامة": {
     "التاريخ": [
-      { "difficulty": "easy", "question": "من أول رئيس للولايات المتحدة؟", "answer": "جورج واشنطن", "points": 200 },
-      { "difficulty": "hard", "question": "في أي عام انتهت الحرب العالمية الثانية؟", "answer": "1945", "points": 400 },
-      { "difficulty": "extreme", "question": "من اكتشف أمريكا سنة 1492؟", "answer": "كريستوفر كولومبوس", "points": 600 }
+      { "difficulty": "easy", "question": "من أول رئيس للولايات المتحدة؟", "answer": "جورج واشنطن", "points": 200, "choices": ["أبراهام لينكولن", "جورج واشنطن", "توماس جيفرسون", "جون كينيدي"] },
+      { "difficulty": "hard", "question": "في أي عام انتهت الحرب العالمية الثانية؟", "answer": "1945", "points": 400, "choices": ["1940", "1945", "1950", "1939"] },
+      { "difficulty": "extreme", "question": "من اكتشف أمريكا سنة 1492؟", "answer": "كريستوفر كولومبوس", "points": 600, "choices": ["فاسكو دا غاما", "كريستوفر كولومبوس", "فيرناندو ماجلان", "جيمس كوك"] }
     ],
     "الجغرافيا": [
-      { "difficulty": "easy", "question": "ما عاصمة فرنسا؟", "answer": "باريس", "points": 200 },
-      { "difficulty": "hard", "question": "في أي قارة تقع صحراء السّحَراء الكبرى؟", "answer": "أفريقيا", "points": 400 },
-      { "difficulty": "extreme", "question": "ما أطول نهر في العالم؟", "answer": "نهر النيل", "points": 600 }
+      { "difficulty": "easy", "question": "ما عاصمة فرنسا؟", "answer": "باريس", "points": 200, "choices": ["لندن", "باريس", "روما", "مدريد"] },
+      { "difficulty": "hard", "question": "في أي قارة تقع صحراء السّحَراء الكبرى؟", "answer": "أفريقيا", "points": 400, "choices": ["آسيا", "أوروبا", "أفريقيا", "أمريكا الجنوبية"] },
+      { "difficulty": "extreme", "question": "ما أطول نهر في العالم؟", "answer": "نهر النيل", "points": 600, "choices": ["نهر الأمازون", "نهر اليانغتسي", "نهر النيل", "نهر المسيسيبي"] }
     ],
     "الثقافة العامة": [
-      { "difficulty": "easy", "question": "كم عدد الحروف في الأبجدية العربية؟", "answer": "28", "points": 200 },
-      { "difficulty": "hard", "question": "ما عاصمة اليابان؟", "answer": "طوكيو", "points": 400 },
-      { "difficulty": "extreme", "question": "ما لون علم الأمم المتحدة؟", "answer": "أزرق وأبيض", "points": 600 }
+      { "difficulty": "easy", "question": "كم عدد الحروف في الأبجدية العربية؟", "answer": "28", "points": 200, "choices": ["26", "27", "28", "29"] },
+      { "difficulty": "hard", "question": "ما عاصمة اليابان؟", "answer": "طوكيو", "points": 400, "choices": ["بكين", "سول", "طوكيو", "بانكوك"] },
+      { "difficulty": "extreme", "question": "ما لون علم الأمم المتحدة؟", "answer": "أزرق وأبيض", "points": 600, "choices": ["أحمر وأبيض", "أزرق وأبيض", "أخضر وأصفر", "أسود وأبيض"] }
     ],
     "البيئة": [
-      { "difficulty": "easy", "question": "ما الغاز المسبب للاحتباس الحراري؟", "answer": "ثاني أكسيد الكربون", "points": 200 },
-      { "difficulty": "hard", "question": "ما المصدر الرئيسي للطاقة المتجددة؟", "answer": "الشمس", "points": 400 },
-      { "difficulty": "extreme", "question": "ما هو إعادة التدوير؟", "answer": "استخدام المواد مرة أخرى", "points": 600 }
+      { "difficulty": "easy", "question": "ما الغاز المسبب للاحتباس الحراري؟", "answer": "ثاني أكسيد الكربون", "points": 200, "choices": ["الأكسجين", "النيتروجين", "ثاني أكسيد الكربون", "الميثان"] },
+      { "difficulty": "hard", "question": "ما المصدر الرئيسي للطاقة المتجددة؟", "answer": "الشمس", "points": 400, "choices": ["الفحم", "الشمس", "النفط", "الغاز"] },
+      { "difficulty": "extreme", "question": "ما هو إعادة التدوير؟", "answer": "استخدام المواد مرة أخرى", "points": 600, "choices": ["حرق النفايات", "استخدام المواد مرة أخرى", "دفن النفايات", "رمي النفايات"] }
     ]
   },
 
   "الآداب والفنون": {
     "الأدب": [
-      { "difficulty": "easy", "question": "من كتب رواية الحرب والسلام؟", "answer": "تولستوي", "points": 200 },
-      { "difficulty": "hard", "question": "من هو شاعر النيل؟", "answer": "حافظ إبراهيم", "points": 400 },
-      { "difficulty": "extreme", "question": "من كتب رواية البؤساء؟", "answer": "فيكتور هوغو", "points": 600 }
+      { "difficulty": "easy", "question": "من كتب رواية الحرب والسلام؟", "answer": "تولستوي", "points": 200, "choices": ["دوستويفسكي", "تولستوي", "غوغول", "تشيخوف"] },
+      { "difficulty": "hard", "question": "من هو شاعر النيل؟", "answer": "حافظ إبراهيم", "points": 400, "choices": ["أحمد شوقي", "حافظ إبراهيم", "محمد عفيفي مطر", "عباس محمود العقاد"] },
+      { "difficulty": "extreme", "question": "من كتب رواية البؤساء؟", "answer": "فيكتور هوغو", "points": 600, "choices": ["ألكسندر دوما", "فيكتور هوغو", "إميل زولا", "غي دي موباسان"] }
     ],
     "الفنون": [
-      { "difficulty": "easy", "question": "من رسم لوحة الموناليزا؟", "answer": "ليوناردو دافنشي", "points": 200 },
-      { "difficulty": "hard", "question": "في أي مدينة يوجد متحف اللوفر؟", "answer": "باريس", "points": 400 },
-      { "difficulty": "extreme", "question": "ما الفن الذي يستخدم العجين والنار؟", "answer": "الخزف", "points": 600 }
+      { "difficulty": "easy", "question": "من رسم لوحة الموناليزا؟", "answer": "ليوناردو دافنشي", "points": 200, "choices": ["ميكيلانجيلو", "ليوناردو دافنشي", "رافائيل", "دوناتيلو"] },
+      { "difficulty": "hard", "question": "في أي مدينة يوجد متحف اللوفر؟", "answer": "باريس", "points": 400, "choices": ["لندن", "روما", "باريس", "مدريد"] },
+      { "difficulty": "extreme", "question": "ما الفن الذي يستخدم العجين والنار؟", "answer": "الخزف", "points": 600, "choices": ["الرسم", "النحت", "الخزف", "التصوير"] }
     ],
     "الموسيقى": [
-      { "difficulty": "easy", "question": "كم عدد المفاتيح في البيانو؟", "answer": "88", "points": 200 },
-      { "difficulty": "hard", "question": "من هو ملك البوب؟", "answer": "مايكل جاكسون", "points": 400 },
-      { "difficulty": "extreme", "question": "ما اسم النوتة الموسيقية الأولى؟", "answer": "دو", "points": 600 }
+      { "difficulty": "easy", "question": "كم عدد المفاتيح في البيانو؟", "answer": "88", "points": 200, "choices": ["76", "82", "88", "92"] },
+      { "difficulty": "hard", "question": "من هو ملك البوب؟", "answer": "مايكل جاكسون", "points": 400, "choices": ["إلتون جون", "مايكل جاكسون", "مادونا", "برينس"] },
+      { "difficulty": "extreme", "question": "ما اسم النوتة الموسيقية الأولى؟", "answer": "دو", "points": 600, "choices": ["ري", "دو", "مي", "فا"] }
     ],
     "اللغة العربية": [
-      { "difficulty": "easy", "question": "ما جمع كلمة قلم؟", "answer": "أقلام", "points": 200 },
-      { "difficulty": "hard", "question": "ما ضد كلمة جميل؟", "answer": "قبيح", "points": 400 },
-      { "difficulty": "extreme", "question": "من مؤلف لسان العرب؟", "answer": "ابن منظور", "points": 600 }
+      { "difficulty": "easy", "question": "ما جمع كلمة قلم؟", "answer": "أقلام", "points": 200, "choices": ["قلم", "أقلام", "قلمة", "قلوم"] },
+      { "difficulty": "hard", "question": "ما ضد كلمة جميل؟", "answer": "قبيح", "points": 400, "choices": ["حسن", "جميل", "قبيح", "ظريف"] },
+      { "difficulty": "extreme", "question": "من مؤلف لسان العرب؟", "answer": "ابن منظور", "points": 600, "choices": ["الجاحظ", "ابن منظور", "الطبري", "الزمخشري"] }
     ]
   },
 
   "الرياضة والترفيه": {
     "الرياضة": [
-      { "difficulty": "easy", "question": "كم عدد لاعبي فريق كرة القدم؟", "answer": "11 لاعبًا", "points": 200 },
-      { "difficulty": "hard", "question": "ما الرياضة التي تُستخدم فيها الريشة الطائرة؟", "answer": "الريشة الطائرة", "points": 400 },
-      { "difficulty": "extreme", "question": "أي دولة استضافت أولمبياد 2016؟", "answer": "البرازيل", "points": 600 }
+      { "difficulty": "easy", "question": "كم عدد لاعبي فريق كرة القدم؟", "answer": "11 لاعبًا", "points": 200, "choices": ["9 لاعبين", "10 لاعبين", "11 لاعبًا", "12 لاعبًا"] },
+      { "difficulty": "hard", "question": "ما الرياضة التي تُستخدم فيها الريشة الطائرة؟", "answer": "الريشة الطائرة", "points": 400, "choices": ["التنس", "الريشة الطائرة", "الكرة الطائرة", "الكرة اللينة"] },
+      { "difficulty": "extreme", "question": "أي دولة استضافت أولمبياد 2016؟", "answer": "البرازيل", "points": 600, "choices": ["الصين", "بريطانيا", "البرازيل", "روسيا"] }
     ],
     "الأفلام": [
-      { "difficulty": "easy", "question": "من هو مخرج فيلم تايتانيك؟", "answer": "جيمس كاميرون", "points": 200 },
-      { "difficulty": "hard", "question": "في أي فيلم يوجد شخصية أولاف رجل الثلج؟", "answer": "فروزن", "points": 400 },
-      { "difficulty": "extreme", "question": "من بطل فيلم الجوكر 2019؟", "answer": "خواكين فينيكس", "points": 600 }
+      { "difficulty": "easy", "question": "من هو مخرج فيلم تايتانيك؟", "answer": "جيمس كاميرون", "points": 200, "choices": ["ستيفن سبيلبرغ", "جيمس كاميرون", "مارتن سكورسيزي", "كريستوفر نولان"] },
+      { "difficulty": "hard", "question": "في أي فيلم يوجد شخصية أولاف رجل الثلج؟", "answer": "فروزن", "points": 400, "choices": ["مولان", "فروزن", "تانغلد", "زوتوبيا"] },
+      { "difficulty": "extreme", "question": "من بطل فيلم الجوكر 2019؟", "answer": "خواكين فينيكس", "points": 600, "choices": ["جيريمي آيرونز", "خواكين فينيكس", "باتريك باتمان", "غاري أولدمان"] }
     ],
     "الألعاب": [
-      { "difficulty": "easy", "question": "كم عدد المربعات في لوحة الشطرنج؟", "answer": "64", "points": 200 },
-      { "difficulty": "hard", "question": "في أي لعبة تستخدم الكروت والرموز ♠ ♥ ♦ ♣؟", "answer": "الكوتشينة", "points": 400 },
-      { "difficulty": "extreme", "question": "ما اللعبة التي تحتوي على مكعب بألوان متعددة؟", "answer": "مكعب روبيك", "points": 600 }
+      { "difficulty": "easy", "question": "كم عدد المربعات في لوحة الشطرنج؟", "answer": "64", "points": 200, "choices": ["64", "72", "56", "80"] },
+      { "difficulty": "hard", "question": "في أي لعبة تستخدم الكروت والرموز ♠ ♥ ♦ ♣؟", "answer": "الكوتشينة", "points": 400, "choices": ["البوكر", "الكوتشينة", "البريدج", "السوليتير"] },
+      { "difficulty": "extreme", "question": "ما اللعبة التي تحتوي على مكعب بألوان متعددة؟", "answer": "مكعب روبيك", "points": 600, "choices": ["الدومينو", "مكعب روبيك", "الليغو", "الجينغا"] }
     ],
     "الطبيعة": [
-      { "difficulty": "easy", "question": "ما الحيوان الذي يلقب بملك الغابة؟", "answer": "الأسد", "points": 200 },
-      { "difficulty": "hard", "question": "ما أسرع الحيوانات البرية؟", "answer": "الفهد", "points": 400 },
-      { "difficulty": "extreme", "question": "ما أكبر محيط في العالم؟", "answer": "الهادئ", "points": 600 }
+      { "difficulty": "easy", "question": "ما الحيوان الذي يلقب بملك الغابة؟", "answer": "الأسد", "points": 200, "choices": ["النمر", "الأسد", "الدب", "الذئب"] },
+      { "difficulty": "hard", "question": "ما أسرع الحيوانات البرية؟", "answer": "الفهد", "points": 400, "choices": ["الأسد", "الفهد", "الغزال", "الحصان"] },
+      { "difficulty": "extreme", "question": "ما أكبر محيط في العالم؟", "answer": "الهادئ", "points": 600, "choices": ["الأطلسي", "الهندي", "المحيط المتجمد الشمالي", "الهادئ"] }
     ]
   },
 
   "التقنية والمنطق": {
     "التكنولوجيا": [
-      { "difficulty": "easy", "question": "ما نظام التشغيل الذي تطوره مايكروسوفت؟", "answer": "ويندوز", "points": 200 },
-      { "difficulty": "hard", "question": "ما لغة البرمجة المستخدمة لتصميم صفحات الويب؟", "answer": "HTML", "points": 400 },
-      { "difficulty": "extreme", "question": "ما هو اسم الذكاء الصناعي الذي طورته OpenAI؟", "answer": "شات جي بي تي", "points": 600 }
+      { "difficulty": "easy", "question": "ما نظام التشغيل الذي تطوره مايكروسوفت؟", "answer": "ويندوز", "points": 200, "choices": ["ماك أو إس", "ويندوز", "لينكس", "أندرويد"] },
+      { "difficulty": "hard", "question": "ما لغة البرمجة المستخدمة لتصميم صفحات الويب؟", "answer": "HTML", "points": 400, "choices": ["جافا", "بايثون", "HTML", "سي++"] },
+      { "difficulty": "extreme", "question": "ما هو اسم الذكاء الصناعي الذي طورته OpenAI؟", "answer": "شات جي بي تي", "points": 600, "choices": ["أليكسا", "سيري", "شات جي بي تي", "كورتانا"] }
     ],
     "الاختراعات": [
-      { "difficulty": "easy", "question": "من اخترع المصباح الكهربائي؟", "answer": "توماس إديسون", "points": 200 },
-      { "difficulty": "hard", "question": "من اخترع الهاتف؟", "answer": "ألكسندر غراهام بيل", "points": 400 },
-      { "difficulty": "extreme", "question": "من أول من اخترع الطائرة؟", "answer": "الأخوان رايت", "points": 600 }
+      { "difficulty": "easy", "question": "من اخترع المصباح الكهربائي؟", "answer": "توماس إديسون", "points": 200, "choices": ["بنجامين فرانكلين", "توماس إديسون", "نيكولا تسلا", "ألكسندر غراهام بيل"] },
+      { "difficulty": "hard", "question": "من اخترع الهاتف؟", "answer": "ألكسندر غراهام بيل", "points": 400, "choices": ["توماس إديسون", "ألكسندر غراهام بيل", "غوتليب دايملر", "كارل بنز"] },
+      { "difficulty": "extreme", "question": "من أول من اخترع الطائرة؟", "answer": "الأخوان رايت", "points": 600, "choices": ["ألبرت أينشتاين", "الأخوان رايت", "توماس إديسون", "نيكولا تسلا"] }
     ],
     "المنطق": [
-      { "difficulty": "easy", "question": "إذا كانت 5×3=15، فكم 3×5؟", "answer": "15", "points": 200 },
-      { "difficulty": "hard", "question": "كم تفاحة تبقى إذا أكلت 2 من 5؟", "answer": "3", "points": 400 },
-      { "difficulty": "extreme", "question": "ما الرقم التالي في التسلسل 2، 4، 8، 16؟", "answer": "32", "points": 600 }
+      { "difficulty": "easy", "question": "إذا كانت 5×3=15، فكم 3×5؟", "answer": "15", "points": 200, "choices": ["10", "15", "20", "25"] },
+      { "difficulty": "hard", "question": "كم تفاحة تبقى إذا أكلت 2 من 5؟", "answer": "3", "points": 400, "choices": ["1", "2", "3", "4"] },
+      { "difficulty": "extreme", "question": "ما الرقم التالي في التسلسل 2، 4، 8، 16؟", "answer": "32", "points": 600, "choices": ["24", "32", "40", "48"] }
     ],
     "الرياضيات": [
-      {"difficulty": "easy", "question": "ما حاصل جمع 7 + 8؟", "answer": "15", "points": 200 },
-      {"difficulty": "hard", "question": "كم درجة في المثلث؟", "answer": "180", "points": 400 },
-      {"difficulty": "extreme", "question": "ما الجذر التربيعي لـ 81؟", "answer": "9", "points": 600 }
+      {"difficulty": "easy", "question": "ما حاصل جمع 7 + 8؟", "answer": "15", "points": 200, "choices": ["14", "15", "16", "17"] },
+      {"difficulty": "hard", "question": "كم درجة في المثلث؟", "answer": "180", "points": 400, "choices": ["90", "120", "180", "360"] },
+      {"difficulty": "extreme", "question": "ما الجذر التربيعي لـ 81؟", "answer": "9", "points": 600, "choices": ["7", "8", "9", "10"] }
     ]
   },
 
   "المجتمع والحياة": {
     "الطب": [
-      { "difficulty": "easy", "question": "ما العضو المسؤول عن ضخ الدم؟", "answer": "القلب", "points": 200 },
-      { "difficulty": "hard", "question": "ما الفيتامين المسؤول عن تقوية العظام؟", "answer": "فيتامين د", "points": 400 },
-      { "difficulty": "extreme", "question": "ما المرض الذي يسببه نقص الإنسولين؟", "answer": "السكري", "points": 600 }
+      { "difficulty": "easy", "question": "ما العضو المسؤول عن ضخ الدم؟", "answer": "القلب", "points": 200, "choices": ["الكبد", "الكلى", "القلب", "الرئتين"] },
+      { "difficulty": "hard", "question": "ما الفيتامين المسؤول عن تقوية العظام؟", "answer": "فيتامين د", "points": 400, "choices": ["فيتامين أ", "فيتامين ب", "فيتامين ج", "فيتامين د"] },
+      { "difficulty": "extreme", "question": "ما المرض الذي يسببه نقص الإنسولين؟", "answer": "السكري", "points": 600, "choices": ["السرطان", "السكري", "الزهايمر", "الباركنسون"] }
     ],
     "الدين": [
-      { "difficulty": "easy", "question": "كم عدد أركان الإسلام؟", "answer": "خمسة", "points": 200 },
-      { "difficulty": "hard", "question": "ما أول سورة في القرآن؟", "answer": "الفاتحة", "points": 400 },
-      { "difficulty": "extreme", "question": "في أي شهر يصوم المسلمون؟", "answer": "رمضان", "points": 600 }
+      { "difficulty": "easy", "question": "كم عدد أركان الإسلام؟", "answer": "خمسة", "points": 200, "choices": ["4", "5", "6", "7"] },
+      { "difficulty": "hard", "question": "ما أول سورة في القرآن؟", "answer": "الفاتحة", "points": 400, "choices": ["البقرة", "آل عمران", "الفاتحة", "النساء"] },
+      { "difficulty": "extreme", "question": "في أي شهر يصوم المسلمون؟", "answer": "رمضان", "points": 600, "choices": ["شعبان", "رمضان", "شوال", "ذو القعدة"] }
     ],
     "الاقتصاد": [
-      { "difficulty": "easy", "question": "ما العملة الرسمية لمصر؟", "answer": "الجنيه", "points": 200 },
-      { "difficulty": "hard", "question": "ما الجهة المسؤولة عن إصدار النقود؟", "answer": "البنك المركزي", "points": 400 },
-      { "difficulty": "extreme", "question": "ما هو التضخم؟", "answer": "ارتفاع الأسعار العام", "points": 600 }
+      { "difficulty": "easy", "question": "ما العملة الرسمية لمصر؟", "answer": "الجنيه", "points": 200, "choices": ["الدولار", "اليورو", "الجنيه", "الريال"] },
+      { "difficulty": "hard", "question": "ما الجهة المسؤولة عن إصدار النقود؟", "answer": "البنك المركزي", "points": 400, "choices": ["وزارة المالية", "البنك المركزي", "البنك التجاري", "الخزانة العامة"] },
+      { "difficulty": "extreme", "question": "ما هو التضخم؟", "answer": "ارتفاع الأسعار العام", "points": 600, "choices": ["انخفاض الأسعار", "ارتفاع الأسعار العام", "تثبيت الأسعار", "تقلب الأسعار"] }
     ],
     "السياسة": [
-      { "difficulty": "easy", "question": "ما أعلى سلطة تنفيذية في الدولة؟", "answer": "رئيس الجمهورية", "points": 200 },
-      { "difficulty": "hard", "question": "كم عدد الدول الأعضاء في الأمم المتحدة؟", "answer": "193", "points": 400 },
-      { "difficulty": "extreme", "question": "أين يقع مقر الأمم المتحدة؟", "answer": "نيويورك", "points": 600 }
+      { "difficulty": "easy", "question": "ما أعلى سلطة تنفيذية في الدولة؟", "answer": "رئيس الجمهورية", "points": 200, "choices": ["رئيس الوزراء", "رئيس الجمهورية", "رئيس البرلمان", "رئيس المحكمة"] },
+      { "difficulty": "hard", "question": "كم عدد الدول الأعضاء في الأمم المتحدة؟", "answer": "193", "points": 400, "choices": ["190", "193", "195", "200"] },
+      { "difficulty": "extreme", "question": "أين يقع مقر الأمم المتحدة؟", "answer": "نيويورك", "points": 600, "choices": ["جنيف", "باريس", "نيويورك", "لندن"] }
     ]
   }
 }

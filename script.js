@@ -8,22 +8,37 @@ function showModal(html) { $('#modalContent').innerHTML = html; $('#modalBack').
 function closeModal() { $('#modalBack').style.display = 'none'; }
 
 /* -------------------------
-   Data & state
-   ------------------------- */
+Data & state
+------------------------- */
 let questionsData = null; // loaded from questions.json
 let miniCards = []; // 24 mini categories built from questionsData
 const CATEGORY_COST = 500;
 
+const assistTools = [
+{ id: 'double_points', name: 'Double Points', description: 'Doubles the value of the current question.', icon: '💰' },
+{ id: 'show_choices', name: 'Show Choices', description: 'Displays multiple-choice options for the current question.', icon: '👁️' },
+{ id: 'steal_question', name: 'Steal Question', description: 'Allows the team that activates this power-up to take control of the turn temporarily and answer the question — even if it\'s not their turn. If the stealing team answers correctly → they earn the points. If they answer incorrectly → control passes back to the other team as usual. When question ends the turn goes back normally.', icon: '🤏' },
+{ id: 'mute_opponent', name: 'Mute Opponent (كتم الفريق الآخر)', description: 'Grants the activating team 90 seconds to answer while disabling the opponent\'s answer buttons.', icon: '🔇' },
+{ id: 'change_question', name: 'Change Question', description: 'Replaces the current question with a new one from the same category and same difficulty.', icon: '🔄' }
+];
+
+let usedQuestions = new Set(); // to track used questions
+let doublePointsActive = false;
+let showChoicesActive = false;
+let stealActive = null;
+let muteActive = null;
+
 const state = {
-  players: [], // two players {id,name,score}
+  players: [], // two players {id,name,score,selectedTools:[],usedTools:new Set()}
   startingPoints: 1000,
   chosen: [], // up to 6 mini ids
   boardCats: [], // 6 used on board {slot,id,title,group}
   currentPlayerIndex: 0,
   boardDisabled: {}, // key catid_value -> true when answered
-  questions: {}, // key catid_value -> {q, answer, image?}
+  questions: {}, // key catid_value -> {q, answer, image?, choices?}
   // Track individual player scores during category selection
-  categorySelectionScores: { 0: 1000, 1: 1000 }
+  categorySelectionScores: { 0: 1000, 1: 1000 },
+  selectedTools: {0: [], 1: []}
 };
 
 /* -------------------------
@@ -65,8 +80,25 @@ function buildMiniCardsFromData(){
 }
 
 /* -------------------------
-   UI: Setup -> Categories
-   ------------------------- */
+UI: Setup -> Categories
+------------------------- */
+
+function renderToolSelection() {
+  const toolsHtml = assistTools.map(t => `<div class="tool-icon" data-tool="${t.id}" title="${t.name}: ${t.description}">${t.icon}</div>`).join('');
+  $('#team1Tools').innerHTML = toolsHtml;
+  $('#team2Tools').innerHTML = toolsHtml;
+  updateToolButtons();
+}
+
+function updateToolButtons() {
+  $$('.tool-icon').forEach(icon => {
+    const team = parseInt(icon.closest('.powerups').id === 'team1Tools' ? 0 : 1);
+    const toolId = icon.dataset.tool;
+    const selected = state.selectedTools[team];
+    icon.classList.toggle('selected', selected.includes(toolId));
+  });
+  updateStartButton();
+}
 
 
 // Track current active tab
@@ -294,7 +326,12 @@ function renderChosen(){
       refreshMiniVisuals();
     });
   });
-  $('#startGameBtn').disabled = state.chosen.length !== 6;
+  updateStartButton();
+}
+
+function updateStartButton() {
+  const chosenOk = state.chosen.length === 6;
+  $('#startGameBtn').disabled = !chosenOk;
 }
 
 /* visual update for mini cards */
@@ -314,12 +351,13 @@ el.classList.toggle('selected', state.chosen.includes(id));
    ------------------------- */
 $('#startGameBtn').addEventListener('click', ()=>{
   if(state.chosen.length !== 6){ alert('اختر 6 مصغرات للبدء.'); return; }
+  if(state.selectedTools[0].length !== 3 || state.selectedTools[1].length !== 3){ alert('كل فريق يجب أن يختار 3 أدوات مساعدة.'); return; }
   // Ensure players are set from setup panel inputs and use category selection scores
   const p1 = $('#p1name').value.trim() || 'فريق 1';
   const p2 = $('#p2name').value.trim() || 'فريق 2';
   state.players = [
-    {id:0, name:p1, score: state.categorySelectionScores[0]},
-    {id:1, name:p2, score: state.categorySelectionScores[1]}
+    {id:0, name:p1, score: state.categorySelectionScores[0], selectedTools: [...state.selectedTools[0]], usedTools: new Set()},
+    {id:1, name:p2, score: state.categorySelectionScores[1], selectedTools: [...state.selectedTools[1]], usedTools: new Set()}
   ];
   state.startingPoints = Math.max(state.categorySelectionScores[0], state.categorySelectionScores[1]); // Use the higher score as reference
   state.boardCats = state.chosen.map((id, idx)=>{
@@ -357,8 +395,10 @@ $('#startGameBtn').addEventListener('click', ()=>{
         state.questions[cat.id + '_' + val + '_' + i] = {
           q: selectedQuestion ? selectedQuestion.question : `سؤال تجريبي عن ${cat.title} (قيمة ${val})`,
           answer: selectedQuestion ? selectedQuestion.answer : 'الإجابة',
-          image: selectedQuestion && selectedQuestion.image ? selectedQuestion.image : null
+          image: selectedQuestion && selectedQuestion.image ? selectedQuestion.image : null,
+          choices: selectedQuestion && selectedQuestion.choices ? selectedQuestion.choices : null
         };
+        if (selectedQuestion) usedQuestions.add(selectedQuestion.question);
       }
     });
   });
@@ -434,33 +474,33 @@ running = true;
 timerStart = Date.now() - pausedTime;
 oneMinuteAlertShown = false;
 timerPhase = 'normal';
- currentTeamTimedOut = false;
+currentTeamTimedOut = false;
 timerInterval = setInterval(()=> {
-  const elapsed = Date.now() - timerStart;
-    $('#timerDisplay').innerText = formatTimer(elapsed);
+const elapsed = Date.now() - timerStart;
+$('#timerDisplay').innerText = formatTimer(elapsed);
 
-    // Check for 1 minute alert
-    if (elapsed >= 60000 && !oneMinuteAlertShown && timerPhase === 'normal') {
-      oneMinuteAlertShown = true;
-      timerPhase = 'extended';
-      currentTeamTimedOut = true;
-      alert('انتهى الوقت! الفريق الآخر لديه 30 ثانية إضافية للإجابة');
-      // Continue timer for additional 30 seconds
-    }
+// Check for 1 minute alert (only if not mute)
+if (elapsed >= 60000 && !oneMinuteAlertShown && timerPhase === 'normal' && !muteActive) {
+oneMinuteAlertShown = true;
+timerPhase = 'extended';
+currentTeamTimedOut = true;
+alert('انتهى الوقت! الفريق الآخر لديه 30 ثانية إضافية للإجابة');
+// Continue timer for additional 30 seconds
+}
 
-    // Check for final timeout (1 minute 30 seconds total)
-    if (elapsed >= 90000 && timerPhase !== 'final') {
-      timerPhase = 'final';
-      pauseTimer();
-      // Highlight answer button to indicate time is up
-      const answerBtn = $('#answerBtn');
-      if(answerBtn && !document.querySelector('.answer-result')) {
-        answerBtn.style.background = '#ff4444';
-        answerBtn.style.animation = 'pulse 0.5s infinite';
-        answerBtn.style.boxShadow = '0 0 20px rgba(255, 68, 68, 0.8)';
-      }
-    }
-  }, 200);
+// Check for final timeout (1 minute 30 seconds total, or 90s for mute)
+if (elapsed >= 90000 && timerPhase !== 'final') {
+timerPhase = 'final';
+pauseTimer();
+// Highlight answer button to indicate time is up
+const answerBtn = $('#answerBtn');
+if(answerBtn && !document.querySelector('.answer-result')) {
+answerBtn.style.background = '#ff4444';
+answerBtn.style.animation = 'pulse 0.5s infinite';
+answerBtn.style.boxShadow = '0 0 20px rgba(255, 68, 68, 0.8)';
+}
+}
+}, 200);
 }
 function pauseTimer(){
   if(!running) return;
@@ -488,13 +528,26 @@ function openQuestionPage(catId, value, instance = 1){
   $('#qpQuestionText').innerText = qobj.q || 'نص السؤال';
   const wrap = $('#qpImageWrap'); wrap.innerHTML = '';
   if(qobj.image){
-    const img = document.createElement('img'); img.src = qobj.image; wrap.appendChild(img);
-  } else {
-    wrap.innerHTML = `<div style="width:100%;height:260px;background:linear-gradient(#fff,#f2f2f2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#999">صورة (إن وجدت)</div>`;
+    const img = document.createElement('img'); img.src = qobj.image; img.style.maxWidth = '100%'; img.style.maxHeight = '320px'; wrap.appendChild(img);
+  }
+  if(qobj.audio){
+    const audio = document.createElement('audio'); audio.src = qobj.audio; audio.controls = true; audio.style.width = '100%'; wrap.appendChild(audio);
+  }
+  if(!qobj.image && !qobj.audio){
+    wrap.innerHTML = `<div style="width:100%;height:260px;background:linear-gradient(#fff,#f2f2f2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#999">وسائط (صورة أو صوت إن وجدت)</div>`;
+  }
+  // remove old choices
+  const oldChoices = $('.choices');
+  if (oldChoices) oldChoices.remove();
+  if (showChoicesActive) {
+    renderChoices();
   }
   // show question page
   $('#questionPage').style.display = 'flex';
   $('#questionPage').setAttribute('aria-hidden','false');
+  // render scores and powerups
+  renderQuestionPageScores();
+  renderQuestionPagePowerups();
   // ensure answer button present and remove any previous results
   renderAnswerButton();
   // start timer
@@ -515,6 +568,10 @@ $('#resetTimer').addEventListener('click', ()=> {
 $('#backToBoard').addEventListener('click', ()=> {
   // close question page without answering; question remains enabled
   pauseTimer();
+  // Remove focus from any element inside the question page to avoid aria-hidden warning
+  if (document.activeElement && $('#questionPage').contains(document.activeElement)) {
+    document.activeElement.blur();
+  }
   $('#questionPage').style.display = 'none';
   $('#questionPage').setAttribute('aria-hidden','true');
 });
@@ -574,8 +631,17 @@ function onAnswerClicked(){
   const b2 = document.createElement('button'); b2.className = 'who-btn who-team2'; b2.innerText = state.players[1].name;
   const b3 = document.createElement('button'); b3.className = 'who-btn who-none'; b3.innerText = 'لا أحد';
 
+   // Disable buttons based on powerups
+  if (muteActive !== null) {
+     if (muteActive === 0) b2.disabled = true;
+     else b1.disabled = true;
+   }
+   if (stealActive !== null) {
+     if (stealActive === 0) b2.disabled = true;
+     else b1.disabled = true;
+   }
 
-  buttonsWrap.appendChild(b1); buttonsWrap.appendChild(b2); buttonsWrap.appendChild(b3);
+   buttonsWrap.appendChild(b1); buttonsWrap.appendChild(b2); buttonsWrap.appendChild(b3);
 
   answerArea.appendChild(answerBox);
   answerArea.appendChild(buttonsWrap);
@@ -603,11 +669,17 @@ function finalizeAnswer(playerId){
   const key = currentQP.catId + '_' + currentQP.value + '_' + currentQP.instance;
   // award points
   if(playerId !== null){
-    const pl = state.players.find(p=>p.id === playerId);
-    if(pl) pl.score += currentQP.value;
-    // optional visual feedback
-    // alert(`${pl.name} حصل على ${currentQP.value} نقطة`);
-  }
+  const pl = state.players.find(p=>p.id === playerId);
+  if(pl) {
+    pl.score += currentQP.value;
+    if (doublePointsActive) {
+        pl.score += currentQP.value;
+         doublePointsActive = false;
+       }
+     }
+     // optional visual feedback
+     // alert(`${pl.name} حصل على ${currentQP.value} نقطة`);
+   }
   // stop timer
   pauseTimer();
   // remove answer button highlighting if it exists
@@ -619,62 +691,273 @@ function finalizeAnswer(playerId){
   }
   // disable question
   state.boardDisabled[key] = true;
+  // switch turn automatically to other team (if there are 2 teams)
+  state.currentPlayerIndex = (state.currentPlayerIndex + 1) % state.players.length;
   // render updates
   renderBoard();
   renderPlayersRow();
+  updateTurnBadge();
+  if ($('#questionPage').style.display !== 'none') {
+    renderQuestionPageScores();
+  }
   // close question page
+  // Remove focus from any element inside the question page to avoid aria-hidden warning
+  if (document.activeElement && $('#questionPage').contains(document.activeElement)) {
+    document.activeElement.blur();
+  }
   $('#questionPage').style.display = 'none';
   $('#questionPage').setAttribute('aria-hidden','true');
-  // switch turn automatically to other team (if there are 2 teams)
-  state.currentPlayerIndex = (state.currentPlayerIndex + 1) % state.players.length;
-  updateTurnBadge();
   // clear current qp
   currentQP = null;
-  // check if all answered -> show end summary automatically
+  // reset powerup flags
+   showChoicesActive = false;
+   stealActive = null;
+   muteActive = null;
+   // check if all answered -> show end summary automatically
   checkAllAnswered();
 }
 
 /* -------------------------
-   Players row / turn switching / +/- controls
-   ------------------------- */
+Players row / turn switching / +/- controls
+------------------------- */
 function renderPlayersRow(){
-  const row = $('#playersRow'); row.innerHTML = '';
-  state.players.forEach((p, idx)=>{
-    const el = document.createElement('div');
-    el.className = 'player-chip ' + (state.currentPlayerIndex === idx ? 'active' : '');
-    el.dataset.pid = p.id;
-    el.innerHTML = `
-      <div class="player-top"><div style="font-weight:900">${p.name}</div></div>
-      <div style="display:flex;align-items:center;gap:8px;margin-top:6px"><div class="score">${p.score}</div></div>
-      <div class="score-controls"><button class="pm" data-action="minus" data-p="${p.id}">-</button><button class="pm" data-action="plus" data-p="${p.id}">+</button></div>
-    `;
-    // clicking chip changes current turn (edit turn)
-    el.addEventListener('click', ()=>{
+$('#player0Card').innerHTML = generatePlayerHtml(0, false);
+$('#player1Card').innerHTML = generatePlayerHtml(1, false);
+// Add double_points button if selected
+state.players.forEach((p, idx) => {
+  if (p.selectedTools.includes('double_points')) {
+    const tool = assistTools.find(t => t.id === 'double_points');
+    const used = p.usedTools.has('double_points');
+    const toolsDiv = document.createElement('div');
+    toolsDiv.className = 'tools';
+    toolsDiv.innerHTML = `<button class="tool-use-btn" data-tool="double_points" data-team="${idx}" ${used ? 'disabled' : ''}>${tool.name}</button>`;
+    $('#player' + idx + 'Card').appendChild(toolsDiv);
+  }
+});
+// Update active class on score-card containers for better visibility
+$('#player0Card').classList.toggle('active', state.currentPlayerIndex === 0);
+$('#player1Card').classList.toggle('active', state.currentPlayerIndex === 1);
+
+
+// Add event listeners
+$$('.player-chip').forEach(chip => {
+chip.addEventListener('click', () => {
+const idx = parseInt(chip.dataset.pid);
+state.currentPlayerIndex = idx;
+updateTurnBadge();
+  renderPlayersRow();
+});
+});
+
+$$('.pm').forEach(b => {
+b.addEventListener('click', (ev) => {
+ev.stopPropagation();
+const pid = parseInt(b.dataset.p,10);
+const action = b.dataset.action;
+const pl = state.players.find(p=>p.id === pid);
+if(!pl) return;
+const step = 100;
+if(action === 'plus') pl.score += step;
+else pl.score = Math.max(0, pl.score - step);
+renderPlayersRow();
+});
+});
+
+$$('.tool-use-btn').forEach(btn => {
+ btn.addEventListener('click', () => {
+   const toolId = btn.dataset.tool;
+ const team = parseInt(btn.dataset.team);
+const tool = assistTools.find(t => t.id === toolId);
+showModal(`<p>${tool.description}</p><button id="usePowerup" data-tool="${toolId}" data-team="${team}" style="color:#ff1493">استخدم الطاقة</button><button id="closePowerup">إغلاق</button>`);
+});
+});
+
+}
+
+function renderQuestionPageScores(){
+  $('#qpPlayer0Card').innerHTML = generatePlayerHtml(0, false);
+  $('#qpPlayer1Card').innerHTML = generatePlayerHtml(1, false);
+  // Update active class
+  $('#qpPlayer0Card').classList.toggle('active', state.currentPlayerIndex === 0);
+  $('#qpPlayer1Card').classList.toggle('active', state.currentPlayerIndex === 1);
+
+  // Add event listeners for question page
+  $$('#qpPlayer0Card .player-chip, #qpPlayer1Card .player-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const idx = parseInt(chip.dataset.pid);
       state.currentPlayerIndex = idx;
       updateTurnBadge();
+      renderQuestionPageScores();
       renderPlayersRow();
     });
-    row.appendChild(el);
   });
-  // plus/minus handlers
-  $$('.pm').forEach(b=>{
-    b.addEventListener('click', (ev)=>{
+
+  $$('#qpPlayer0Card .pm, #qpPlayer1Card .pm').forEach(b => {
+    b.addEventListener('click', (ev) => {
       ev.stopPropagation();
       const pid = parseInt(b.dataset.p,10);
       const action = b.dataset.action;
       const pl = state.players.find(p=>p.id === pid);
       if(!pl) return;
-      const step = 100; // change step; you can modify to 50, 10 or add UI to edit
+      const step = 100;
       if(action === 'plus') pl.score += step;
       else pl.score = Math.max(0, pl.score - step);
+      renderQuestionPageScores();
       renderPlayersRow();
     });
   });
 }
 
+function renderQuestionPagePowerups(){
+// Clear any existing tools in score cards
+$$('.score-card .tools').forEach(t => t.remove());
+
+state.players.forEach((p, idx) => {
+const toolsHtml = p.selectedTools.filter(tId => tId !== 'double_points').map(tId => {
+const tool = assistTools.find(t => t.id === tId);
+const used = p.usedTools.has(tId);
+  return `<button class="tool-use-btn" data-tool="${tId}" data-team="${idx}" ${used ? 'disabled' : ''} title="${p.name}: ${tool.description}">${tool.icon} ${tool.name}</button>`;
+  }).join('');
+
+  if (toolsHtml) {
+  const toolsDiv = document.createElement('div');
+    toolsDiv.className = 'tools';
+      toolsDiv.innerHTML = toolsHtml;
+    $('#qpPlayer' + idx + 'Card').appendChild(toolsDiv);
+    }
+});
+
+// Add event listeners
+$$('.score-card .tool-use-btn').forEach(btn => {
+btn.addEventListener('click', () => {
+const toolId = btn.dataset.tool;
+const team = parseInt(btn.dataset.team);
+  const tool = assistTools.find(t => t.id === toolId);
+    showModal(`<p>${tool.description}</p><button id="usePowerup" data-tool="${toolId}" data-team="${team}" style="color:#ff1493">استخدم الطاقة</button><button id="closePowerup">إغلاق</button>`);
+    });
+  });
+}
+
+function generatePlayerHtml(idx, includeTools = true) {
+const p = state.players[idx];
+let html = `
+<div class="player-chip ${state.currentPlayerIndex === idx ? 'active' : ''}" data-pid="${p.id}">
+  <div class="player-top"><div style="font-weight:900">${p.name}</div></div>
+  <div style="display:flex;align-items:center;gap:8px;margin-top:6px"><div class="score">${p.score}</div></div>
+    <div class="score-controls"><button class="pm" data-action="minus" data-p="${p.id}">-</button><button class="pm" data-action="plus" data-p="${p.id}">+</button></div>
+  </div>`;
+
+if (includeTools) {
+const toolsHtml = p.selectedTools.map(tId => {
+const tool = assistTools.find(t => t.id === tId);
+  const used = p.usedTools.has(tId);
+  return `<button class="tool-use-btn" data-tool="${tId}" data-team="${idx}" ${used ? 'disabled' : ''}>${tool.name}</button>`;
+  }).join('');
+    html += `<div class="tools">${toolsHtml}</div>`;
+  }
+
+  return html;
+}
+
 function updateTurnBadge(){
   const p = state.players[state.currentPlayerIndex];
   $('#currentTurnBadge').innerText = p ? 'دور: ' + p.name : 'دور: -';
+}
+
+function usePowerup(team, toolId) {
+  state.players[team].usedTools.add(toolId);
+  renderPlayersRow();
+  if ($('#questionPage').style.display !== 'none') {
+    renderQuestionPageScores();
+    renderQuestionPagePowerups();
+  }
+  switch(toolId) {
+    case 'double_points':
+      doublePointsActive = true;
+      break;
+    case 'show_choices':
+      showChoicesActive = true;
+      if ($('#questionPage').style.display !== 'none') {
+        renderChoices();
+      }
+      break;
+    case 'steal_question':
+      stealActive = team;
+      state.currentPlayerIndex = team;
+      updateTurnBadge();
+      break;
+    case 'mute_opponent':
+      muteActive = team;
+      if (running) {
+        // perhaps reset timer to 90s
+      }
+      break;
+    case 'change_question':
+      changeQuestion();
+      break;
+  }
+}
+
+// Add event listener for usePowerup button
+document.addEventListener('click', (e) => {
+  if (e.target.id === 'usePowerup') {
+    const toolId = e.target.dataset.tool;
+    const team = parseInt(e.target.dataset.team);
+    usePowerup(team, toolId);
+    closeModal();
+  } else if (e.target.id === 'closePowerup') {
+    closeModal();
+  }
+});
+
+function renderChoices() {
+if (!currentQP) return;
+const qobj = state.questions[currentQP.catId + '_' + currentQP.value + '_' + currentQP.instance];
+if (qobj && qobj.choices && qobj.choices.length > 0) {
+const choicesHtml = qobj.choices.map(c => `<div class="choice">${c}</div>`).join('');
+  $('#qpQuestionText').insertAdjacentHTML('afterend', `<div class="choices">${choicesHtml}</div>`);
+  }
+}
+
+function changeQuestion() {
+  const cat = state.boardCats.find(c => c.id === currentQP.catId);
+  const qlist = questionsData[cat.group][cat.title];
+  const difficultyLabel = {200: 'easy', 400: 'hard', 600: 'extreme'}[currentQP.value];
+  const available = qlist.filter(q => q.difficulty === difficultyLabel);
+  if (available.length > 0) {
+    const currentQuestion = state.questions[currentQP.catId + '_' + currentQP.value + '_' + currentQP.instance].q;
+    const otherQuestions = available.filter(q => q.question !== currentQuestion);
+    const newQ = otherQuestions.length > 0 ? otherQuestions[Math.floor(Math.random() * otherQuestions.length)] : available[Math.floor(Math.random() * available.length)];
+    if (newQ.question === currentQuestion) {
+      alert('لا توجد أسئلة أخرى متاحة في هذه الفئة والصعوبة.');
+      return;
+    }
+    const qobj = state.questions[currentQP.catId + '_' + currentQP.value + '_' + currentQP.instance];
+    qobj.q = newQ.question;
+    qobj.answer = newQ.answer;
+    qobj.image = newQ.image;
+    qobj.choices = newQ.choices;
+    // update display
+    $('#qpQuestionText').innerText = qobj.q;
+    const wrap = $('#qpImageWrap'); wrap.innerHTML = '';
+    if(qobj.image){
+      const img = document.createElement('img'); img.src = qobj.image; img.style.maxWidth = '100%'; img.style.maxHeight = '320px'; wrap.appendChild(img);
+    }
+    if(qobj.audio){
+      const audio = document.createElement('audio'); audio.src = qobj.audio; audio.controls = true; audio.style.width = '100%'; wrap.appendChild(audio);
+    }
+    if(!qobj.image && !qobj.audio){
+      wrap.innerHTML = `<div style="width:100%;height:260px;background:linear-gradient(#fff,#f2f2f2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#999">وسائط (صورة أو صوت إن وجدت)</div>`;
+    }
+    // remove old choices and render new if active
+    const oldChoices = $('.choices');
+    if (oldChoices) oldChoices.remove();
+    if (showChoicesActive) {
+      renderChoices();
+    }
+  } else {
+    alert('لا توجد أسئلة متاحة في هذه الفئة والصعوبة.');
+  }
 }
 
 /* -------------------------
@@ -709,7 +992,7 @@ $('#endGame').addEventListener('click', ()=>{
 const sorted = [...state.players].sort((a,b)=>b.score - a.score);
 const winner = sorted[0];
 const summary = state.players.map(p => `${p.name}: ${p.score}`).join('<br/>');
-showModal(`<h3>نهاية اللعبة — الفائز: ${winner ? winner.name : 'لا يوجد'}</h3><div style="margin-top:8px">${summary}</div><div style="margin-top:12px"><button id="closeEnd" style="padding:8px;border-radius:8px">العودة للإعداد</button></div>`);
+showModal(`<h3>نهاية اللعبة — الفائز: ${winner ? winner.name : 'لا يوجد'}</h3><div style="margin-top:8px">${summary}</div><div style="margin-top:12px"><button id="closeEnd" style="padding:8px;border-radius:8px;color:#ff1493">العودة للإعداد</button></div>`);
 $('#closeEnd').addEventListener('click', ()=>{
 closeModal();
 // Reset to setup panel, category panel, and hero section
@@ -717,15 +1000,24 @@ $('#gamePanel').style.display = 'none';
 $('#setupPanel').style.display = 'block';
 $('#categoryPanel').style.display = 'block';
 $('.hero-section').style.display = 'block';
-// Reset category selection scores to default
-const sp = parseInt($('#startingPoints').value || '1000', 10);
-state.categorySelectionScores[0] = sp;
-state.categorySelectionScores[1] = sp;
+// Reset category selection scores to inputs
+const sp1 = parseInt($('#startingPoints1').value || '1000', 10);
+const sp2 = parseInt($('#startingPoints2').value || '1000', 10);
+state.categorySelectionScores[0] = sp1;
+state.categorySelectionScores[1] = sp2;
 // Reset state (optional - could keep scores or reset everything)
-  // state.players = [];
-    state.chosen = [];
-    state.boardCats = [];
-    // state.questions = {};
+// state.players = [];
+state.chosen = [];
+state.boardCats = [];
+state.selectedTools = {0: [], 1: []};
+usedQuestions = new Set();
+// state.questions = {};
+// Clear the chosen section UI
+renderChosen();
+// Clear highlights on category cards
+renderCategories();
+// Clear highlights on powerup buttons
+updateToolButtons();
   });
 });
 
@@ -748,10 +1040,14 @@ function checkAllAnswered(){
 /* -------------------------
    Initialization
    ------------------------- */
-// Update category selection scores when starting points input changes
-$('#startingPoints').addEventListener('input', ()=>{
-  const sp = parseInt($('#startingPoints').value || '1000', 10);
+// Update category selection scores when starting points inputs change
+$('#startingPoints1').addEventListener('input', ()=>{
+  const sp = parseInt($('#startingPoints1').value || '1000', 10);
   state.categorySelectionScores[0] = sp;
+});
+
+$('#startingPoints2').addEventListener('input', ()=>{
+  const sp = parseInt($('#startingPoints2').value || '1000', 10);
   state.categorySelectionScores[1] = sp;
 });
 
@@ -759,9 +1055,28 @@ $('#startingPoints').addEventListener('input', ()=>{
   await loadQuestionsJson();
   renderCategories(); // initial render (works if questionsData not loaded yet)
   renderChosen(); // render the chosen categories panel
+  renderToolSelection();
   // Initialize category selection scores
-  const sp = parseInt($('#startingPoints').value || '1000', 10);
-  state.categorySelectionScores[0] = sp;
-  state.categorySelectionScores[1] = sp;
+  const sp1 = parseInt($('#startingPoints1').value || '1000', 10);
+  const sp2 = parseInt($('#startingPoints2').value || '1000', 10);
+  state.categorySelectionScores[0] = sp1;
+  state.categorySelectionScores[1] = sp2;
+
+  // Tool selection event listeners
+  $$('.tool-icon').forEach(icon => {
+    icon.addEventListener('click', () => {
+      const team = parseInt(icon.closest('.powerups').id === 'team1Tools' ? 0 : 1);
+      const toolId = icon.dataset.tool;
+      const selected = state.selectedTools[team];
+      const idx = selected.indexOf(toolId);
+      if (idx !== -1) {
+        selected.splice(idx, 1);
+      } else if (selected.length < 3) {
+        selected.push(toolId);
+      }
+      updateToolButtons();
+    });
+  });
+  updateStartButton();
 })();
 

@@ -698,6 +698,11 @@ max-width: 800px;
   opacity: 0.5;
   cursor: not-allowed;
 }
+.tool-use-btn.inactive-turn {
+  background: #ccc;
+  color: #666;
+  border: 2px solid #999;
+}
 
 /* Choices */
 .choices {

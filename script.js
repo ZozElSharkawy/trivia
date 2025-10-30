@@ -19,7 +19,12 @@ const assistTools = [
 { id: 'show_choices', name: 'Show Choices', description: 'Displays multiple-choice options for the current question.', icon: '👁️' },
 { id: 'steal_question', name: 'Steal Question', description: 'Allows the team that activates this power-up to take control of the turn temporarily and answer the question — even if it\'s not their turn. If the stealing team answers correctly → they earn the points. If they answer incorrectly → control passes back to the other team as usual. When question ends the turn goes back normally.', icon: '🤏' },
 { id: 'mute_opponent', name: 'Mute Opponent (كتم الفريق الآخر)', description: 'Grants the activating team 90 seconds to answer while disabling the opponent\'s answer buttons.', icon: '🔇' },
-{ id: 'change_question', name: 'Change Question', description: 'Replaces the current question with a new one from the same category and same difficulty.', icon: '🔄' }
+{ id: 'change_question', name: 'Change Question', description: 'Replaces the current question with a new one from the same category and same difficulty.', icon: '🔄' },
+{ id: 'call_friend', name: 'استشاره محنك', description: 'Call a friend for advice.', icon: '📞' },
+{ id: 'add_time', name: 'زنقة محنك', description: 'Adds extra time for the current team to answer (120 seconds instead of 60).', icon: '⏰' },
+{ id: 'steal_player', name: 'اعارة', description: 'Steal a player.', icon: '👤' },
+{ id: 'share_points', name: 'مشاركة النقاط', description: 'Points are shared between teams if answered correctly.', icon: '🤝' },
+{ id: 'cancel_question', name: 'حذف السؤال', description: 'Cancels the current question.', icon: '❌' }
 ];
 
 let usedQuestions = new Set(); // to track used questions
@@ -27,6 +32,8 @@ let doublePointsActive = false;
 let showChoicesActive = false;
 let stealActive = null;
 let muteActive = null;
+let sharePointsActive = false;
+let addTimeActive = false;
 
 const state = {
   players: [], // two players {id,name,score,selectedTools:[],usedTools:new Set()}
@@ -468,6 +475,9 @@ function formatTimer(ms){
   const ss = (s%60).toString().padStart(2,'0');
   return `${mm}:${ss}`;
 }
+let firstTimeout = addTimeActive ? 120000 : 60000;
+let finalTimeout = addTimeActive ? 150000 : 90000;
+
 function startTimer(){
 if(running) return;
 running = true;
@@ -479,8 +489,8 @@ timerInterval = setInterval(()=> {
 const elapsed = Date.now() - timerStart;
 $('#timerDisplay').innerText = formatTimer(elapsed);
 
-// Check for 1 minute alert (only if not mute)
-if (elapsed >= 60000 && !oneMinuteAlertShown && timerPhase === 'normal' && !muteActive) {
+// Check for first alert (only if not mute)
+if (elapsed >= firstTimeout && !oneMinuteAlertShown && timerPhase === 'normal' && !muteActive) {
 oneMinuteAlertShown = true;
 timerPhase = 'extended';
 currentTeamTimedOut = true;
@@ -488,8 +498,8 @@ alert('انتهى الوقت! الفريق الآخر لديه 30 ثانية إ�
 // Continue timer for additional 30 seconds
 }
 
-// Check for final timeout (1 minute 30 seconds total, or 90s for mute)
-if (elapsed >= 90000 && timerPhase !== 'final') {
+// Check for final timeout
+if (elapsed >= finalTimeout && timerPhase !== 'final') {
 timerPhase = 'final';
 pauseTimer();
 // Highlight answer button to indicate time is up
@@ -669,17 +679,21 @@ function finalizeAnswer(playerId){
   const key = currentQP.catId + '_' + currentQP.value + '_' + currentQP.instance;
   // award points
   if(playerId !== null){
-  const pl = state.players.find(p=>p.id === playerId);
-  if(pl) {
-    pl.score += currentQP.value;
-    if (doublePointsActive) {
-        pl.score += currentQP.value;
-         doublePointsActive = false;
-       }
-     }
-     // optional visual feedback
-     // alert(`${pl.name} حصل على ${currentQP.value} نقطة`);
-   }
+    const points = currentQP.value;
+    const doubled = doublePointsActive ? points * 2 : points;
+    if (sharePointsActive) {
+      // divide among 2 teams
+      state.players.forEach(p => p.score += doubled / 2);
+    } else {
+      const pl = state.players.find(p=>p.id === playerId);
+      if(pl) {
+        pl.score += doubled;
+      }
+    }
+    doublePointsActive = false;
+    // optional visual feedback
+    // alert(`${pl.name} حصل على ${doubled} نقطة`);
+  }
   // stop timer
   pauseTimer();
   // remove answer button highlighting if it exists
@@ -710,10 +724,12 @@ function finalizeAnswer(playerId){
   // clear current qp
   currentQP = null;
   // reset powerup flags
-   showChoicesActive = false;
-   stealActive = null;
-   muteActive = null;
-   // check if all answered -> show end summary automatically
+  showChoicesActive = false;
+  stealActive = null;
+  muteActive = null;
+  sharePointsActive = false;
+  addTimeActive = false;
+  // check if all answered -> show end summary automatically
   checkAllAnswered();
 }
 
@@ -816,7 +832,12 @@ state.players.forEach((p, idx) => {
 const toolsHtml = p.selectedTools.filter(tId => tId !== 'double_points').map(tId => {
 const tool = assistTools.find(t => t.id === tId);
 const used = p.usedTools.has(tId);
-  return `<button class="tool-use-btn" data-tool="${tId}" data-team="${idx}" ${used ? 'disabled' : ''} title="${p.name}: ${tool.description}">${tool.icon} ${tool.name}</button>`;
+const isCurrentTurn = idx === state.currentPlayerIndex;
+const disabledAttr = used || (tId === 'add_time' && !isCurrentTurn) ? 'disabled' : '';
+const extraClass = tId === 'add_time' && !isCurrentTurn ? ' inactive-turn' : '';
+const buttonHtml = `<button class="tool-use-btn${extraClass}" data-tool="${tId}" data-team="${idx}" ${disabledAttr} title="${p.name}: ${tool.description}">${tool.icon} ${tool.name}</button>`;
+const extraText = tId === 'add_time' && !isCurrentTurn ? '<br/><small style="color:#666;font-size:10px;">يمكن استخدامه فقط في دورك</small>' : '';
+  return buttonHtml + extraText;
   }).join('');
 
   if (toolsHtml) {
@@ -895,6 +916,44 @@ function usePowerup(team, toolId) {
     case 'change_question':
       changeQuestion();
       break;
+    case 'call_friend':
+      // does nothing
+      break;
+    case 'add_time':
+      if (team === state.currentPlayerIndex) {
+        addTimeActive = true;
+        // Change alert to 2 minutes instead of 1 minute
+        firstTimeout = 120000;
+        finalTimeout = 150000;
+      }
+      break;
+    case 'steal_player':
+      // does nothing
+      break;
+    case 'share_points':
+      sharePointsActive = true;
+      break;
+    case 'cancel_question':
+      // show message and close like backToBoard but disable question
+      alert('تم حذف السؤال بواسطة الفريق ' + state.players[team].name);
+      // disable question
+      const key = currentQP.catId + '_' + currentQP.value + '_' + currentQP.instance;
+      state.boardDisabled[key] = true;
+    renderBoard();
+    // close like backToBoard
+    pauseTimer();
+    if (document.activeElement && $('#questionPage').contains(document.activeElement)) {
+        document.activeElement.blur();
+      }
+      $('#questionPage').style.display = 'none';
+      $('#questionPage').setAttribute('aria-hidden','true');
+      // reset powerups
+      showChoicesActive = false;
+      stealActive = null;
+      muteActive = null;
+      sharePointsActive = false;
+      addTimeActive = false;
+      break;
   }
 }
 
@@ -909,6 +968,8 @@ document.addEventListener('click', (e) => {
     closeModal();
   }
 });
+
+
 
 function renderChoices() {
 if (!currentQP) return;

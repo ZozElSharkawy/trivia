@@ -16,7 +16,7 @@ const CATEGORY_COST = 500;
 
 const assistTools = [
 { id: 'double_points', name: 'Double Points', description: 'Doubles the value of the current question.', icon: '💰' },
-{ id: 'show_choices', name: 'Show Choices', description: 'Displays multiple-choice options for the current question.', icon: '👁️' },
+{ id: 'search', name: 'محنك شي ان', description: 'Adds 20 seconds to answering time and halves the question points.', icon: '🔍' },
 { id: 'steal_question', name: 'Steal Question', description: 'Allows the team that activates this power-up to take control of the turn temporarily and answer the question — even if it\'s not their turn. If the stealing team answers correctly → they earn the points. If they answer incorrectly → control passes back to the other team as usual. When question ends the turn goes back normally.', icon: '🤏' },
 { id: 'mute_opponent', name: 'Mute Opponent (كتم الفريق الآخر)', description: 'Grants the activating team 90 seconds to answer while disabling the opponent\'s answer buttons.', icon: '🔇' },
 { id: 'change_question', name: 'Change Question', description: 'Replaces the current question with a new one from the same category and same difficulty.', icon: '🔄' },
@@ -29,7 +29,7 @@ const assistTools = [
 
 let usedQuestions = new Set(); // to track used questions
 let doublePointsActive = false;
-let showChoicesActive = false;
+let searchActive = false;
 let stealActive = null;
 let muteActive = null;
 let sharePointsActive = false;
@@ -546,12 +546,6 @@ function openQuestionPage(catId, value, instance = 1){
   if(!qobj.image && !qobj.audio){
     wrap.innerHTML = `<div style="width:100%;height:260px;background:linear-gradient(#fff,#f2f2f2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#999">وسائط (صورة أو صوت إن وجدت)</div>`;
   }
-  // remove old choices
-  const oldChoices = $('.choices');
-  if (oldChoices) oldChoices.remove();
-  if (showChoicesActive) {
-    renderChoices();
-  }
   // show question page
   $('#questionPage').style.display = 'flex';
   $('#questionPage').setAttribute('aria-hidden','false');
@@ -679,7 +673,11 @@ function finalizeAnswer(playerId){
   const key = currentQP.catId + '_' + currentQP.value + '_' + currentQP.instance;
   // award points
   if(playerId !== null){
-    const points = currentQP.value;
+    let points = currentQP.value;
+    // Half points if search powerup is active
+    if (searchActive) {
+      points = Math.floor(points / 2);
+    }
     const doubled = doublePointsActive ? points * 2 : points;
     if (sharePointsActive) {
       // divide among 2 teams
@@ -724,7 +722,7 @@ function finalizeAnswer(playerId){
   // clear current qp
   currentQP = null;
   // reset powerup flags
-  showChoicesActive = false;
+  searchActive = false;
   stealActive = null;
   muteActive = null;
   sharePointsActive = false;
@@ -833,10 +831,10 @@ const toolsHtml = p.selectedTools.filter(tId => tId !== 'double_points').map(tId
 const tool = assistTools.find(t => t.id === tId);
 const used = p.usedTools.has(tId);
 const isCurrentTurn = idx === state.currentPlayerIndex;
-const disabledAttr = used || (tId === 'add_time' && !isCurrentTurn) ? 'disabled' : '';
-const extraClass = tId === 'add_time' && !isCurrentTurn ? ' inactive-turn' : '';
+const disabledAttr = used || ((tId === 'add_time' || tId === 'search') && !isCurrentTurn) ? 'disabled' : '';
+const extraClass = (tId === 'add_time' || tId === 'search') && !isCurrentTurn ? ' inactive-turn' : '';
 const buttonHtml = `<button class="tool-use-btn${extraClass}" data-tool="${tId}" data-team="${idx}" ${disabledAttr} title="${p.name}: ${tool.description}">${tool.icon} ${tool.name}</button>`;
-const extraText = tId === 'add_time' && !isCurrentTurn ? '<br/><small style="color:#666;font-size:10px;">يمكن استخدامه فقط في دورك</small>' : '';
+const extraText = (tId === 'add_time' || tId === 'search') && !isCurrentTurn ? '<br/><small style="color:#666;font-size:10px;">يمكن استخدامه فقط في دورك</small>' : '';
   return buttonHtml + extraText;
   }).join('');
 
@@ -896,10 +894,12 @@ function usePowerup(team, toolId) {
     case 'double_points':
       doublePointsActive = true;
       break;
-    case 'show_choices':
-      showChoicesActive = true;
-      if ($('#questionPage').style.display !== 'none') {
-        renderChoices();
+    case 'search':
+      searchActive = true;
+      if (running) {
+        // Add 20 seconds to timeout thresholds
+        firstTimeout += 20000;
+        finalTimeout += 20000;
       }
       break;
     case 'steal_question':
@@ -948,7 +948,7 @@ function usePowerup(team, toolId) {
       $('#questionPage').style.display = 'none';
       $('#questionPage').setAttribute('aria-hidden','true');
       // reset powerups
-      showChoicesActive = false;
+      searchActive = false;
       stealActive = null;
       muteActive = null;
       sharePointsActive = false;
@@ -971,14 +971,7 @@ document.addEventListener('click', (e) => {
 
 
 
-function renderChoices() {
-if (!currentQP) return;
-const qobj = state.questions[currentQP.catId + '_' + currentQP.value + '_' + currentQP.instance];
-if (qobj && qobj.choices && qobj.choices.length > 0) {
-const choicesHtml = qobj.choices.map(c => `<div class="choice">${c}</div>`).join('');
-  $('#qpQuestionText').insertAdjacentHTML('afterend', `<div class="choices">${choicesHtml}</div>`);
-  }
-}
+
 
 function changeQuestion() {
   const cat = state.boardCats.find(c => c.id === currentQP.catId);
@@ -1010,12 +1003,7 @@ function changeQuestion() {
     if(!qobj.image && !qobj.audio){
       wrap.innerHTML = `<div style="width:100%;height:260px;background:linear-gradient(#fff,#f2f2f2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#999">وسائط (صورة أو صوت إن وجدت)</div>`;
     }
-    // remove old choices and render new if active
-    const oldChoices = $('.choices');
-    if (oldChoices) oldChoices.remove();
-    if (showChoicesActive) {
-      renderChoices();
-    }
+
   } else {
     alert('لا توجد أسئلة متاحة في هذه الفئة والصعوبة.');
   }

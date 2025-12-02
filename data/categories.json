@@ -1,0 +1,270 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "group": "العلوم",
+      "title": "الفيزياء",
+      "icon": "📚",
+      "file": "questions_cat_1.json"
+    },
+    {
+      "id": 2,
+      "group": "العلوم",
+      "title": "الكيمياء",
+      "icon": "📚",
+      "file": "questions_cat_2.json"
+    },
+    {
+      "id": 3,
+      "group": "العلوم",
+      "title": "الأحياء",
+      "icon": "📚",
+      "file": "questions_cat_3.json"
+    },
+    {
+      "id": 4,
+      "group": "العلوم",
+      "title": "الفضاء والأرض",
+      "icon": "📚",
+      "file": "questions_cat_4.json"
+    },
+    {
+      "id": 5,
+      "group": "المعارف العامة",
+      "title": "التاريخ",
+      "icon": "📚",
+      "file": "questions_cat_5.json"
+    },
+    {
+      "id": 6,
+      "group": "المعارف العامة",
+      "title": "الجغرافيا",
+      "icon": "📚",
+      "file": "questions_cat_6.json"
+    },
+    {
+      "id": 7,
+      "group": "افلام ومسلسلات",
+      "title": "سلسلة أفلام مارفل",
+      "icon": "📚",
+      "file": "questions_cat_7.json"
+    },
+    {
+      "id": 8,
+      "group": "افلام ومسلسلات",
+      "title": "مسلسل Game of Thrones",
+      "icon": "📚",
+      "file": "questions_cat_8.json"
+    },
+    {
+      "id": 9,
+      "group": "افلام ومسلسلات",
+      "title": "مسلسل House of the Dragon",
+      "icon": "📚",
+      "file": "questions_cat_9.json"
+    },
+    {
+      "id": 10,
+      "group": "افلام ومسلسلات",
+      "title": "The Office",
+      "icon": "📚",
+      "file": "questions_cat_10.json"
+    },
+    {
+      "id": 11,
+      "group": "افلام ومسلسلات",
+      "title": "Peaky Blinders",
+      "icon": "📚",
+      "file": "questions_cat_11.json"
+    },
+    {
+      "id": 12,
+      "group": "افلام ومسلسلات",
+      "title": "Suits",
+      "icon": "📚",
+      "file": "questions_cat_12.json"
+    },
+    {
+      "id": 13,
+      "group": "افلام ومسلسلات",
+      "title": "Breaking Bad",
+      "icon": "📚",
+      "file": "questions_cat_13.json"
+    },
+    {
+      "id": 14,
+      "group": "افلام ومسلسلات",
+      "title": "Squid Game",
+      "icon": "📚",
+      "file": "questions_cat_14.json"
+    },
+    {
+      "id": 15,
+      "group": "افلام ومسلسلات",
+      "title": "Better Call Saul",
+      "icon": "📚",
+      "file": "questions_cat_15.json"
+    },
+    {
+      "id": 16,
+      "group": "افلام ومسلسلات",
+      "title": "Stranger Things",
+      "icon": "📚",
+      "file": "questions_cat_16.json"
+    },
+    {
+      "id": 17,
+      "group": "افلام ومسلسلات",
+      "title": "The Blacklist",
+      "icon": "📚",
+      "file": "questions_cat_17.json"
+    },
+    {
+      "id": 18,
+      "group": "افلام ومسلسلات",
+      "title": "FROM",
+      "icon": "📚",
+      "file": "questions_cat_18.json"
+    },
+    {
+      "id": 19,
+      "group": "افلام ومسلسلات",
+      "title": "One Punch Man",
+      "icon": "📚",
+      "file": "questions_cat_19.json"
+    },
+    {
+      "id": 20,
+      "group": "افلام ومسلسلات",
+      "title": "عالم دي سي ",
+      "icon": "📚",
+      "file": "questions_cat_20.json"
+    },
+    {
+      "id": 21,
+      "group": "افلام ومسلسلات",
+      "title": "مسلسل الفايكنج",
+      "icon": "📚",
+      "file": "questions_cat_21.json"
+    },
+    {
+      "id": 22,
+      "group": "افلام ومسلسلات",
+      "title": "مسلسل The Walking Dead",
+      "icon": "📚",
+      "file": "questions_cat_22.json"
+    },
+    {
+      "id": 23,
+      "group": "افلام ومسلسلات",
+      "title": "مسلسل بلاك كلوفر",
+      "icon": "📚",
+      "file": "questions_cat_23.json"
+    },
+    {
+      "id": 24,
+      "group": "افلام ومسلسلات",
+      "title": "مسلسل ناروتو",
+      "icon": "📚",
+      "file": "questions_cat_24.json"
+    },
+    {
+      "id": 25,
+      "group": "افلام ومسلسلات",
+      "title": "مسلسل Attack on Titan",
+      "icon": "📚",
+      "file": "questions_cat_25.json"
+    },
+    {
+      "id": 26,
+      "group": "افلام ومسلسلات",
+      "title": "مسلسل Jujutsu Kaisen",
+      "icon": "📚",
+      "file": "questions_cat_26.json"
+    },
+    {
+      "id": 27,
+      "group": "افلام ومسلسلات",
+      "title": "مسلسل Demon Slayer",
+      "icon": "📚",
+      "file": "questions_cat_27.json"
+    },
+    {
+      "id": 28,
+      "group": "افلام ومسلسلات",
+      "title": "مسلسل Hunter x Hunter",
+      "icon": "📚",
+      "file": "questions_cat_28.json"
+    },
+    {
+      "id": 29,
+      "group": "افلام ومسلسلات",
+      "title": "دراغون بول",
+      "icon": "📚",
+      "file": "questions_cat_29.json"
+    },
+    {
+      "id": 30,
+      "group": "افلام ومسلسلات",
+      "title": "أكاديمية بطلي",
+      "icon": "📚",
+      "file": "questions_cat_30.json"
+    },
+    {
+      "id": 31,
+      "group": "افلام ومسلسلات",
+      "title": "ون بيس",
+      "icon": "📚",
+      "file": "questions_cat_31.json"
+    },
+    {
+      "id": 32,
+      "group": "المعارف العامة",
+      "title": "ألغاز",
+      "icon": "📚",
+      "file": "questions_cat_32.json"
+    },
+    {
+      "id": 33,
+      "group": "كرة القدم",
+      "title": "الدوري الإسباني",
+      "icon": "📚",
+      "file": "questions_cat_33.json"
+    },
+    {
+      "id": 34,
+      "group": "كرة القدم",
+      "title": "الدوري الإنجليزي الممتاز",
+      "icon": "📚",
+      "file": "questions_cat_34.json"
+    },
+    {
+      "id": 35,
+      "group": "كرة القدم",
+      "title": "دوري أبطال أوروبا",
+      "icon": "📚",
+      "file": "questions_cat_35.json"
+    },
+    {
+      "id": 36,
+      "group": "كرة القدم",
+      "title": "كأس العالم",
+      "icon": "📚",
+      "file": "questions_cat_36.json"
+    },
+    {
+      "id": 37,
+      "group": "كرة القدم",
+      "title": "نجوم كرة القدم (الأندية والمسيرات)",
+      "icon": "📚",
+      "file": "questions_cat_37.json"
+    },
+    {
+      "id": 38,
+      "group": "كرة القدم",
+      "title": "الدوري السعودي",
+      "icon": "📚",
+      "file": "questions_cat_38.json"
+    }
+    ]
+    }

@@ -10,8 +10,9 @@ function closeModal() { $('#modalBack').style.display = 'none'; }
 /* -------------------------
 Data & state
 ------------------------- */
-let questionsData = null; // loaded from questions.json
-let miniCards = []; // 24 mini categories built from questionsData
+let categoriesData = null; // loaded from categories.json - contains all category metadata
+let loadedQuestions = {}; // cache for loaded question files {categoryId: questionData}
+let miniCards = []; // mini categories built from categoriesData
 const CATEGORY_COST = 500;
 
 const assistTools = [
@@ -49,40 +50,65 @@ const state = {
 };
 
 /* -------------------------
-   Load questions.json
+   Load categories.json and lazy load questions
    ------------------------- */
-async function loadQuestionsJson(){
+async function loadCategoriesJson(){
   try {
-    const res = await fetch('questions.json');
+    const res = await fetch('data/categories.json');
     if(!res.ok) throw new Error('HTTP '+res.status);
-    questionsData = await res.json();
-    buildMiniCardsFromData();
+    const data = await res.json();
+    categoriesData = data.categories;
+    buildMiniCardsFromCategories();
   } catch(err){
-    alert('فشل تحميل ملف questions.json. تأكد من وجوده في نفس المجلد وتشغيل ملف عبر خادم محلي (مثلاً: `npx http-server` أو `python -m http.server`).\n\nالخطأ: ' + err.message);
+    alert('فشل تحميل ملف categories.json. تأكد من وجوده في مجلد data/ وتشغيل الملف عبر خادم محلي (مثلاً: `npx http-server` أو `python -m http.server`).\n\nالخطأ: ' + err.message);
     console.error(err);
-    // Provide fallback minimal data so page doesn't break (optional)
-    questionsData = {
-      "العلوم": {"أحياء":[{"difficulty":200,"question":"سؤال تجريبي","answer":"الإجابة"}]}
-    };
-    buildMiniCardsFromData();
+    // Provide fallback minimal data so page doesn't break
+    categoriesData = [
+      {id: 1, group: "العلوم", title: "أحياء", icon: "📚", file: "questions_cat_1.json"}
+    ];
+    buildMiniCardsFromCategories();
   }
 }
 
-function buildMiniCardsFromData(){
+function buildMiniCardsFromCategories(){
   miniCards = [];
-  let idCounter = 1;
-  for(const group of Object.keys(questionsData)){
-    const subs = questionsData[group];
-    for(const sub of Object.keys(subs)){
-      miniCards.push({
-        id: 'm' + (idCounter++),
-        group,
-        title: sub,
-        locked: Math.random() < 0.5, // some locked for demo - increased to 50% for better testing
-        cost: CATEGORY_COST,
-        unlockedBy: null
-      });
-    }
+  if(!categoriesData) return;
+  categoriesData.forEach((cat, idx) => {
+    miniCards.push({
+      id: 'm' + cat.id,
+      group: cat.group,
+      title: cat.title,
+      file: cat.file, // store the file to load later
+      locked: Math.random() < 0.5, // some locked for demo
+      cost: CATEGORY_COST,
+      unlockedBy: null
+    });
+  });
+}
+
+/* Lazy load questions for a specific category */
+async function loadCategoryQuestions(categoryId){
+  // Find the category
+  const cat = miniCards.find(m => m.id === categoryId);
+  if(!cat || !cat.file) return null;
+  
+  // Return cached if already loaded
+  if(loadedQuestions[categoryId]) return loadedQuestions[categoryId];
+  
+  try {
+    const res = await fetch('data/' + cat.file);
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const data = await res.json();
+    loadedQuestions[categoryId] = data;
+    return data;
+  } catch(err){
+    console.error(`Failed to load ${cat.file}:`, err);
+    // Return minimal fallback
+    return {
+      "العام": [
+        {difficulty: "easy", question: "سؤال تجريبي", answer: "الإجابة"}
+      ]
+    };
   }
 }
 
@@ -227,14 +253,15 @@ function onMiniClick(id){
     // First ensure players are set from setup panel
     const p1 = $('#p1name').value.trim() || 'فريق 1';
     const p2 = $('#p2name').value.trim() || 'فريق 2';
-    const sp = parseInt($('#startingPoints').value || '1000', 10);
+    const sp1 = parseInt($('#startingPoints1').value || '1000', 10);
+    const sp2 = parseInt($('#startingPoints2').value || '1000', 10);
     // Ensure categorySelectionScores is initialized
     if (!state.categorySelectionScores) {
-      state.categorySelectionScores = { 0: sp, 1: sp };
+      state.categorySelectionScores = { 0: sp1, 1: sp2 };
     }
     const tempPlayers = [
-      {id:0, name:p1, score: state.categorySelectionScores[0] || sp},
-      {id:1, name:p2, score: state.categorySelectionScores[1] || sp}
+      {id:0, name:p1, score: state.categorySelectionScores[0]},
+      {id:1, name:p2, score: state.categorySelectionScores[1]}
     ];
     const playersHtml = tempPlayers.map(p=>`<button data-p="${p.id}" class="buy-player-btn" style="margin:6px;padding:8px;border-radius:8px;color:#ff1493">${p.name} (${p.score})</button>`).join('');
     showModal(`<h3>فتح: ${m.title} — التكلفة ${m.cost}</h3><div>من سيدفع لفتح هذه الفئة؟</div><div style="margin-top:10px">${playersHtml}</div><div style="margin-top:10px"><button id="cancelBuy" style="background:#999;padding:8px;border-radius:8px">إلغاء</button></div>`);
@@ -247,9 +274,7 @@ function onMiniClick(id){
       }
 
       $$('.buy-player-btn').forEach(btn => {
-        console.log('Attaching event listener to button:', btn, 'data-p:', btn.dataset.p);
         btn.addEventListener('click', (e) => {
-          console.log('Buy button clicked for player:', btn.dataset.p, 'mini:', id);
           e.preventDefault();
           attemptBuyCategory(parseInt(btn.dataset.p,10), id);
         });
@@ -354,9 +379,9 @@ el.classList.toggle('selected', state.chosen.includes(id));
 
 
 /* -------------------------
-   Start game -> Build board
-   ------------------------- */
-$('#startGameBtn').addEventListener('click', ()=>{
+    Start game -> Build board
+    ------------------------- */
+$('#startGameBtn').addEventListener('click', async ()=>{
   if(state.chosen.length !== 6){ alert('اختر 6 مصغرات للبدء.'); return; }
   if(state.selectedTools[0].length !== 3 || state.selectedTools[1].length !== 3){ alert('كل فريق يجب أن يختار 3 أدوات مساعدة.'); return; }
   // Ensure players are set from setup panel inputs and use category selection scores
@@ -369,15 +394,23 @@ $('#startGameBtn').addEventListener('click', ()=>{
   state.startingPoints = Math.max(state.categorySelectionScores[0], state.categorySelectionScores[1]); // Use the higher score as reference
   state.boardCats = state.chosen.map((id, idx)=>{
     const m = miniCards.find(x=>x.id===id);
-    return { slot: idx, id: m.id, title: m.title, group: m.group };
+    return { slot: idx, id: m.id, title: m.title, group: m.group, file: m.file };
   });
-  // fill state.questions from questionsData for chosen cats
+  // Lazy load questions for chosen categories
   state.questions = {};
-  // Map numeric difficulty values to string labels in questions.json
   const difficultyMap = { 200: 'easy', 400: 'hard', 600: 'extreme' };
-  state.boardCats.forEach(cat => {
-    const qlist = (questionsData[cat.group] && questionsData[cat.group][cat.title]) || [];
-    // ensure mapping for 200/400/600 with 2 questions each, ensure different questions for each button
+  
+  // Load all chosen category questions
+  for(const cat of state.boardCats){
+    const catQuestions = await loadCategoryQuestions(cat.id);
+    if(!catQuestions) continue;
+    
+    // Extract question list from the loaded file structure
+    // The file has categoryId, group, title, and questions array
+    let qlist = catQuestions.questions || [];
+    if(!Array.isArray(qlist)) qlist = [];
+    
+    // Ensure mapping for 200/400/600 with 2 questions each
     [200,400,600].forEach(val => {
       const difficultyLabel = difficultyMap[val];
       const availableQuestions = qlist.filter(q => q.difficulty === difficultyLabel);
@@ -385,18 +418,15 @@ $('#startGameBtn').addEventListener('click', ()=>{
       // Select 2 different questions for this difficulty level
       let selectedQuestions = [];
       if (availableQuestions.length >= 2) {
-        // Shuffle and pick first 2 questions
         const shuffled = [...availableQuestions].sort(() => Math.random() - 0.5);
         selectedQuestions = shuffled.slice(0, 2);
       } else if (availableQuestions.length === 1) {
-        // If only 1 question available, use it for both buttons
         selectedQuestions = [availableQuestions[0], availableQuestions[0]];
       } else {
-        // No questions available
         selectedQuestions = [null, null];
       }
 
-      // Assign the selected questions to the 2 buttons
+      // Assign the selected questions
       for (let i = 1; i <= 2; i++) {
         const selectedQuestion = selectedQuestions[i-1];
         state.questions[cat.id + '_' + val + '_' + i] = {
@@ -408,7 +438,7 @@ $('#startGameBtn').addEventListener('click', ()=>{
         if (selectedQuestion) usedQuestions.add(selectedQuestion.question);
       }
     });
-  });
+  }
 
   state.boardDisabled = {};
   // Hide setup, category, and hero panels to show only game panel
@@ -973,11 +1003,24 @@ document.addEventListener('click', (e) => {
 
 
 
-function changeQuestion() {
+async function changeQuestion() {
   const cat = state.boardCats.find(c => c.id === currentQP.catId);
-  const qlist = questionsData[cat.group][cat.title];
+  if(!cat) return;
+  
+  // Lazy load questions for this category if not already loaded
+  const catQuestions = await loadCategoryQuestions(cat.id);
+  if(!catQuestions) {
+    alert('فشل تحميل الأسئلة لهذه الفئة.');
+    return;
+  }
+  
+  // Extract question list from the loaded file structure
+  let qlist = catQuestions.questions || [];
+  if(!Array.isArray(qlist)) qlist = [];
+  
   const difficultyLabel = {200: 'easy', 400: 'hard', 600: 'extreme'}[currentQP.value];
   const available = qlist.filter(q => q.difficulty === difficultyLabel);
+  
   if (available.length > 0) {
     const currentQuestion = state.questions[currentQP.catId + '_' + currentQP.value + '_' + currentQP.instance].q;
     const otherQuestions = available.filter(q => q.question !== currentQuestion);
@@ -1101,8 +1144,8 @@ $('#startingPoints2').addEventListener('input', ()=>{
 });
 
 (async function init(){
-  await loadQuestionsJson();
-  renderCategories(); // initial render (works if questionsData not loaded yet)
+  await loadCategoriesJson();
+  renderCategories(); // initial render with categories from categories.json
   renderChosen(); // render the chosen categories panel
   renderToolSelection();
   // Initialize category selection scores

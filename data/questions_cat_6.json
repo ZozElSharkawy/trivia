@@ -1,0 +1,1502 @@
+{
+  "categoryId": 6,
+  "group": "المعارف العامة",
+  "title": "الجغرافيا",
+  "questions": [
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة فرنسا؟",
+      "answer": "باريس"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هو أطول جبل في العالم؟",
+      "answer": "جبل إيفرست"
+    },
+    {
+      "difficulty": "easy",
+      "question": "أين تقع السعودية؟",
+      "answer": "آسيا"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هو أكبر محيط في العالم؟",
+      "answer": "المحيط الهادئ"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما اسم النهر الذي يمر عبر القاهرة؟",
+      "answer": "نهر النيل"
+    },
+    {
+      "difficulty": "easy",
+      "question": "في أي بلد تقع أهرامات الجيزة؟",
+      "answer": "مصر"
+    },
+    {
+      "difficulty": "easy",
+      "question": "كم عدد قارات العالم؟",
+      "answer": "سبع قارات"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي القارة المتجمدة في القطب الجنوبي؟",
+      "answer": "القارة القطبية الجنوبية"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة إيطاليا؟",
+      "answer": "روما"
+    },
+    {
+      "difficulty": "easy",
+      "question": "أين يقع برج إيفل؟",
+      "answer": "باريس، فرنسا"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي أكبر دولة في العالم من حيث المساحة؟",
+      "answer": "روسيا"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة المملكة العربية السعودية؟",
+      "answer": "الرياض"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هو المحيط الذي يفصل بين أمريكا الشمالية وأوروبا؟",
+      "answer": "المحيط الأطلسي"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما اسم الصحراء الكبرى في شمال أفريقيا؟",
+      "answer": "الصحراء الكبرى"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة اليابان؟",
+      "answer": "طوكيو"
+    },
+    {
+      "difficulty": "easy",
+      "question": "في أي قارة تقع البرازيل؟",
+      "answer": "أمريكا الجنوبية"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هو النهر الأطول في العالم؟",
+      "answer": "نهر النيل"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة الولايات المتحدة الأمريكية؟",
+      "answer": "واشنطن العاصمة"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي أصغر قارة في العالم؟",
+      "answer": "أستراليا"
+    },
+    {
+      "difficulty": "easy",
+      "question": "أين يقع تمثال الحرية؟",
+      "answer": "نيويورك"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي الدولة التي تشبه الحذاء في شكلها؟",
+      "answer": "إيطاليا"
+    },
+    {
+      "difficulty": "easy",
+      "question": "كم عدد المحيطات الرئيسية في العالم؟",
+      "answer": "خمسة محيطات"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة المملكة المتحدة؟",
+      "answer": "لندن"
+    },
+    {
+      "difficulty": "easy",
+      "question": "في أي بلد يقع سور الصين العظيم؟",
+      "answer": "الصين"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي أكبر قارة من حيث المساحة؟",
+      "answer": "آسيا"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة إسبانيا؟",
+      "answer": "مدريد"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هو اسم أطول نهر في أمريكا الجنوبية؟",
+      "answer": "نهر الأمازون"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي الدولة الأكثر سكاناً في العالم حالياً؟",
+      "answer": "الهند"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة كندا؟",
+      "answer": "أوتاوا"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي القارة التي تُعرف أيضاً بأنها دولة؟",
+      "answer": "أستراليا"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة ألمانيا؟",
+      "answer": "برلين"
+    },
+    {
+      "difficulty": "easy",
+      "question": "في أي قارة تقع الهند؟",
+      "answer": "آسيا"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هو الخط الوهمي الذي يقسم الأرض إلى نصفين شمالي وجنوبي؟",
+      "answer": "خط الاستواء"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة مصر؟",
+      "answer": "القاهرة"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هو البحر الذي يقع بين أوروبا وأفريقيا؟",
+      "answer": "البحر الأبيض المتوسط"
+    },
+    {
+      "difficulty": "easy",
+      "question": "في أي مدينة يقع برج بيزا المائل؟",
+      "answer": "بيزا"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة المكسيك؟",
+      "answer": "مكسيكو سيتي"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي أعلى قمة جبلية في أفريقيا؟",
+      "answer": "جبل كليمنجارو"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة روسيا؟",
+      "answer": "موسكو"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي أكبر جزيرة في العالم؟",
+      "answer": "جرينلاند"
+    },
+    {
+      "difficulty": "easy",
+      "question": "في أي قارة تقع الصحراء الكبرى؟",
+      "answer": "أفريقيا"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة الهند؟",
+      "answer": "نيودلهي"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هو المحيط المتجمد الشمالي؟",
+      "answer": "المحيط المتجمد الشمالي"
+    },
+    {
+      "difficulty": "easy",
+      "question": "أين يقع مبنى الكولوسيوم؟",
+      "answer": "روما"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة الصين؟",
+      "answer": "بكين"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي أكبر غابة مطيرة في العالم؟",
+      "answer": "غابات الأمازون"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة أستراليا؟",
+      "answer": "كانبرا"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هو أبرد مكان على وجه الأرض؟",
+      "answer": "القارة القطبية الجنوبية"
+    },
+    {
+      "difficulty": "easy",
+      "question": "في أي بلد يقع تاج محل؟",
+      "answer": "الهند"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة البرازيل؟",
+      "answer": "برازيليا"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هو المحيط الذي يقع غرب الأمريكتين؟",
+      "answer": "المحيط الهادئ"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما اسم المضيق الذي يفصل بين إسبانيا والمغرب؟",
+      "answer": "مضيق جبل طارق"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة الأرجنتين؟",
+      "answer": "بوينس آيرس"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي القارة التي تضم أكبر عدد من البلدان؟",
+      "answer": "أفريقيا"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة اليونان؟",
+      "answer": "أثينا"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هو المحيط الثالث في العالم من حيث المساحة؟",
+      "answer": "المحيط الهندي"
+    },
+    {
+      "difficulty": "easy",
+      "question": "في أي ولاية أمريكية يقع جسر البوابة الذهبية؟",
+      "answer": "كاليفورنيا"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة تركيا؟",
+      "answer": "أنقرة"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هو البحر الذي يفصل بين المملكة العربية السعودية ومصر؟",
+      "answer": "البحر الأحمر"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما اسم القناة التي تربط البحر الأحمر بالبحر الأبيض المتوسط؟",
+      "answer": "قناة السويس"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة جنوب أفريقيا الإدارية؟",
+      "answer": "بريتوريا"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هو اسم المسطح المائي الكبير المالح؟",
+      "answer": "محيط"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة كوريا الجنوبية؟",
+      "answer": "سيول"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي أعلى شلالات في العالم؟",
+      "answer": "شلالات آنجل"
+    },
+    {
+      "difficulty": "easy",
+      "question": "في أي قارة تقع كندا؟",
+      "answer": "أمريكا الشمالية"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة المغرب؟",
+      "answer": "الرباط"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هو اسم اليابسة الكبيرة جداً؟",
+      "answer": "قارة"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة بيرو؟",
+      "answer": "ليما"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هو اسم مجرى الماء العذب الذي يصب في البحر؟",
+      "answer": "نهر"
+    },
+    {
+      "difficulty": "easy",
+      "question": "في أي بلد تقع مدينة البندقية (فينيسيا)؟",
+      "answer": "إيطاليا"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة السويد؟",
+      "answer": "ستوكهولم"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي أعلى سلسلة جبال في العالم؟",
+      "answer": "جبال الهيمالايا"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة النرويج؟",
+      "answer": "أوسلو"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هو اسم الظاهرة الطبيعية التي تسبب اهتزاز الأرض؟",
+      "answer": "زلزال"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة تايلاند؟",
+      "answer": "بانكوك"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هو اسم الجبل الذي يثور ويخرج منه الحمم؟",
+      "answer": "بركان"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة البرتغال؟",
+      "answer": "لشبونة"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هو أصغر بلد في العالم؟",
+      "answer": "الفاتيكان"
+    },
+    {
+      "difficulty": "easy",
+      "question": "في أي قارة تقع فرنسا؟",
+      "answer": "أوروبا"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة النمسا؟",
+      "answer": "فيينا"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هو اسم القارة التي لا يسكنها بشر بشكل دائم؟",
+      "answer": "أنتاركتيكا"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة إيرلندا؟",
+      "answer": "دبلن"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هو المحيط الذي يحيط بالقطب الشمالي؟",
+      "answer": "المحيط المتجمد الشمالي"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة بولندا؟",
+      "answer": "وارسو"
+    },
+    {
+      "difficulty": "easy",
+      "question": "في أي بلد يقع نهر المسيسيبي؟",
+      "answer": "الولايات المتحدة"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة الدنمارك؟",
+      "answer": "كوبنهاجن"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي أكبر صحراء حارة في العالم؟",
+      "answer": "الصحراء الكبرى"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة فنلندا؟",
+      "answer": "هلسنكي"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هو اسم القارة التي تشمل كندا والولايات المتحدة والمكسيك؟",
+      "answer": "أمريكا الشمالية"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة سويسرا؟",
+      "answer": "برن"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هو البحر الميت؟",
+      "answer": "بحر شديد الملوحة بين الأردن وفلسطين"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة هولندا؟",
+      "answer": "أمستردام"
+    },
+    {
+      "difficulty": "easy",
+      "question": "في أي قارة يقع نهر النيل؟",
+      "answer": "أفريقيا"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة بلجيكا؟",
+      "answer": "بروكسل"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هو اسم المحيط الذي يقع شرق أفريقيا؟",
+      "answer": "المحيط الهندي"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة تشيلي؟",
+      "answer": "سانتياغو"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي القارة التي تشمل البرازيل والأرجنتين؟",
+      "answer": "أمريكا الجنوبية"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة المجر؟",
+      "answer": "بودابست"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما اسم القارة التي تشمل إسبانيا وألمانيا وإيطاليا؟",
+      "answer": "أوروبا"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي عاصمة سنغافورة؟",
+      "answer": "سنغافورة"
+    },
+    {
+      "difficulty": "easy",
+      "question": "ما هي أعلى هضبة في العالم؟",
+      "answer": "هضبة التبت"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي أعمق نقطة في محيطات العالم؟",
+      "answer": "خندق ماريانا"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي سلسلة الجبال التي تفصل بين فرنسا وإسبانيا؟",
+      "answer": "جبال البرانس"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما اسم المضيق الذي يفصل بين آسيا وأمريكا الشمالية؟",
+      "answer": "مضيق بيرينغ"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي أكبر بحيرة في قارة أفريقيا؟",
+      "answer": "بحيرة فيكتوريا"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هو النهر الرئيسي الذي يمر عبر فيينا وبودابست وبلغراد؟",
+      "answer": "نهر الدانوب"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هو \"حزام النار\" في المحيط الهادئ؟",
+      "answer": "منطقة نشطة زلزالياً وبركانياً"
+    },
+    {
+      "difficulty": "medium",
+      "question": "أين تقع صحراء أتاكاما التي تعتبر من أكثر المناطق جفافاً؟",
+      "answer": "تشيلي"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي الدولة التي تقع بالكامل داخل دولة جنوب أفريقيا؟",
+      "answer": "ليسوتو"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هو الخط الوهمي الذي يحدد خط الطول صفر درجة؟",
+      "answer": "خط غرينتش"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي أكبر جزيرة في البحر الأبيض المتوسط؟",
+      "answer": "جزيرة صقلية"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة نيوزيلندا؟",
+      "answer": "ويلينغتون"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هما الدولتان اللتان تشتركان في أطول حدود برية دولية؟",
+      "answer": "كندا والولايات المتحدة"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي الدولة التي تُعرف بـ \"أرض الشمس المشرقة\"؟",
+      "answer": "اليابان"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة فيتنام؟",
+      "answer": "هانوي"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي اللغة الرسمية في البرازيل؟",
+      "answer": "البرتغالية"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي أعلى قمة جبلية في اليابان؟",
+      "answer": "جبل فوجي"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هو المصطلح الجغرافي الذي يصف مجموعة من الجزر المتقاربة؟",
+      "answer": "أرخبيل"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي الدولة الوحيدة التي يمر بها خط الاستواء ومدار الجدي؟",
+      "answer": "البرازيل"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هو البحر الذي يفصل بين المملكة المتحدة وفرنسا؟",
+      "answer": "بحر المانش"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي أكبر دولة حبيسة في العالم؟",
+      "answer": "كازاخستان"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي ظاهرة \"النينيو\" المناخية؟",
+      "answer": "ارتفاع دوري في درجة حرارة المحيط الهادئ"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هو المضيق الذي يربط البحر الأبيض المتوسط بالمحيط الأطلسي؟",
+      "answer": "مضيق جبل طارق"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة كولومبيا؟",
+      "answer": "بوغوتا"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي أكبر صحراء في قارة آسيا؟",
+      "answer": "صحراء جوبي"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هو النهر الذي يمر عبر باريس؟",
+      "answer": "نهر السين"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي القناة التي تربط الأطلسي بالهادئ عبر أمريكا الوسطى؟",
+      "answer": "قناة بنما"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي أعلى قمة في قارة أمريكا الشمالية؟",
+      "answer": "جبل دينالي"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي الدولة التي تقع فيها مدينة البتراء الأثرية؟",
+      "answer": "الأردن"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هو النهر الأطول في قارة أوروبا؟",
+      "answer": "نهر الفولغا"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي أكبر بحيرة مالحة في العالم؟",
+      "answer": "بحر قزوين"
+    },
+    {
+      "difficulty": "medium",
+      "question": "أين يقع \"الحيد المرجاني العظيم\"؟",
+      "answer": "أستراليا"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة كينيا؟",
+      "answer": "نيروبي"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي أعلى قمة في جبال الألب الأوروبية؟",
+      "answer": "جبل مون بلان"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هو المصطلح الذي يطلق على وادٍ جليدي ساحلي غمرته مياه البحر؟",
+      "answer": "فيورد"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي الدولة الإسكندنافية المشهورة بالفيوردات؟",
+      "answer": "النرويج"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة نيجيريا؟",
+      "answer": "أبوجا"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي أكبر شبه جزيرة في العالم؟",
+      "answer": "شبه الجزيرة العربية"
+    },
+    {
+      "difficulty": "medium",
+      "question": "أين تقع جبال الأنديز؟",
+      "answer": "أمريكا الجنوبية"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هو النهر الذي يمر عبر لندن؟",
+      "answer": "نهر التايمز"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة الفلبين؟",
+      "answer": "مانيلا"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي الدولة التي تحتل \"القرن الأفريقي\"؟",
+      "answer": "الصومال"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي أعلى قمة في أمريكا الجنوبية؟",
+      "answer": "جبل أكونكاجوا"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هو نهر \"الغانج\" المقدس في الهند؟",
+      "answer": "نهر رئيسي ينبع من جبال الهيمالايا"
+    },
+    {
+      "difficulty": "medium",
+      "question": "في أي بلد تقع أطلال \"ماتشو بيتشو\"؟",
+      "answer": "بيرو"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هو المضيق الذي يفصل بين أستراليا وتسمانيا؟",
+      "answer": "مضيق باس"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي الدولة المعروفة باسم \"هولندا\" ولكن اسمها الرسمي \"نيدرلاند\"؟",
+      "answer": "نيدرلاند"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة كوبا؟",
+      "answer": "هافانا"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة جمهورية التشيك؟",
+      "answer": "براغ"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة إثيوبيا؟",
+      "answer": "أديس أبابا"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي السهول العشبية الواسعة في الأرجنتين؟",
+      "answer": "البامبا"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة اسكتلندا؟",
+      "answer": "إدنبرة"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هو \"نصف الكرة الشمالي\"؟",
+      "answer": "النصف الشمالي من الأرض"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة إيران؟",
+      "answer": "طهران"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هو البحر الذي يقع شرق شبه الجزيرة الكورية؟",
+      "answer": "بحر اليابان"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة باكستان؟",
+      "answer": "إسلام أباد"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي سلسلة الجبال الرئيسية التي تمتد طولياً عبر إيطاليا؟",
+      "answer": "جبال الأبينيني"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي ثاني أكبر دولة في العالم من حيث المساحة؟",
+      "answer": "كندا"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة أوكرانيا؟",
+      "answer": "كييف"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هو النهر الذي يمر عبر بغداد؟",
+      "answer": "نهر دجلة"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة الإكوادور؟",
+      "answer": "كيتو"
+    },
+    {
+      "difficulty": "medium",
+      "question": "أين تقع جبال القوقاز؟",
+      "answer": "بين البحر الأسود وبحر قزوين"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي أكبر جزر اليابان الأربعة الرئيسية؟",
+      "answer": "هونشو"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي \"الرياح الموسمية\" (المونسون)؟",
+      "answer": "رياح يتغير اتجاهها بشكل موسمي"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة بنغلاديش؟",
+      "answer": "دكا"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي الدولة التي تتقاسم جزيرة هيسبانيولا مع هايتي؟",
+      "answer": "جمهورية الدومينيكان"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هو \"النهر الجليدي\"؟",
+      "answer": "كتلة ضخمة من الجليد تتحرك على اليابسة"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة رومانيا؟",
+      "answer": "بوخارست"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي أكبر ولاية أمريكية من حيث المساحة؟",
+      "answer": "ألاسكا"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة أفغانستان؟",
+      "answer": "كابول"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هو البحر الذي يفصل بين إيطاليا والبلقان؟",
+      "answer": "البحر الأدرياتيكي"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة السنغال؟",
+      "answer": "داكار"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي الدولة التي تُعرف تاريخياً بـ \"بلاد الأرز\"؟",
+      "answer": "لبنان"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي أعلى قمة في القارة القطبية الجنوبية؟",
+      "answer": "جبل فينسون ماسيف"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة أيسلندا؟",
+      "answer": "ريكيافيك"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة ماليزيا؟",
+      "answer": "كوالالمبور"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي الدولة التي كانت تُعرف سابقاً باسم \"سيام\"؟",
+      "answer": "تايلاند"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هو \"المضيق\"؟",
+      "answer": "ممر مائي يصل بين مسطحين مائيين"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة العراق؟",
+      "answer": "بغداد"
+    },
+    {
+      "difficulty": "medium",
+      "question": "في أي دولة تقع جزيرة \"بالي\" السياحية الشهيرة؟",
+      "answer": "إندونيسيا"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي \"خطوط العرض\"؟",
+      "answer": "دوائر وهمية أفقية لتحديد الموقع"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي \"خطوط الطول\"؟",
+      "answer": "أنصاف دوائر عمودية لتحديد الموقع"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة كمبوديا؟",
+      "answer": "بنوم بنه"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي المنطقة التي تُعرف بـ \"سقف العالم\"؟",
+      "answer": "هضبة التبت"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هو \"الجرف القاري\"؟",
+      "answer": "امتداد مغمور لليابسة تحت المياه"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة بوليفيا الإدارية؟",
+      "answer": "لاباز"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي مجموعة البحيرات العظمى الخمس؟",
+      "answer": "هيورون، أونتاريو، ميشيغان، إيري، سوبيريور"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة غانا؟",
+      "answer": "أكرا"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هو \"البرزخ\"؟",
+      "answer": "شريط ضيق من اليابسة يربط كتلتين"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة الجزائر؟",
+      "answer": "الجزائر"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي ثاني أعلى قمة جبلية في العالم بعد إيفرست؟",
+      "answer": "جبل كي 2"
+    },
+    {
+      "difficulty": "medium",
+      "question": "في أي دولة أفريقية تقع مدينة \"تمبكتو\" التاريخية؟",
+      "answer": "مالي"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي أعمق بحيرة للمياه العذبة في العالم؟",
+      "answer": "بحيرة بايكال"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هو النهر الذي يشكل حدود بين المكسيك والولايات المتحدة؟",
+      "answer": "نهر ريو غراندي"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة أوروجواي؟",
+      "answer": "مونتيفيديو"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هو خط التاريخ الدولي؟",
+      "answer": "خط وهمي على خط طول 180 درجة"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي \"الدلتا\"؟",
+      "answer": "أرض رسوبية عند مصب النهر"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي أكبر جزيرة في العالم بعد القارات؟",
+      "answer": "جرينلاند"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هو الفرق بين الطقس والمناخ؟",
+      "answer": "الطقس قصير المدى والمناخ طويل المدى"
+    },
+    {
+      "difficulty": "medium",
+      "question": "ما هي عاصمة منغوليا؟",
+      "answer": "أولان باتور"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو النهر الرئيسي في جنوب شرق آسيا الذي يمر عبر ست دول؟",
+      "answer": "نهر الميكونغ"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي أكبر جزيرة في قارة أفريقيا في المحيط الهندي؟",
+      "answer": "مدغشقر"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما اسم الصحراء التي تغطي أجزاء من بوتسوانا وناميبيا؟",
+      "answer": "صحراء كالاهاري"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما اسم الشلالات الواقعة على الحدود بين كندا والولايات المتحدة؟",
+      "answer": "شلالات نياجرا"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي أعلى بحيرة صالحة للملاحة في العالم؟",
+      "answer": "بحيرة تيتيكاكا"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي السلسلة الجبلية الرئيسية على الساحل الغربي لأمريكا الشمالية؟",
+      "answer": "جبال روكي"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو أطول نهر في آسيا بالكامل داخل الصين؟",
+      "answer": "نهر اليانغتسي"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو البركان الإيطالي الذي دمر بومبي؟",
+      "answer": "جبل فيزوف"
+    },
+    {
+      "difficulty": "hard",
+      "question": "في أي دولة تقع \"جزر غالاباغوس\"؟",
+      "answer": "الإكوادور"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو المصطلح الجغرافي الذي يصف أرضاً مرتفعة ومسطحة؟",
+      "answer": "هضبة"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي عاصمة إندونيسيا الحالية؟",
+      "answer": "جاكرتا"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما اسم البحر الذي يضم الحاجز المرجاني العظيم؟",
+      "answer": "بحر المرجان"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما المصطلح الذي يصف زيادة الإنتاج الزراعي في منتصف القرن العشرين؟",
+      "answer": "الثورة الخضراء"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي ثاني أكبر جزيرة في العالم؟",
+      "answer": "غينيا الجديدة"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو الممر المائي في أقصى جنوب أمريكا الجنوبية؟",
+      "answer": "مضيق ماجلان"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو البحر الداخلي بين أوروبا وآسيا؟",
+      "answer": "البحر الأسود"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو النهر الأوروبي الذي ينبع من سويسرا ويمر بألمانيا وهولندا؟",
+      "answer": "نهر الراين"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما اسم الصحراء في جنوب غرب الولايات المتحدة؟",
+      "answer": "صحراء موهافي"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو المصطلح الجغرافي السياسي للدولة بين دولتين كبيرتين؟",
+      "answer": "دولة حاجزة"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما اسم المضيق بين صقلية والبر الرئيسي الإيطالي؟",
+      "answer": "مضيق ميسينا"
+    },
+    {
+      "difficulty": "hard",
+      "question": "لأي دولة تتبع \"جزر الكناري\"؟",
+      "answer": "إسبانيا"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو ثاني أطول نهر في الصين المعروف بـ \"النهر الأصفر\"؟",
+      "answer": "نهر هوانغ هي"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو نوع المناخ الذي يتميز بفروقات كبيرة في درجات الحرارة؟",
+      "answer": "المناخ القاري"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو البحر الذي يقع في شمال أوروبا؟",
+      "answer": "بحر البلطيق"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي السلسلة الجبلية عبر أوروبا الوسطى والشرقية؟",
+      "answer": "جبال الكاربات"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو المصطلح المستخدم لتربية الكائنات المائية في بيئات خاضعة للرقابة؟",
+      "answer": "الاستزراع المائي"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو الاسم الذي يُطلق على أضيق جزء في القناة الإنجليزية؟",
+      "answer": "مضيق دوفر"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما اسم الجزيرة التي تمثل ولاية أسترالية جنوب البر الرئيسي؟",
+      "answer": "تسمانيا"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما الفرق بين الجبل الجليدي والجليد البحري؟",
+      "answer": "الجبل جليد عذب والجليد البحري مالح"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"مدار السرطان\"؟",
+      "answer": "خط عرض 23.5 درجة شمالاً"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما الذي يميز \"الدائرة القطبية الشمالية\"؟",
+      "answer": "24 ساعة ضوء نهار في الصيف"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو المصطلح الذي يصف الزراعة دون استخدام الري؟",
+      "answer": "الزراعة البعلية"
+    },
+    {
+      "difficulty": "hard",
+      "question": "في أي محيط تقع دولة جزر المالديف؟",
+      "answer": "المحيط الهندي"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما الفرق بين \"الخليج\" و \"شبه الجزيرة\"؟",
+      "answer": "الخليج مائي وشبه الجزيرة يابسة"
+    },
+    {
+      "difficulty": "hard",
+      "question": "في علم السكان، ماذا يعني \"معدل الخصوبة الإجمالي\"؟",
+      "answer": "متوسط عدد الأطفال المتوقع"
+    },
+    {
+      "difficulty": "hard",
+      "question": "في أي ولاية أمريكية تقع \"البحيرة المالحة الكبيرة\"؟",
+      "answer": "يوتا"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما اسم النظرية التي تقول بأن القارات كانت قارة واحدة؟",
+      "answer": "نظرية الانجراف القاري"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي \"الرياح الغربية العكسية\"؟",
+      "answer": "رياح تهب من الغرب إلى الشرق"
+    },
+    {
+      "difficulty": "hard",
+      "question": "لأي دولة تتبع \"جزر الأزور\"؟",
+      "answer": "البرتغال"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو المصطلح الذي يجمع قارتي أوروبا وآسيا؟",
+      "answer": "أوراسيا"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"تيار الخليج\"؟",
+      "answer": "تيار محيطي دافئ يؤثر على أوروبا"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما اسم الشلالات بين البرازيل والأرجنتين؟",
+      "answer": "شلالات إجوازو"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي المنطقة الخصبة في شمال مصر حيث يتفرع النيل؟",
+      "answer": "دلتا النيل"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو المصطلح الذي يطلق على جزيرة رملية موازية للساحل؟",
+      "answer": "الجزيرة الحاجزة"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي عاصمة كوستاريكا؟",
+      "answer": "سان خوسيه"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو المصطلح الاقتصادي للدول التي تستخدم اليورو؟",
+      "answer": "منطقة اليورو"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو النظام البيئي الساحلي الذي ينمو في المياه المالحة؟",
+      "answer": "غابات المانغروف"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو المصطلح الديموغرافي لانتقال الناس من الريف للمدن؟",
+      "answer": "التمدّن"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي الدولة التي تشترك في حدود مع روسيا وكوريا الشمالية؟",
+      "answer": "الصين"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"تيار همبولت\" أو تيار بيرو؟",
+      "answer": "تيار محيطي بارد يتدفق شمالاً"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي الدولة التي تشترك في جزيرة \"بورنيو\"؟",
+      "answer": "إندونيسيا"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"الأفق\" في علم دراسة التربة؟",
+      "answer": "طبقة أفقية مميزة في التربة"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما اسم البحر الذي يفصل بين أستراليا ونيوزيلندا؟",
+      "answer": "بحر تسمان"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي \"الزراعة المتنقلة\"؟",
+      "answer": "نظام زراعي تُهجر فيه الأرض لاستعادة خصوبتها"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"رأس هورن\"؟",
+      "answer": "النقطة الجنوبية الأقصى في أمريكا الجنوبية"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي الدولة الأوروبية المعروفة بـ \"أرض الألف بحيرة\"؟",
+      "answer": "فنلندا"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"الممر الشمالي الغربي\"؟",
+      "answer": "طريق بحرية عبر المحيط المتجمد الشمالي"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"الانقلاب الشتوي\"؟",
+      "answer": "أقصر يوم في السنة"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"الاعتدال الربيعي\"؟",
+      "answer": "الوقت الذي يتساوى فيه الليل والنهار"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"الممر الشمالي الشرقي\"؟",
+      "answer": "طريق بحرية عبر شمال روسيا"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي \"التربة اللاتيريتية\"؟",
+      "answer": "تربة حمراء غنية بالحديد والألومنيوم"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"السهل الساحلي\"؟",
+      "answer": "منطقة منخفضة بجوار المحيط"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي \"المنطقة الاقتصادية الخالصة\"؟",
+      "answer": "منطقة بحرية تمتد 200 ميل بحري"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"مقياس بوفورت\"؟",
+      "answer": "مقياس لقياس سرعة الرياح"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي \"الزراعة الأحادية\"؟",
+      "answer": "زراعة محصول واحد فقط"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي \"الزراعة البستانية\"؟",
+      "answer": "زراعة الفواكه والخضروات والزهور"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"الإنتاج الأولي\" في النظام البيئي؟",
+      "answer": "تحويل الطاقة الشمسية إلى كتلة حيوية"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"المصب\"؟",
+      "answer": "مسطح مائي حيث التقاء النهر بالبحر"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي \"الكثبان الرملية\"؟",
+      "answer": "تلال من الرمال كونتها الرياح"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"الرأس\"؟",
+      "answer": "نتوء بارز من اليابسة"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما اسم المضيق بين الجزائر الشمالية والجنوبية في نيوزيلندا؟",
+      "answer": "مضيق كوك"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي ثاني أكبر دولة في أمريكا الجنوبية من حيث المساحة؟",
+      "answer": "الأرجنتين"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي \"الكتلة الهوائية\"؟",
+      "answer": "كتلة هواء لها درجة حرارة ورطوبة متجانسة"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي \"الجبهة الباردة\"؟",
+      "answer": "حد فاصل لكتلة هواء باردة متقدمة"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي \"الجبهة الدافئة\"؟",
+      "answer": "حد فاصل لكتلة هواء دافئة متقدمة"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"الهوريكان\" أو الإعصار المداري؟",
+      "answer": "عاصفة مدارية قوية تتشكل فوق المياه الدافئة"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"التيفون\"؟",
+      "answer": "اسم محلي للإعصار المداري في غرب المحيط الهادئ"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"السايكلون\"؟",
+      "answer": "اسم محلي للإعصار في جنوب المحيط الهادئ"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"التورنيدو\" أو الإعصار القمعي؟",
+      "answer": "عمود دوار عنيف من الهواء"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي \"المدينة العالمية\"؟",
+      "answer": "مدينة مركز اقتصادي عالمي"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي \"التنمية المستدامة\"؟",
+      "answer": "تنمية تلبي احتياجات الحاضر دون الإضرار بالمستقبل"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"مؤشر التنمية البشرية\"؟",
+      "answer": "مقياس مركب لتصنيف البلدان"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"الناتج المحلي الإجمالي\"؟",
+      "answer": "القيمة السوقية لجميع السلع والخدمات المنتجة"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"الناتج القومي الإجمالي\"؟",
+      "answer": "القيمة الإجمالية لإنتاج مواطني الدولة"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"التوازن التجاري\"؟",
+      "answer": "الفرق بين الصادرات والواردات"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ماذا يحدث عندما تتجاوز الصادرات الواردات؟",
+      "answer": "فائض تجاري"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ماذا يحدث عندما تتجاوز الواردات الصادرات؟",
+      "answer": "عجز تجاري"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي \"العولمة\"؟",
+      "answer": "زيادة الترابط الاقتصادي والثقافي بين دول العالم"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي \"منظمة التجارة العالمية\"؟",
+      "answer": "منظمة دولية تنظم التجارة بين الدول"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي \"منظمة أوبك\"؟",
+      "answer": "منظمة الدول المصدرة للبترول"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي \"خطوط الكنتور\"؟",
+      "answer": "خطوط على الخريطة توصل بين نقاط نفس الارتفاع"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"مفتاح الخريطة\"؟",
+      "answer": "صندوق تفسيري يشرح رموز الخريطة"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"مقياس الخريطة\"؟",
+      "answer": "النسبة بين المسافة على الخريطة والحقيقية"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"الإسقاط الخرائطي\"؟",
+      "answer": "طريقة تمثيل سطح الأرض الكروي على سطح مستوٍ"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"إسقاط مركاتور\"؟",
+      "answer": "إسقاط يحافظ على الاتجاهات لكن يشوه المساحات"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي \"منطقة ظل المطر\"؟",
+      "answer": "منطقة جافة على الجانب غير المواجه للرياح"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي \"القمة\"؟",
+      "answer": "أعلى نقطة في جبل أو تل"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هو \"النطاق المناخي\"؟",
+      "answer": "منطقة جغرافية تتميز بخصائص مناخية عامة"
+    },
+    {
+      "difficulty": "hard",
+      "question": "ما هي \"المياه الإقليمية\"؟",
+      "answer": "حزام بحري يمتد 12 ميلاً من الساحل للدولة"
+    }
+  ]
+}

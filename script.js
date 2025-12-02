@@ -25,7 +25,8 @@ const assistTools = [
 { id: 'add_time', name: 'زنقة محنك', description: 'Adds extra time for the current team to answer (120 seconds instead of 60).', icon: '⏰' },
 { id: 'steal_player', name: 'اعارة', description: 'Steal a player.', icon: '👤' },
 { id: 'share_points', name: 'مشاركة النقاط', description: 'Points are shared between teams if answered correctly.', icon: '🤝' },
-{ id: 'cancel_question', name: 'حذف السؤال', description: 'Cancels the current question.', icon: '❌' }
+{ id: 'cancel_question', name: 'حذف السؤال', description: 'Cancels the current question.', icon: '❌' },
+{ id: 'lucky_spin', name: 'Lucky Spin', description: 'Spins a lucky roulette that randomly selects one of: double points, triple points, add 20 seconds, remove question, steal points, or deduct points.', icon: '🎡' }
 ];
 
 let usedQuestions = new Set(); // to track used questions
@@ -35,6 +36,7 @@ let stealActive = null;
 let muteActive = null;
 let sharePointsActive = false;
 let addTimeActive = false;
+let luckySpin = null; // {team, result} - result is one of: double, triple, add_time, remove_question, steal_points, deduct_points
 
 const state = {
   players: [], // two players {id,name,score,selectedTools:[],usedTools:new Set()}
@@ -398,7 +400,7 @@ $('#startGameBtn').addEventListener('click', async ()=>{
   });
   // Lazy load questions for chosen categories
   state.questions = {};
-  const difficultyMap = { 200: 'easy', 400: 'hard', 600: 'extreme' };
+  const difficultyMap = { 200: 'easy', 400: 'medium', 600: 'hard' };
   
   // Load all chosen category questions
   for(const cat of state.boardCats){
@@ -413,7 +415,12 @@ $('#startGameBtn').addEventListener('click', async ()=>{
     // Ensure mapping for 200/400/600 with 2 questions each
     [200,400,600].forEach(val => {
       const difficultyLabel = difficultyMap[val];
-      const availableQuestions = qlist.filter(q => q.difficulty === difficultyLabel);
+      let availableQuestions = qlist.filter(q => q.difficulty === difficultyLabel);
+
+      // If no questions for this difficulty, try to use other difficulties
+      if (availableQuestions.length === 0) {
+        availableQuestions = qlist;
+      }
 
       // Select 2 different questions for this difficulty level
       let selectedQuestions = [];
@@ -699,26 +706,33 @@ function onAnswerClicked(){
 
 /* finalize answer: award points (if any), stop timer, disable question, auto-switch turn to other team, return to board */
 function finalizeAnswer(playerId){
-  if(!currentQP) return;
-  const key = currentQP.catId + '_' + currentQP.value + '_' + currentQP.instance;
-  // award points
-  if(playerId !== null){
-    let points = currentQP.value;
-    // Half points if search powerup is active
-    if (searchActive) {
-      points = Math.floor(points / 2);
-    }
-    const doubled = doublePointsActive ? points * 2 : points;
-    if (sharePointsActive) {
-      // divide among 2 teams
-      state.players.forEach(p => p.score += doubled / 2);
-    } else {
-      const pl = state.players.find(p=>p.id === playerId);
-      if(pl) {
-        pl.score += doubled;
-      }
-    }
-    doublePointsActive = false;
+   if(!currentQP) return;
+   const key = currentQP.catId + '_' + currentQP.value + '_' + currentQP.instance;
+   // award points
+   if(playerId !== null){
+     let points = currentQP.value;
+     // Half points if search powerup is active
+     if (searchActive) {
+       points = Math.floor(points / 2);
+     }
+     let multiplied = points;
+     if (doublePointsActive) {
+       multiplied = points * 2;
+     } else if (window.triplePointsActive) {
+       multiplied = points * 3;
+       window.triplePointsActive = false;
+     }
+     const doubled = multiplied;
+     if (sharePointsActive) {
+       // divide among 2 teams
+       state.players.forEach(p => p.score += doubled / 2);
+     } else {
+       const pl = state.players.find(p=>p.id === playerId);
+       if(pl) {
+         pl.score += doubled;
+       }
+     }
+     doublePointsActive = false;
     // optional visual feedback
     // alert(`${pl.name} حصل على ${doubled} نقطة`);
   }
@@ -757,9 +771,12 @@ function finalizeAnswer(playerId){
   muteActive = null;
   sharePointsActive = false;
   addTimeActive = false;
+  luckySpin = null;
+  doublePointsActive = false;
+  window.triplePointsActive = false;
   // check if all answered -> show end summary automatically
   checkAllAnswered();
-}
+  }
 
 /* -------------------------
 Players row / turn switching / +/- controls
@@ -984,8 +1001,12 @@ function usePowerup(team, toolId) {
       sharePointsActive = false;
       addTimeActive = false;
       break;
-  }
-}
+    case 'lucky_spin':
+      showLuckySpin(team);
+      // Don't close modal here - it will be closed by the spin modal
+      return;
+    }
+    }
 
 // Add event listener for usePowerup button
 document.addEventListener('click', (e) => {
@@ -993,7 +1014,10 @@ document.addEventListener('click', (e) => {
     const toolId = e.target.dataset.tool;
     const team = parseInt(e.target.dataset.team);
     usePowerup(team, toolId);
-    closeModal();
+    // Only close modal if it's not a lucky_spin (lucky_spin has its own modal)
+    if (toolId !== 'lucky_spin') {
+      closeModal();
+    }
   } else if (e.target.id === 'closePowerup') {
     closeModal();
   }
@@ -1004,51 +1028,481 @@ document.addEventListener('click', (e) => {
 
 
 async function changeQuestion() {
-  const cat = state.boardCats.find(c => c.id === currentQP.catId);
-  if(!cat) return;
-  
-  // Lazy load questions for this category if not already loaded
-  const catQuestions = await loadCategoryQuestions(cat.id);
-  if(!catQuestions) {
-    alert('فشل تحميل الأسئلة لهذه الفئة.');
-    return;
-  }
-  
-  // Extract question list from the loaded file structure
-  let qlist = catQuestions.questions || [];
-  if(!Array.isArray(qlist)) qlist = [];
-  
-  const difficultyLabel = {200: 'easy', 400: 'hard', 600: 'extreme'}[currentQP.value];
-  const available = qlist.filter(q => q.difficulty === difficultyLabel);
-  
-  if (available.length > 0) {
-    const currentQuestion = state.questions[currentQP.catId + '_' + currentQP.value + '_' + currentQP.instance].q;
-    const otherQuestions = available.filter(q => q.question !== currentQuestion);
-    const newQ = otherQuestions.length > 0 ? otherQuestions[Math.floor(Math.random() * otherQuestions.length)] : available[Math.floor(Math.random() * available.length)];
-    if (newQ.question === currentQuestion) {
-      alert('لا توجد أسئلة أخرى متاحة في هذه الفئة والصعوبة.');
-      return;
-    }
-    const qobj = state.questions[currentQP.catId + '_' + currentQP.value + '_' + currentQP.instance];
-    qobj.q = newQ.question;
-    qobj.answer = newQ.answer;
-    qobj.image = newQ.image;
-    qobj.choices = newQ.choices;
-    // update display
-    $('#qpQuestionText').innerText = qobj.q;
-    const wrap = $('#qpImageWrap'); wrap.innerHTML = '';
-    if(qobj.image){
-      const img = document.createElement('img'); img.src = qobj.image; img.style.maxWidth = '100%'; img.style.maxHeight = '320px'; wrap.appendChild(img);
-    }
-    if(qobj.audio){
-      const audio = document.createElement('audio'); audio.src = qobj.audio; audio.controls = true; audio.style.width = '100%'; wrap.appendChild(audio);
-    }
-    if(!qobj.image && !qobj.audio){
-      wrap.innerHTML = `<div style="width:100%;height:260px;background:linear-gradient(#fff,#f2f2f2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#999">وسائط (صورة أو صوت إن وجدت)</div>`;
-    }
+   const cat = state.boardCats.find(c => c.id === currentQP.catId);
+   if(!cat) return;
+   
+   // Lazy load questions for this category if not already loaded
+   const catQuestions = await loadCategoryQuestions(cat.id);
+   if(!catQuestions) {
+     alert('فشل تحميل الأسئلة لهذه الفئة.');
+     return;
+   }
+   
+   // Extract question list from the loaded file structure
+   let qlist = catQuestions.questions || [];
+   if(!Array.isArray(qlist)) qlist = [];
+   
+   const difficultyLabel = {200: 'easy', 400: 'medium', 600: 'hard'}[currentQP.value];
+   const available = qlist.filter(q => q.difficulty === difficultyLabel);
+   
+   if (available.length > 0) {
+     const currentQuestion = state.questions[currentQP.catId + '_' + currentQP.value + '_' + currentQP.instance].q;
+     const otherQuestions = available.filter(q => q.question !== currentQuestion);
+     const newQ = otherQuestions.length > 0 ? otherQuestions[Math.floor(Math.random() * otherQuestions.length)] : available[Math.floor(Math.random() * available.length)];
+     if (newQ.question === currentQuestion) {
+       alert('لا توجد أسئلة أخرى متاحة في هذه الفئة والصعوبة.');
+       return;
+     }
+     const qobj = state.questions[currentQP.catId + '_' + currentQP.value + '_' + currentQP.instance];
+     qobj.q = newQ.question;
+     qobj.answer = newQ.answer;
+     qobj.image = newQ.image;
+     qobj.choices = newQ.choices;
+     // update display
+     $('#qpQuestionText').innerText = qobj.q;
+     const wrap = $('#qpImageWrap'); wrap.innerHTML = '';
+     if(qobj.image){
+       const img = document.createElement('img'); img.src = qobj.image; img.style.maxWidth = '100%'; img.style.maxHeight = '320px'; wrap.appendChild(img);
+     }
+     if(qobj.audio){
+       const audio = document.createElement('audio'); audio.src = qobj.audio; audio.controls = true; audio.style.width = '100%'; wrap.appendChild(audio);
+     }
+     if(!qobj.image && !qobj.audio){
+       wrap.innerHTML = `<div style="width:100%;height:260px;background:linear-gradient(#fff,#f2f2f2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#999">وسائط (صورة أو صوت إن وجدت)</div>`;
+     }
 
-  } else {
-    alert('لا توجد أسئلة متاحة في هذه الفئة والصعوبة.');
+   } else {
+     alert('لا توجد أسئلة متاحة في هذه الفئة والصعوبة.');
+   }
+ }
+
+/* Lucky Spin Feature */
+function showLuckySpin(team) {
+  const spinOptions = [
+    { id: 'double', label: 'Double Points', emoji: '2️⃣', color: '#FFD700' },
+    { id: 'triple', label: 'Triple Points', emoji: '3️⃣', color: '#FFA500' },
+    { id: 'add_time', label: 'Add 20 Seconds', emoji: '⏱️', color: '#87CEEB' },
+    { id: 'remove_question', label: 'Remove Question', emoji: '❌', color: '#FF6B6B' },
+    { id: 'steal_points', label: 'Steal Points', emoji: '💸', color: '#9370DB' },
+    { id: 'deduct_points', label: 'Deduct Points', emoji: '📉', color: '#FF4444' }
+  ];
+
+  const spinContainer = document.createElement('div');
+  spinContainer.style.cssText = `
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 2500;
+  `;
+
+  const modal = document.createElement('div');
+  modal.style.cssText = `
+    background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    width: 90%;
+  `;
+
+  const title = document.createElement('h2');
+  title.textContent = 'Lucky Spin 🎡';
+  title.style.cssText = 'color: #ff1493; margin: 0 0 20px 0; font-size: 28px;';
+  modal.appendChild(title);
+
+  // Container for roulette with fixed pointer
+  const rouletteContainer = document.createElement('div');
+  rouletteContainer.style.cssText = `
+    position: relative;
+    width: 300px;
+    height: 340px;
+    margin: 20px auto;
+  `;
+
+  // Fixed pointer at right side
+  const fixedPointer = document.createElement('div');
+  fixedPointer.style.cssText = `
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-right: 25px solid #ff1493;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  `;
+  rouletteContainer.appendChild(fixedPointer);
+
+  // SVG-based roulette spinner with labels
+  const svgNS = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(svgNS, 'svg');
+  svg.setAttribute('viewBox', '0 0 300 300');
+  svg.setAttribute('width', '300');
+  svg.setAttribute('height', '300');
+  svg.style.cssText = `
+    display: block;
+    margin: 0 auto;
+    filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.2));
+    transform-origin: center;
+  `;
+
+  const defs = document.createElementNS(svgNS, 'defs');
+  const style = document.createElementNS(svgNS, 'style');
+  style.textContent = `
+    .roulette-slice { transition: none; }
+    .roulette-label { font-weight: bold; font-size: 11px; fill: white; text-anchor: middle; }
+  `;
+  defs.appendChild(style);
+  svg.appendChild(defs);
+
+  const sliceAngle = 360 / spinOptions.length;
+  spinOptions.forEach((option, index) => {
+    const startAngle = index * sliceAngle;
+    const endAngle = (index + 1) * sliceAngle;
+    
+    // Create pie slice path
+    const startRad = (startAngle * Math.PI) / 180;
+    const endRad = (endAngle * Math.PI) / 180;
+    const radius = 150;
+    
+    const x1 = 150 + radius * Math.cos(startRad);
+    const y1 = 150 + radius * Math.sin(startRad);
+    const x2 = 150 + radius * Math.cos(endRad);
+    const y2 = 150 + radius * Math.sin(endRad);
+    
+    const largeArc = sliceAngle > 180 ? 1 : 0;
+    const path = document.createElementNS(svgNS, 'path');
+    path.setAttribute('d', `M 150 150 L ${x1} ${y1} A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2} Z`);
+    path.setAttribute('fill', option.color);
+    path.setAttribute('stroke', '#fff');
+    path.setAttribute('stroke-width', '2');
+    path.setAttribute('class', 'roulette-slice');
+    svg.appendChild(path);
+    
+    // Add label text
+    const labelAngle = startAngle + sliceAngle / 2;
+    const labelRad = (labelAngle * Math.PI) / 180;
+    const labelRadius = 100;
+    const labelX = 150 + labelRadius * Math.cos(labelRad);
+    const labelY = 150 + labelRadius * Math.sin(labelRad);
+    
+    const text = document.createElementNS(svgNS, 'text');
+    text.setAttribute('x', labelX);
+    text.setAttribute('y', labelY);
+    text.setAttribute('class', 'roulette-label');
+    text.setAttribute('dominant-baseline', 'middle');
+    text.textContent = `${option.emoji}\n${option.label.split(' ')[0]}`;
+    svg.appendChild(text);
+  });
+
+  // Add center circle
+  const centerCircle = document.createElementNS(svgNS, 'circle');
+  centerCircle.setAttribute('cx', '150');
+  centerCircle.setAttribute('cy', '150');
+  centerCircle.setAttribute('r', '40');
+  centerCircle.setAttribute('fill', 'white');
+  centerCircle.setAttribute('stroke', '#ff1493');
+  centerCircle.setAttribute('stroke-width', '3');
+  svg.appendChild(centerCircle);
+
+  const centerText = document.createElementNS(svgNS, 'text');
+  centerText.setAttribute('x', '150');
+  centerText.setAttribute('y', '150');
+  centerText.setAttribute('text-anchor', 'middle');
+  centerText.setAttribute('dominant-baseline', 'middle');
+  centerText.setAttribute('font-size', '24');
+  centerText.textContent = '🎲';
+  svg.appendChild(centerText);
+
+  // Add SVG to container (pointer stays fixed above)
+  rouletteContainer.appendChild(svg);
+  modal.appendChild(rouletteContainer);
+
+  const spinBtn = document.createElement('button');
+  spinBtn.textContent = 'SPIN!';
+  spinBtn.style.cssText = `
+    background: linear-gradient(135deg, #ff1493, #ff45d7);
+    color: white;
+    padding: 14px 40px;
+    font-size: 18px;
+    font-weight: 900;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-top: 20px;
+    box-shadow: 0 4px 15px rgba(255, 20, 147, 0.4);
+    transition: all 0.3s ease;
+  `;
+  spinBtn.onmouseover = () => { spinBtn.style.transform = 'scale(1.05)'; spinBtn.style.boxShadow = '0 6px 20px rgba(255, 20, 147, 0.6)'; };
+  spinBtn.onmouseout = () => { spinBtn.style.transform = 'scale(1)'; spinBtn.style.boxShadow = '0 4px 15px rgba(255, 20, 147, 0.4)'; };
+
+  spinBtn.addEventListener('click', async () => {
+    spinBtn.disabled = true;
+    spinBtn.style.opacity = '0.6';
+    spinBtn.style.cursor = 'not-allowed';
+
+    // Determine result randomly
+    const resultIndex = Math.floor(Math.random() * spinOptions.length);
+    const spinDuration = 3000; // 3 seconds spin
+    // To land on slice N (0-5), rotate so that slice's center (at 60*N + 30°) reaches the pointer (0°)
+    // Need to rotate by: 360 - (60*N + 30) = 330 - 60*N degrees, plus full rotations
+    const baseRotation = 330 - 60 * resultIndex;
+    const rotations = 10 + baseRotation / 360;
+
+    console.log('🎡 Lucky Spin: resultIndex=' + resultIndex + ', baseRotation=' + baseRotation + ', rotations=' + rotations + ', result=' + spinOptions[resultIndex].id);
+
+    // Animate the spin
+    svg.style.transition = `transform ${spinDuration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+    svg.style.transform = `rotate(${rotations * 360}deg)`;
+
+    // Wait for spin to complete
+    await new Promise(resolve => setTimeout(resolve, spinDuration + 200));
+
+    const result = spinOptions[resultIndex];
+    console.log('🎡 Lucky Spin: Spin result ID =', result.id);
+    
+    // Highlight the winning section on the wheel
+    const slices = svg.querySelectorAll('.roulette-slice');
+    slices.forEach((slice, index) => {
+      if (index === resultIndex) {
+        // Highlight winning slice
+        slice.setAttribute('stroke', '#fff');
+        slice.setAttribute('stroke-width', '4');
+        slice.style.filter = 'brightness(1.3)';
+      } else {
+        // Dim other slices
+        slice.style.opacity = '0.7';
+      }
+    });
+    
+    // Show result BEFORE applying spin
+    const resultDiv = document.createElement('div');
+    resultDiv.style.cssText = `
+      margin-top: 20px;
+      padding: 15px;
+      background: ${result.color};
+      color: white;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      border: 3px solid #fff;
+      box-shadow: 0 0 15px ${result.color};
+    `;
+    resultDiv.innerHTML = `🎉 ${result.emoji} ${result.label}!`;
+    modal.insertBefore(resultDiv, spinBtn);
+    
+    // Add descriptive message
+    const messageDiv = document.createElement('div');
+    messageDiv.style.cssText = `
+      margin-top: 10px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      border-radius: 8px;
+      font-size: 14px;
+      text-align: center;
+      line-height: 1.4;
+    `;
+    
+    // Build message based on result
+    let message = '';
+    switch(result.id) {
+      case 'double':
+        message = 'Your next points earned will be doubled!';
+        break;
+      case 'triple':
+        message = 'Your next points earned will be tripled!';
+        break;
+      case 'add_time':
+        message = 'You gained 20 extra seconds to answer the question!';
+        break;
+      case 'remove_question':
+        message = 'The current question is removed with no points. Turn passes to opponent.';
+        break;
+      case 'steal_points':
+        message = 'You steal 100 points from your opponent! The question is skipped.';
+        break;
+      case 'deduct_points':
+        message = 'You lose 100 points! The question is skipped.';
+        break;
+    }
+    messageDiv.innerHTML = message;
+    modal.insertBefore(messageDiv, spinBtn);
+    
+    // Apply spin AFTER showing result
+    applySpin(team, result.id);
+
+    // Check if the question page is still open
+    const questionStillOpen = $('#questionPage').style.display !== 'none';
+
+    spinBtn.textContent = questionStillOpen ? 'BACK TO QUESTION' : 'BACK TO BOARD';
+    spinBtn.disabled = false;
+    spinBtn.style.opacity = '1';
+    spinBtn.style.cursor = 'pointer';
+    spinBtn.onclick = () => {
+      spinContainer.remove();
+      // Close the powerup description modal if it exists
+      const existingModal = document.getElementById('modalBack');
+      if (existingModal && existingModal.style.display === 'flex') {
+        closeModal();
+      }
+    };
+  });
+
+  modal.appendChild(spinBtn);
+  spinContainer.appendChild(modal);
+  document.body.appendChild(spinContainer);
+}
+
+function applySpin(team, result) {
+  luckySpin = { team, result };
+  
+  switch(result) {
+    case 'double':
+      // Will be applied during finalizeAnswer
+      doublePointsActive = true;
+      window.triplePointsActive = false;  // Make sure triple is not active
+      console.log('Lucky Spin: Double Points activated');
+      // Keep question open - don't close anything
+      return;
+    
+    case 'triple':
+      // Custom multiplier for triple
+      doublePointsActive = false;  // Make sure double is not active
+      window.triplePointsActive = true;
+      console.log('Lucky Spin: Triple Points activated');
+      // Keep question open - don't close anything
+      return;
+    
+    case 'add_time':
+      if (running) {
+        firstTimeout += 20000;
+        finalTimeout += 20000;
+        console.log('Lucky Spin: 20 seconds added to timer');
+      }
+      // Keep question open - don't close anything
+      return;
+    
+    case 'remove_question':
+      // Remove question and close immediately without allowing answer submission
+      if (!currentQP) {
+        console.error('Lucky Spin: currentQP is null, cannot remove question');
+        break;
+      }
+      console.log('Lucky Spin: Remove Question triggered');
+      {
+        const key = currentQP.catId + '_' + currentQP.value + '_' + currentQP.instance;
+        state.boardDisabled[key] = true;
+        pauseTimer();
+        if (document.activeElement && $('#questionPage').contains(document.activeElement)) {
+          document.activeElement.blur();
+        }
+        $('#questionPage').style.display = 'none';
+        $('#questionPage').setAttribute('aria-hidden','true');
+        currentQP = null;
+        // reset powerups
+        searchActive = false;
+        stealActive = null;
+        muteActive = null;
+        sharePointsActive = false;
+        addTimeActive = false;
+        luckySpin = null;
+        state.currentPlayerIndex = (state.currentPlayerIndex + 1) % state.players.length;
+        renderBoard();
+        renderPlayersRow();
+        updateTurnBadge();
+        checkAllAnswered();
+        }
+        return;
+        
+        case 'steal_points':
+      // Steal opponent's points without answering, then close the question
+      if (!currentQP) {
+        console.error('Lucky Spin: currentQP is null, cannot steal points');
+        break;
+      }
+      console.log('Lucky Spin: Steal Points triggered');
+      {
+        const opponent = state.players.find(p => p.id !== team);
+        const stealer = state.players.find(p => p.id === team);
+        if (opponent && stealer) {
+          const amountToSteal = Math.min(100, opponent.score);
+          opponent.score -= amountToSteal;
+          stealer.score += amountToSteal;
+          console.log(`Stole ${amountToSteal} points from ${opponent.name} to ${stealer.name}`);
+        }
+        // Now close the question
+        const stealKey = currentQP.catId + '_' + currentQP.value + '_' + currentQP.instance;
+        state.boardDisabled[stealKey] = true;
+        pauseTimer();
+        if (document.activeElement && $('#questionPage').contains(document.activeElement)) {
+          document.activeElement.blur();
+        }
+        $('#questionPage').style.display = 'none';
+        $('#questionPage').setAttribute('aria-hidden','true');
+        currentQP = null;
+        // reset powerups
+        searchActive = false;
+        stealActive = null;
+        muteActive = null;
+        sharePointsActive = false;
+        addTimeActive = false;
+        luckySpin = null;
+        state.currentPlayerIndex = (state.currentPlayerIndex + 1) % state.players.length;
+        renderBoard();
+        renderPlayersRow();
+        updateTurnBadge();
+        checkAllAnswered();
+        }
+        return;
+        
+        case 'deduct_points':
+          // Deduct your own team's points and close question
+          if (!currentQP) {
+            console.error('Lucky Spin: currentQP is null, cannot deduct points');
+            break;
+          }
+          console.log('Lucky Spin: Deduct Points triggered');
+          {
+            const player = state.players.find(p => p.id === team);
+            if (player) {
+              player.score = Math.max(0, player.score - 100);
+              console.log(`Deducted 100 points from ${player.name}`);
+            }
+            // Close the question
+            const deductKey = currentQP.catId + '_' + currentQP.value + '_' + currentQP.instance;
+            state.boardDisabled[deductKey] = true;
+            pauseTimer();
+            if (document.activeElement && $('#questionPage').contains(document.activeElement)) {
+              document.activeElement.blur();
+            }
+            $('#questionPage').style.display = 'none';
+            $('#questionPage').setAttribute('aria-hidden','true');
+            currentQP = null;
+            // reset powerups
+            searchActive = false;
+            stealActive = null;
+            muteActive = null;
+            sharePointsActive = false;
+            addTimeActive = false;
+            luckySpin = null;
+            state.currentPlayerIndex = (state.currentPlayerIndex + 1) % state.players.length;
+            renderBoard();
+            renderPlayersRow();
+            updateTurnBadge();
+            checkAllAnswered();
+          }
+          return;
+    
+    default:
+      console.warn(`Unknown spin result: ${result}`);
   }
 }
 

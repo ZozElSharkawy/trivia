@@ -846,6 +846,7 @@ function renderQuestionPageScores(){
       state.currentPlayerIndex = idx;
       updateTurnBadge();
       renderQuestionPageScores();
+      renderQuestionPagePowerups();
       renderPlayersRow();
     });
   });

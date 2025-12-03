@@ -16,17 +16,17 @@ let miniCards = []; // mini categories built from categoriesData
 const CATEGORY_COST = 500;
 
 const assistTools = [
-{ id: 'double_points', name: 'Double Points', description: 'Doubles the value of the current question.', icon: '💰' },
-{ id: 'search', name: 'محنك شي ان', description: 'Adds 20 seconds to answering time and halves the question points.', icon: '🔍' },
-{ id: 'steal_question', name: 'Steal Question', description: 'Allows the team that activates this power-up to take control of the turn temporarily and answer the question — even if it\'s not their turn. If the stealing team answers correctly → they earn the points. If they answer incorrectly → control passes back to the other team as usual. When question ends the turn goes back normally.', icon: '🤏' },
-{ id: 'mute_opponent', name: 'Mute Opponent (كتم الفريق الآخر)', description: 'Grants the activating team 90 seconds to answer while disabling the opponent\'s answer buttons.', icon: '🔇' },
-{ id: 'change_question', name: 'Change Question', description: 'Replaces the current question with a new one from the same category and same difficulty.', icon: '🔄' },
-{ id: 'call_friend', name: 'استشاره محنك', description: 'Call a friend for advice.', icon: '📞' },
-{ id: 'add_time', name: 'زنقة محنك', description: 'Adds extra time for the current team to answer (120 seconds instead of 60).', icon: '⏰' },
-{ id: 'steal_player', name: 'اعارة', description: 'Steal a player.', icon: '👤' },
-{ id: 'share_points', name: 'مشاركة النقاط', description: 'Points are shared between teams if answered correctly.', icon: '🤝' },
-{ id: 'cancel_question', name: 'حذف السؤال', description: 'Cancels the current question.', icon: '❌' },
-{ id: 'lucky_spin', name: 'Lucky Spin', description: 'Spins a lucky roulette that randomly selects one of: double points, triple points, add 20 seconds, remove question, steal points, or deduct points.', icon: '🎡' }
+{ id: 'double_points', name:'الدبل', description: 'مضاعفة قيمة السؤال الحالي.', icon: '💰' },
+{ id: 'search', name: 'محنك شي ان', description: 'إضافة 20 ثانية لوقت الإجابة وتقليل نقاط السؤال إلى النصف.', icon: '🔍' },
+{ id: 'steal_question', name: 'سرقة السؤال', description: 'يسمح للفريق الذي يفعل هذه القوة بالسيطرة على الدور مؤقتاً والإجابة على السؤال — حتى لو لم يكن دورهم. إذا أجاب الفريق بشكل صحيح → يحصلون على النقاط. إذا أجابوا بشكل خاطئ → يعود التحكم للفريق الآخر. عند انتهاء السؤال يعود الدور بشكل طبيعي.', icon: '🤏' },
+{ id: 'mute_opponent', name: 'تسكيت المحنك', description: 'يمنح الفريق 90 ثانية للإجابة مع تعطيل أزرار إجابة الفريق الآخر.', icon: '🔇' },
+{ id: 'change_question', name: 'تغيير السؤال', description: 'استبدال السؤال الحالي بسؤال جديد من نفس الفئة والصعوبة.', icon: '🔄' },
+{ id: 'call_friend', name: 'استشاره محنك', description: 'استدعاء صديق للنصيحة.', icon: '📞' },
+{ id: 'add_time', name: 'زنقة محنك', description: 'إضافة وقت إضافي للفريق الحالي للإجابة (120 ثانية بدلاً من 60).', icon: '⏰' },
+{ id: 'steal_player', name: 'اعارة', description: 'سرقة لاعب.', icon: '👤' },
+{ id: 'share_points', name: 'مشاركة النقاط', description: 'تقسيم النقاط بين الفريقين عند الإجابة الصحيحة.', icon: '🤝' },
+{ id: 'cancel_question', name: 'حذف السؤال', description: 'إلغاء السؤال الحالي.', icon: '❌' },
+{ id: 'lucky_spin', name: 'روليت', description: 'تدوير عجلة الحظ التي تختار عشوائياً من: نقاط مزدوجة، نقاط ثلاثية، إضافة 20 ثانية، حذف السؤال، سرقة النقاط، أو خسارة النقاط.', icon: '🎡' }
 ];
 
 let usedQuestions = new Set(); // to track used questions
@@ -580,9 +580,6 @@ function openQuestionPage(catId, value, instance = 1){
   if(qobj.audio){
     const audio = document.createElement('audio'); audio.src = qobj.audio; audio.controls = true; audio.style.width = '100%'; wrap.appendChild(audio);
   }
-  if(!qobj.image && !qobj.audio){
-    wrap.innerHTML = `<div style="width:100%;height:260px;background:linear-gradient(#fff,#f2f2f2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#999">وسائط (صورة أو صوت إن وجدت)</div>`;
-  }
   // show question page
   $('#questionPage').style.display = 'flex';
   $('#questionPage').setAttribute('aria-hidden','false');
@@ -1067,9 +1064,6 @@ async function changeQuestion() {
      if(qobj.audio){
        const audio = document.createElement('audio'); audio.src = qobj.audio; audio.controls = true; audio.style.width = '100%'; wrap.appendChild(audio);
      }
-     if(!qobj.image && !qobj.audio){
-       wrap.innerHTML = `<div style="width:100%;height:260px;background:linear-gradient(#fff,#f2f2f2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#999">وسائط (صورة أو صوت إن وجدت)</div>`;
-     }
 
    } else {
      alert('لا توجد أسئلة متاحة في هذه الفئة والصعوبة.');
@@ -1079,12 +1073,12 @@ async function changeQuestion() {
 /* Lucky Spin Feature */
 function showLuckySpin(team) {
   const spinOptions = [
-    { id: 'double', label: 'Double Points', emoji: '2️⃣', color: '#FFD700' },
-    { id: 'triple', label: 'Triple Points', emoji: '3️⃣', color: '#FFA500' },
-    { id: 'add_time', label: 'Add 20 Seconds', emoji: '⏱️', color: '#87CEEB' },
-    { id: 'remove_question', label: 'Remove Question', emoji: '❌', color: '#FF6B6B' },
-    { id: 'steal_points', label: 'Steal Points', emoji: '💸', color: '#9370DB' },
-    { id: 'deduct_points', label: 'Deduct Points', emoji: '📉', color: '#FF4444' }
+    { id: 'double', label: 'نقاط مزدوجة', emoji: '2️⃣', color: '#FFD700' },
+    { id: 'triple', label: 'نقاط ثلاثية', emoji: '3️⃣', color: '#FFA500' },
+    { id: 'add_time', label: 'أضف 20 ثانية', emoji: '⏱️', color: '#87CEEB' },
+    { id: 'remove_question', label: 'حذف السؤال', emoji: '❌', color: '#FF6B6B' },
+    { id: 'steal_points', label: 'سرقة النقاط', emoji: '💸', color: '#9370DB' },
+    { id: 'deduct_points', label: 'خسارة النقاط', emoji: '📉', color: '#FF4444' }
   ];
 
   const spinContainer = document.createElement('div');
@@ -1110,7 +1104,7 @@ function showLuckySpin(team) {
   `;
 
   const title = document.createElement('h2');
-  title.textContent = 'Lucky Spin 🎡';
+  title.textContent = 'الدوران المحظوظ 🎡';
   title.style.cssText = 'color: #ff1493; margin: 0 0 20px 0; font-size: 28px;';
   modal.appendChild(title);
 
@@ -1226,7 +1220,7 @@ function showLuckySpin(team) {
   modal.appendChild(rouletteContainer);
 
   const spinBtn = document.createElement('button');
-  spinBtn.textContent = 'SPIN!';
+  spinBtn.textContent = 'ادر العجلة!';
   spinBtn.style.cssText = `
     background: linear-gradient(135deg, #ff1493, #ff45d7);
     color: white;
@@ -1315,22 +1309,22 @@ function showLuckySpin(team) {
     let message = '';
     switch(result.id) {
       case 'double':
-        message = 'Your next points earned will be doubled!';
+        message = 'النقاط التي ستحصل عليها ستكون مضاعفة!';
         break;
       case 'triple':
-        message = 'Your next points earned will be tripled!';
+        message = 'النقاط التي ستحصل عليها ستكون ثلاثية!';
         break;
       case 'add_time':
-        message = 'You gained 20 extra seconds to answer the question!';
+        message = 'حصلت على 20 ثانية إضافية للإجابة على السؤال!';
         break;
       case 'remove_question':
-        message = 'The current question is removed with no points. Turn passes to opponent.';
+        message = 'تم حذف السؤال الحالي بدون نقاط. يمرر الدور للخصم.';
         break;
       case 'steal_points':
-        message = 'You steal 100 points from your opponent! The question is skipped.';
+        message = 'سرقت 100 نقطة من خصمك! السؤال يتم تخطيه.';
         break;
       case 'deduct_points':
-        message = 'You lose 100 points! The question is skipped.';
+        message = 'خسرت 100 نقطة! السؤال يتم تخطيه.';
         break;
     }
     messageDiv.innerHTML = message;
@@ -1342,7 +1336,7 @@ function showLuckySpin(team) {
     // Check if the question page is still open
     const questionStillOpen = $('#questionPage').style.display !== 'none';
 
-    spinBtn.textContent = questionStillOpen ? 'BACK TO QUESTION' : 'BACK TO BOARD';
+    spinBtn.textContent = questionStillOpen ? 'العودة للسؤال' : 'العودة للوحة';
     spinBtn.disabled = false;
     spinBtn.style.opacity = '1';
     spinBtn.style.cursor = 'pointer';

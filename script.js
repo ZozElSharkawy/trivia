@@ -265,7 +265,7 @@ function onMiniClick(id){
       {id:0, name:p1, score: state.categorySelectionScores[0]},
       {id:1, name:p2, score: state.categorySelectionScores[1]}
     ];
-    const playersHtml = tempPlayers.map(p=>`<button data-p="${p.id}" class="buy-player-btn" style="margin:6px;padding:8px;border-radius:8px;color:#ff1493">${p.name} (${p.score})</button>`).join('');
+    const playersHtml = tempPlayers.map(p=>`<button data-p="${p.id}" class="buy-player-btn" style="margin:6px;padding:8px;border-radius:8px;color:#fff">${p.name} (${p.score})</button>`).join('');
     showModal(`<h3>فتح: ${m.title} — التكلفة ${m.cost}</h3><div>من سيدفع لفتح هذه الفئة؟</div><div style="margin-top:10px">${playersHtml}</div><div style="margin-top:10px"><button id="cancelBuy" style="background:#999;padding:8px;border-radius:8px">إلغاء</button></div>`);
 
     // Add event listeners after a small delay to ensure DOM is ready
@@ -348,7 +348,7 @@ function renderChosen(){
     const m = miniCards.find(x=>x.id===id);
     const el = document.createElement('div');
     el.className = 'chosen-mini';
-    el.innerHTML = `<div>${m.title}</div><div><button data-id="${id}" class="remove-chosen" style="background:#e74c3c;padding:6px;border-radius:8px">حذف</button></div>`;
+    el.innerHTML = `<div>${m.title}</div><div><button data-id="${id}" class="remove-chosen" style="background:#ff6b35;padding:6px;border-radius:8px">حذف</button></div>`;
     list.appendChild(el);
   });
   $$('.remove-chosen').forEach(b => {
@@ -466,8 +466,8 @@ function renderBoard(){
     const block = document.createElement('div');
     block.className = 'category-block';
     block.innerHTML = `
-      <div style="height:120px;width:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(#ffff00,#ffcc00);border-radius:8px">
-        <div style="font-size:22px;font-weight:900;color:#FF1493">${cat.title}</div>
+      <div style="height:120px;width:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(#87ceeb,#add8e6);border-radius:8px">
+        <div style="font-size:22px;font-weight:900;color:#0066cc">${cat.title}</div>
       </div>
       <div class="title-badge">الفئة ${idx+1}</div>
       <div class="values">
@@ -542,9 +542,9 @@ pauseTimer();
 // Highlight answer button to indicate time is up
 const answerBtn = $('#answerBtn');
 if(answerBtn && !document.querySelector('.answer-result')) {
-answerBtn.style.background = '#ff4444';
+answerBtn.style.background = '#c23b3b';
 answerBtn.style.animation = 'pulse 0.5s infinite';
-answerBtn.style.boxShadow = '0 0 20px rgba(255, 68, 68, 0.8)';
+answerBtn.style.boxShadow = '0 0 20px rgba(194, 59, 59, 0.8)';
 }
 }
 }, 200);
@@ -652,12 +652,12 @@ function onAnswerClicked(){
   // show answer text
   const answerBox = document.createElement('div');
   answerBox.style.padding = '15px 20px';
-  answerBox.style.background = '#e8f4fd';
-  answerBox.style.border = '2px solid #2196f3';
+  answerBox.style.background = '#e0f2ff';
+  answerBox.style.border = '2px solid #1e90ff';
   answerBox.style.borderRadius = '12px';
   answerBox.style.fontWeight = '900';
   answerBox.style.fontSize = '18px';
-  answerBox.style.color = '#0d47a1';
+  answerBox.style.color = '#0066cc';
   answerBox.style.marginBottom = '10px';
   answerBox.innerText = 'الإجابة: ' + (qobj.answer || 'الإجابة');
 
@@ -760,7 +760,6 @@ function finalizeAnswer(playerId){
   }
   $('#questionPage').style.display = 'none';
   $('#questionPage').setAttribute('aria-hidden','true');
-  // clear current qp
   currentQP = null;
   // reset powerup flags
   searchActive = false;
@@ -826,7 +825,7 @@ $$('.tool-use-btn').forEach(btn => {
    const toolId = btn.dataset.tool;
  const team = parseInt(btn.dataset.team);
 const tool = assistTools.find(t => t.id === toolId);
-showModal(`<p>${tool.description}</p><button id="usePowerup" data-tool="${toolId}" data-team="${team}" style="color:#ff1493">استخدم الطاقة</button><button id="closePowerup">إغلاق</button>`);
+showModal(`<p>${tool.description}</p><button id="usePowerup" data-tool="${toolId}" data-team="${team}" style="color:#fff">استخدم الطاقة</button><button id="closePowerup">إغلاق</button>`);
 });
 });
 
@@ -879,7 +878,7 @@ const isCurrentTurn = idx === state.currentPlayerIndex;
 const disabledAttr = used || ((tId === 'add_time' || tId === 'search') && !isCurrentTurn) ? 'disabled' : '';
 const extraClass = (tId === 'add_time' || tId === 'search') && !isCurrentTurn ? ' inactive-turn' : '';
 const buttonHtml = `<button class="tool-use-btn${extraClass}" data-tool="${tId}" data-team="${idx}" ${disabledAttr} title="${p.name}: ${tool.description}">${tool.icon} ${tool.name}</button>`;
-const extraText = (tId === 'add_time' || tId === 'search') && !isCurrentTurn ? '<br/><small style="color:#666;font-size:10px;">يمكن استخدامه فقط في دورك</small>' : '';
+const extraText = (tId === 'add_time' || tId === 'search') && !isCurrentTurn ? '<br/><small style="color:#999;font-size:10px;">يمكن استخدامه فقط في دورك</small>' : '';
   return buttonHtml + extraText;
   }).join('');
 
@@ -897,7 +896,7 @@ btn.addEventListener('click', () => {
 const toolId = btn.dataset.tool;
 const team = parseInt(btn.dataset.team);
   const tool = assistTools.find(t => t.id === toolId);
-    showModal(`<p>${tool.description}</p><button id="usePowerup" data-tool="${toolId}" data-team="${team}" style="color:#ff1493">استخدم الطاقة</button><button id="closePowerup">إغلاق</button>`);
+    showModal(`<p>${tool.description}</p><button id="usePowerup" data-tool="${toolId}" data-team="${team}" style="color:#fff">استخدم الطاقة</button><button id="closePowerup">إغلاق</button>`);
     });
   });
 }
@@ -1074,12 +1073,12 @@ async function changeQuestion() {
 /* Lucky Spin Feature */
 function showLuckySpin(team) {
   const spinOptions = [
-    { id: 'double', label: 'نقاط مزدوجة', emoji: '2️⃣', color: '#FFD700' },
+    { id: 'double', label: 'نقاط مزدوجة', emoji: '2️⃣', color: '#FF6B6B' },
     { id: 'triple', label: 'نقاط ثلاثية', emoji: '3️⃣', color: '#FFA500' },
-    { id: 'add_time', label: 'أضف 20 ثانية', emoji: '⏱️', color: '#87CEEB' },
-    { id: 'remove_question', label: 'حذف السؤال', emoji: '❌', color: '#FF6B6B' },
-    { id: 'steal_points', label: 'سرقة النقاط', emoji: '💸', color: '#9370DB' },
-    { id: 'deduct_points', label: 'خسارة النقاط', emoji: '📉', color: '#FF4444' }
+    { id: 'add_time', label: 'أضف 20 ثانية', emoji: '⏱️', color: '#FFD700' },
+    { id: 'remove_question', label: 'حذف السؤال', emoji: '❌', color: '#00CED1' },
+    { id: 'steal_points', label: 'سرقة النقاط', emoji: '💸', color: '#32CD32' },
+    { id: 'deduct_points', label: 'خسارة النقاط', emoji: '📉', color: '#9370DB' }
   ];
 
   const spinContainer = document.createElement('div');
@@ -1106,7 +1105,7 @@ function showLuckySpin(team) {
 
   const title = document.createElement('h2');
   title.textContent = 'الدوران المحظوظ 🎡';
-  title.style.cssText = 'color: #ff1493; margin: 0 0 20px 0; font-size: 28px;';
+  title.style.cssText = 'color: #0066cc; margin: 0 0 20px 0; font-size: 28px;';
   modal.appendChild(title);
 
   // Container for roulette with fixed pointer
@@ -1130,7 +1129,7 @@ function showLuckySpin(team) {
     height: 0;
     border-top: 15px solid transparent;
     border-bottom: 15px solid transparent;
-    border-right: 25px solid #ff1493;
+    border-right: 25px solid #1e90ff;
     filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
   `;
   rouletteContainer.appendChild(fixedPointer);
@@ -1203,7 +1202,7 @@ function showLuckySpin(team) {
   centerCircle.setAttribute('cy', '150');
   centerCircle.setAttribute('r', '40');
   centerCircle.setAttribute('fill', 'white');
-  centerCircle.setAttribute('stroke', '#ff1493');
+  centerCircle.setAttribute('stroke', '#1e90ff');
   centerCircle.setAttribute('stroke-width', '3');
   svg.appendChild(centerCircle);
 
@@ -1223,7 +1222,7 @@ function showLuckySpin(team) {
   const spinBtn = document.createElement('button');
   spinBtn.textContent = 'ادر العجلة!';
   spinBtn.style.cssText = `
-    background: linear-gradient(135deg, #ff1493, #ff45d7);
+    background: linear-gradient(135deg, #1e90ff, #2ab0ff);
     color: white;
     padding: 14px 40px;
     font-size: 18px;
@@ -1232,11 +1231,11 @@ function showLuckySpin(team) {
     border-radius: 30px;
     cursor: pointer;
     margin-top: 20px;
-    box-shadow: 0 4px 15px rgba(255, 20, 147, 0.4);
+    box-shadow: 0 4px 15px rgba(30, 144, 255, 0.4);
     transition: all 0.3s ease;
   `;
-  spinBtn.onmouseover = () => { spinBtn.style.transform = 'scale(1.05)'; spinBtn.style.boxShadow = '0 6px 20px rgba(255, 20, 147, 0.6)'; };
-  spinBtn.onmouseout = () => { spinBtn.style.transform = 'scale(1)'; spinBtn.style.boxShadow = '0 4px 15px rgba(255, 20, 147, 0.4)'; };
+  spinBtn.onmouseover = () => { spinBtn.style.transform = 'scale(1.05)'; spinBtn.style.boxShadow = '0 6px 20px rgba(30, 144, 255, 0.6)'; };
+  spinBtn.onmouseout = () => { spinBtn.style.transform = 'scale(1)'; spinBtn.style.boxShadow = '0 4px 15px rgba(30, 144, 255, 0.4)'; };
 
   spinBtn.addEventListener('click', async () => {
     spinBtn.disabled = true;
@@ -1365,7 +1364,9 @@ function applySpin(team, result) {
       doublePointsActive = true;
       window.triplePointsActive = false;  // Make sure triple is not active
       console.log('Lucky Spin: Double Points activated');
-      // Keep question open - don't close anything
+      // Keep question open - question page stays visible
+      $('#questionPage').style.display = 'flex';
+      $('#questionPage').setAttribute('aria-hidden','false');
       return;
     
     case 'triple':
@@ -1373,7 +1374,9 @@ function applySpin(team, result) {
       doublePointsActive = false;  // Make sure double is not active
       window.triplePointsActive = true;
       console.log('Lucky Spin: Triple Points activated');
-      // Keep question open - don't close anything
+      // Keep question open - question page stays visible
+      $('#questionPage').style.display = 'flex';
+      $('#questionPage').setAttribute('aria-hidden','false');
       return;
     
     case 'add_time':
@@ -1382,7 +1385,9 @@ function applySpin(team, result) {
         finalTimeout += 20000;
         console.log('Lucky Spin: 20 seconds added to timer');
       }
-      // Keep question open - don't close anything
+      // Keep question open - question page stays visible
+      $('#questionPage').style.display = 'flex';
+      $('#questionPage').setAttribute('aria-hidden','false');
       return;
     
     case 'remove_question':
@@ -1533,7 +1538,7 @@ $('#endGame').addEventListener('click', ()=>{
 const sorted = [...state.players].sort((a,b)=>b.score - a.score);
 const winner = sorted[0];
 const summary = state.players.map(p => `${p.name}: ${p.score}`).join('<br/>');
-showModal(`<h3>نهاية اللعبة — الفائز: ${winner ? winner.name : 'لا يوجد'}</h3><div style="margin-top:8px">${summary}</div><div style="margin-top:12px"><button id="closeEnd" style="padding:8px;border-radius:8px;color:#ff1493">العودة للإعداد</button></div>`);
+showModal(`<h3>نهاية اللعبة — الفائز: ${winner ? winner.name : 'لا يوجد'}</h3><div style="margin-top:8px">${summary}</div><div style="margin-top:12px"><button id="closeEnd" style="padding:8px;border-radius:8px;color:#fff">العودة للإعداد</button></div>`);
 $('#closeEnd').addEventListener('click', ()=>{
 closeModal();
 // Reset to setup panel, category panel, and hero section
